@@ -1,7 +1,7 @@
-import Navbar from '@/components/Navbar';
-import CategoryPage from '@/components/CategoryPage';
-import Footer from '@/components/Footer';
-import FloatingButtons, { MobileBottomNav } from '@/components/FloatingButtons';
+import Navbar from '@/components/layout/Navbar';
+import CategoryPage from '@/components/product/CategoryPage';
+import Footer from '@/components/layout/Footer';
+import FloatingButtons, { MobileBottomNav } from '@/components/common/FloatingButtons';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {

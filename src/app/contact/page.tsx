@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import FloatingButtons, { MobileBottomNav } from '@/components/FloatingButtons';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
+import FloatingButtons, { MobileBottomNav } from '@/components/common/FloatingButtons';
 import { MessageCircle, Mail, Phone, MapPin, Clock, Send, ShieldAlert, Sparkles, CheckCircle2 } from 'lucide-react';
 import { useTranslation } from '@/lib/LanguageContext';
 

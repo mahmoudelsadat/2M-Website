@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import FloatingButtons, { MobileBottomNav } from '@/components/FloatingButtons';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
+import FloatingButtons, { MobileBottomNav } from '@/components/common/FloatingButtons';
 import { Check, ChevronRight, MapPin, CreditCard, Truck, Shield, Phone, Sparkles, AlertCircle } from 'lucide-react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';

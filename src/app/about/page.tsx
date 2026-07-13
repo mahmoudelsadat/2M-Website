@@ -1,6 +1,6 @@
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import FloatingButtons, { MobileBottomNav } from '@/components/FloatingButtons';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
+import FloatingButtons, { MobileBottomNav } from '@/components/common/FloatingButtons';
 import { Shield, Truck, Star, Users, Award, Heart } from 'lucide-react';
 import { Metadata } from 'next';
 

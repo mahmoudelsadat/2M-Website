@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import BackToTop from '@/components/BackToTop';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
+import BackToTop from '@/components/common/BackToTop';
 import { products } from '@/lib/data';
 import { ArrowRight, Home } from 'lucide-react';
 import { formatEGP } from '@/lib/utils';

@@ -5,9 +5,9 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ShieldCheck, Lock, ArrowRight, Eye, EyeOff, AlertTriangle, Mail } from 'lucide-react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import FloatingButtons, { MobileBottomNav } from '@/components/FloatingButtons';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
+import FloatingButtons, { MobileBottomNav } from '@/components/common/FloatingButtons';
 import { useTranslation } from '@/lib/LanguageContext';
 import { toast } from 'sonner';
 

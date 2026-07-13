@@ -9,9 +9,9 @@ import {
   User, MapPin, Package, History, Award, CheckCircle2, 
   ChevronRight, LogOut, ShieldCheck, Heart, Sparkles, ShoppingBag, Truck
 } from 'lucide-react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import FloatingButtons, { MobileBottomNav } from '@/components/FloatingButtons';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
+import FloatingButtons, { MobileBottomNav } from '@/components/common/FloatingButtons';
 import { useTranslation } from '@/lib/LanguageContext';
 import { toast } from 'sonner';
 

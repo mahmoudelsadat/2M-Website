@@ -12,7 +12,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import { navLinks } from '@/lib/data';
 import { useCartStore, useWishlistStore } from '@/lib/store';
-import SearchAutocomplete from './SearchAutocomplete';
+import SearchAutocomplete from '@/components/search/SearchAutocomplete';
 import { useTranslation } from '@/lib/LanguageContext';
 
 // ─── Category Icon Map ─────────────────────────────────────────
