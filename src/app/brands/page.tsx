@@ -1,7 +1,7 @@
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import FloatingButtons, { MobileBottomNav } from '@/components/common/FloatingButtons';
-import BackToTop from '@/components/common/BackToTop';
+import FloatingButtons, { MobileBottomNav } from '@/components/layout/FloatingButtons';
+import BackToTop from '@/components/layout/BackToTop';
 import { getBrands, getProducts } from '@/lib/api';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';

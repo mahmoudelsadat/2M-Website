@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import FloatingButtons, { MobileBottomNav } from '@/components/common/FloatingButtons';
+import FloatingButtons, { MobileBottomNav } from '@/components/layout/FloatingButtons';
 import { MessageCircle, Mail, Phone, MapPin, Clock, Send, ShieldAlert, Sparkles, CheckCircle2 } from 'lucide-react';
 import { useTranslation } from '@/lib/LanguageContext';
 
@@ -24,7 +24,7 @@ export default function ContactPage() {
       icon: MessageCircle,
       title: 'WhatsApp',
       subtitle: isRtl ? 'أسرع استجابة — عادة في غضون 30 دقيقة' : 'Fastest response — usually within 30 minutes',
-      value: '+20 111 516 0947',
+      value: '01115160947',
       href: 'https://wa.me/201115160947',
       color: '#25D366',
       cta: isRtl ? 'دردش الآن' : 'Chat Now',
@@ -42,8 +42,8 @@ export default function ContactPage() {
       icon: Phone,
       title: isRtl ? 'الهاتف المباشر' : 'Phone Line',
       subtitle: isRtl ? 'اتصل بنا خلال ساعات العمل الرسمية' : 'Call us during business hours',
-      value: '+20 111 516 0947',
-      href: 'tel:+201115160947',
+      value: '01115160947',
+      href: 'tel:01115160947',
       color: '#C9A84C',
       cta: isRtl ? 'اتصل الآن' : 'Call Now',
     },

@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Eye, EyeOff, Mail, Lock, User, ArrowRight, CheckCircle2, ShieldCheck } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import FloatingButtons, { MobileBottomNav } from '@/components/common/FloatingButtons';
+import FloatingButtons, { MobileBottomNav } from '@/components/layout/FloatingButtons';
 import { useTranslation } from '@/lib/LanguageContext';
 import { toast } from 'sonner';
 

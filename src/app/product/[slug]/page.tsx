@@ -1,7 +1,7 @@
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import FloatingButtons, { MobileBottomNav } from '@/components/common/FloatingButtons';
-import PDPClient from '@/components/product/PDPClient';
+import FloatingButtons, { MobileBottomNav } from '@/components/layout/FloatingButtons';
+import PDPClient from '@/components/features/product/PDPClient';
 import { getProduct, getProducts } from '@/lib/api';
 import { type Product } from '@/lib/data';
 import { notFound } from 'next/navigation';

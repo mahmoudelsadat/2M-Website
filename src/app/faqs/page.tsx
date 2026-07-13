@@ -2,7 +2,7 @@
 
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import FloatingButtons, { MobileBottomNav } from '@/components/common/FloatingButtons';
+import FloatingButtons, { MobileBottomNav } from '@/components/layout/FloatingButtons';
 import { useState } from 'react';
 import { ChevronDown, ChevronUp, MessageCircle } from 'lucide-react';
 

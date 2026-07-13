@@ -1,14 +1,14 @@
 import Navbar from '@/components/layout/Navbar';
-import Hero from '@/components/sections/Hero';
-import TrustBar from '@/components/sections/TrustBar';
-import CategoryGrid from '@/components/sections/CategoryGrid';
-import TrendingProducts from '@/components/sections/TrendingProducts';
-import HowItWorks from '@/components/sections/HowItWorks';
-import Testimonials from '@/components/sections/Testimonials';
-import InstagramFeed from '@/components/sections/InstagramFeed';
+import Hero from '@/components/features/home/Hero';
+import TrustBar from '@/components/features/home/TrustBar';
+import CategoryGrid from '@/components/features/product/CategoryGrid';
+import TrendingProducts from '@/components/features/product/TrendingProducts';
+import HowItWorks from '@/components/features/home/HowItWorks';
+import Testimonials from '@/components/features/home/Testimonials';
+import InstagramFeed from '@/components/features/home/InstagramFeed';
 import Footer from '@/components/layout/Footer';
-import FloatingButtons, { MobileBottomNav } from '@/components/common/FloatingButtons';
-import BackToTop from '@/components/common/BackToTop';
+import FloatingButtons, { MobileBottomNav } from '@/components/layout/FloatingButtons';
+import BackToTop from '@/components/layout/BackToTop';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {

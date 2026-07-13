@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import FloatingButtons, { MobileBottomNav } from '@/components/common/FloatingButtons';
+import FloatingButtons, { MobileBottomNav } from '@/components/layout/FloatingButtons';
 import { Check, ChevronRight, MapPin, CreditCard, Truck, Shield, Phone, Sparkles, AlertCircle } from 'lucide-react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';

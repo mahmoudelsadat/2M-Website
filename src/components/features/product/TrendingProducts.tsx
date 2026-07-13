@@ -10,7 +10,7 @@ import { getProducts } from '@/lib/api';
 import { useCartStore, useWishlistStore } from '@/lib/store';
 import { formatEGP, calcDiscount } from '@/lib/utils';
 import { toast } from 'sonner';
-import QuickViewModal from '@/components/product/QuickViewModal';
+import QuickViewModal from '@/components/features/product/QuickViewModal';
 
 const TABS = [
   { label: 'All Products',   value: 'all' },

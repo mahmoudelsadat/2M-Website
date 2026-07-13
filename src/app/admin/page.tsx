@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { ShieldCheck, Lock, ArrowRight, Eye, EyeOff, AlertTriangle, Mail } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import FloatingButtons, { MobileBottomNav } from '@/components/common/FloatingButtons';
+import FloatingButtons, { MobileBottomNav } from '@/components/layout/FloatingButtons';
 import { useTranslation } from '@/lib/LanguageContext';
 import { toast } from 'sonner';
 

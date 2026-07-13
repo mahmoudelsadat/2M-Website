@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import FloatingButtons, { MobileBottomNav } from '@/components/common/FloatingButtons';
+import FloatingButtons, { MobileBottomNav } from '@/components/layout/FloatingButtons';
 import { getProducts } from '@/lib/api';
 import { Trash2, Plus, Minus, ShoppingBag, ArrowRight, Tag, Shield, Truck, Check, Package } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';

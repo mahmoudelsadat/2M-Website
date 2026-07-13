@@ -540,21 +540,24 @@ input[type="number"]::-webkit-outer-spin-button {
 
 /* ─── Dark Mode ────────────────────────────────────────────── */
 .dark {
-  --color-page-bg:       #1A0B0E;
-  --color-surface:       #2A1016;
-  --color-surface-2:     #3B161F;
-  --color-surface-3:     #4D1C28;
+  --color-page-bg:       #060700;
+  --color-surface:       #12130A;
+  --color-surface-2:     #1C1D14;
+  --color-surface-3:     #27281D;
   --color-text-primary:  #F8FAFC;
   --color-text-secondary:#CBD5E1;
-  --color-text-muted:    #94A3B8;
-  --color-border:        #58111A;
-  --color-border-soft:   #420C13;
-  --color-brand-primary: #800020; /* Deep Burgundy */
-  --color-brand-primary-dark: #58111A; /* Deep Wine */
+  --color-text-muted:    #8B95A5;
+  --color-border:        #2C2D22;
+  --color-border-soft:   #1C1D14;
+  --color-brand-primary: #C9A84C; /* Metallic Gold */
+  --color-brand-primary-dark: #A88730; /* Deep Gold */
+  --color-brand-primary-soft: rgba(201, 168, 76, 0.1);
+  --color-brand-accent:  #D4AF37;
+  --color-brand-accent-soft: rgba(212, 175, 55, 0.1);
 }
 .dark body                       { background: var(--color-page-bg); color: var(--color-text-primary); }
 .dark .announcement-bar          { background: #060700; }
-.dark .glass-dark                { background: rgba(26, 11, 14, 0.92); }
+.dark .glass-dark                { background: rgba(6, 7, 0, 0.92); }
 .dark .product-card              { background: var(--color-surface); border-color: var(--color-border); }
 .dark .product-card-image        { background: var(--color-page-bg); }
 .dark .card                      { background: var(--color-surface); border-color: var(--color-border); }
