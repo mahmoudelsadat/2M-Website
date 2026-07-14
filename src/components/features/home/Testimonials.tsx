@@ -6,41 +6,42 @@ import { getTestimonials } from '@/lib/api';
 import { Star, ChevronLeft, ChevronRight, CheckCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 
-function TestimonialCard({ t }: { t: Testimonial }) {
+function TestimonialCard({ t: item }: { t: Testimonial }) {
+  const t = useTranslations('Home');
+
   return (
     <div
-      className="p-6 rounded-2xl border flex flex-col gap-4 h-full transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
-      style={{ background: 'var(--color-surface)', borderColor: 'var(--color-border)', boxShadow: 'var(--shadow-sm)' }}
+      className="p-6 rounded-2xl border flex flex-col gap-4 h-full transition-all duration-200 hover:-translate-y-1 hover:shadow-lg bg-card border-border shadow-xs"
     >
       {/* Stars */}
       <div className="flex gap-0.5">
         {[1,2,3,4,5].map((s) => (
-          <Star key={s} size={14} className={s <= t.rating ? 'fill-[#B8922A] text-[#B8922A]' : ''} style={{ color: s <= t.rating ? '#B8922A' : 'var(--color-border)' }} />
+          <Star key={s} size={14} className={s <= item.rating ? 'fill-brand-gold text-brand-gold' : 'text-border'} />
         ))}
       </div>
 
       {/* Quote */}
-      <p className="text-[0.9rem] leading-relaxed flex-1" style={{ color: 'var(--color-text-primary)' }}>&ldquo;{t.text}&rdquo;</p>
+      <p className="text-[0.9rem] leading-relaxed flex-1 text-foreground">&ldquo;{item.text}&rdquo;</p>
 
       {/* Product label */}
-      <div className="text-[11px] font-semibold rounded-full px-3 py-1 w-fit"
-        style={{ color: 'var(--color-brand-primary)', background: 'var(--color-brand-primary-soft)' }}>
-        {t.product}
+      <div className="text-[11px] font-semibold rounded-full px-3 py-1 w-fit text-primary bg-brand-primary-soft">
+        {item.product}
       </div>
 
       {/* Author */}
-      <div className="flex items-center gap-3 pt-3 border-t" style={{ borderColor: 'var(--color-border-soft)' }}>
-        <Image src={t.avatar} alt={t.name} width={36} height={36} className="rounded-full object-cover border" style={{ borderColor: 'var(--color-border)' }} />
+      <div className="flex items-center gap-3 pt-3 border-t border-border">
+        <Image src={item.avatar} alt={item.name} width={36} height={36} className="rounded-full object-cover border border-border" />
         <div>
-          <div className="flex items-center gap-1.5 text-[0.875rem] font-semibold" style={{ color: 'var(--color-text-primary)' }}>
-            {t.name}
-            {t.verified && <CheckCircle size={12} style={{ color: '#2B7CC1' }} />}
+          <div className="flex items-center gap-1.5 text-[0.875rem] font-semibold text-foreground">
+            {item.name}
+            {item.verified && <CheckCircle size={12} className="text-primary" />}
           </div>
-          <div className="text-[11px]" style={{ color: 'var(--color-text-muted)' }}>{t.date}</div>
+          <div className="text-[11px] text-muted-foreground">{item.date}</div>
         </div>
-        {t.verified && (
-          <span className="ml-auto badge badge-sky text-[10px]">✓ Verified</span>
+        {item.verified && (
+          <span className="ml-auto badge badge-sky text-[10px]">{t('verified')}</span>
         )}
       </div>
     </div>
@@ -52,6 +53,7 @@ export default function Testimonials() {
   const [paused, setPaused] = useState(false);
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const intervalRef = useRef<ReturnType<typeof setInterval>>(null!);
+  const t = useTranslations('Home');
 
   useEffect(() => {
     getTestimonials().then(setTestimonials).catch(err => console.error(err));
@@ -75,24 +77,22 @@ export default function Testimonials() {
   ] : testimonials;
 
   return (
-    <section className="py-16 border-t" style={{ background: 'var(--color-surface)', borderColor: 'var(--color-border)' }}>
+    <section className="py-16 border-t bg-card border-border">
       <div className="container-2m">
         {/* Header */}
         <div className="section-header">
           <div>
-            <div className="section-label">Social Proof</div>
-            <h2 className="section-title">What Customers Say</h2>
+            <div className="section-label">{t('socialProof')}</div>
+            <h2 className="section-title">{t('whatCustomersSay')}</h2>
           </div>
           <div className="flex items-center gap-2">
             <button id="testimonials-prev" onClick={prev}
-              className="w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-200"
-              style={{ background: 'var(--color-surface)', borderColor: 'var(--color-border)', color: 'var(--color-text-secondary)' }}
+              className="w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-200 bg-card border-border text-muted-foreground hover:bg-surface-2"
             >
               <ChevronLeft size={16} />
             </button>
             <button id="testimonials-next" onClick={next}
-              className="w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-200"
-              style={{ background: 'var(--color-surface)', borderColor: 'var(--color-border)', color: 'var(--color-text-secondary)' }}
+              className="w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-200 bg-card border-border text-muted-foreground hover:bg-surface-2"
             >
               <ChevronRight size={16} />
             </button>
@@ -100,18 +100,18 @@ export default function Testimonials() {
         </div>
 
         {/* Overall rating strip */}
-        <div className="flex items-center gap-4 p-4 rounded-2xl mb-8 border" style={{ background: 'var(--color-brand-gold-soft)', borderColor: 'rgba(201,168,76,0.25)' }}>
-          <div className="text-3xl font-black" style={{ color: 'var(--color-brand-gold-dark)' }}>4.9</div>
+        <div className="flex items-center gap-4 p-4 rounded-2xl mb-8 border bg-brand-gold-soft border-brand-gold-dark/25">
+          <div className="text-3xl font-black text-brand-gold-dark">4.9</div>
           <div>
             <div className="flex gap-0.5 mb-0.5">
-              {[1,2,3,4,5].map((s) => <Star key={s} size={14} className="fill-[#B8922A] text-[#B8922A]" />)}
+              {[1,2,3,4,5].map((s) => <Star key={s} size={14} className="fill-brand-gold text-brand-gold" />)}
             </div>
-            <div className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>
-              Based on <span className="font-bold" style={{ color: 'var(--color-text-primary)' }}>10,000+</span> verified reviews
+            <div className="text-sm text-muted-foreground">
+              {t('basedOn')} <span className="font-bold text-foreground">10,000+</span> {t('verifiedReviews')}
             </div>
           </div>
-          <div className="ml-auto hidden sm:block text-xs italic" style={{ color: 'var(--color-text-muted)' }}>
-            &ldquo;Egypt&apos;s most trusted pharmacy brand&rdquo;
+          <div className="ml-auto hidden sm:block text-xs italic text-muted">
+            &ldquo;{t('egyptMostTrustedBrand')}&rdquo;
           </div>
         </div>
 
@@ -155,13 +155,8 @@ export default function Testimonials() {
         <div className="flex justify-center gap-1.5 mt-7">
           {testimonials.map((_, i) => (
             <button key={i} onClick={() => setCurrent(i)}
-              className="rounded-full transition-all duration-300"
-              style={{
-                width: i === current ? '24px' : '8px',
-                height: '8px',
-                background: i === current ? 'var(--color-brand-primary)' : 'var(--color-border)',
-              }}
-              aria-label={`Go to review ${i + 1}`}
+              className={`h-2 rounded-full transition-all duration-300 ${i === current ? 'w-6 bg-primary' : 'w-2 bg-border'}`}
+              aria-label={t('goToReview', { index: i + 1 })}
             />
           ))}
         </div>

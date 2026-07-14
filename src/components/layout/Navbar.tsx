@@ -54,12 +54,9 @@ function DarkModeToggle({ compact = false }: { compact?: boolean }) {
       id="dark-mode-toggle"
       onClick={toggle}
       whileTap={{ scale: 0.88 }}
-      className={`${compact ? 'w-8 h-8' : 'w-9 h-9'} rounded-xl flex items-center justify-center border transition-all duration-300`}
-      style={{
-        background: dark ? 'rgba(255,255,255,0.06)' : 'var(--color-surface)',
-        borderColor: dark ? 'rgba(255,255,255,0.1)' : 'var(--color-border)',
-        color: dark ? 'var(--color-brand-gold)' : 'var(--color-text-secondary)',
-      }}
+      className={`${compact ? 'w-8 h-8' : 'w-9 h-9'} rounded-xl flex items-center justify-center border border-border-theme bg-card transition-all duration-300 ${
+        dark ? 'text-gold' : 'text-muted-foreground'
+      }`}
       aria-label={dark ? 'Light mode' : 'Dark mode'}
     >
       <AnimatePresence mode="wait" initial={false}>
@@ -77,22 +74,6 @@ function DarkModeToggle({ compact = false }: { compact?: boolean }) {
   );
 }
 
-// ─── Announcement marquee items ───────────────────────────────
-const ANNOUNCEMENTS_EN = [
-  '🚚 Free delivery on orders over EGP 500',
-  '⚡ Pay via InstaPay · Vodafone Cash · e& Cash',
-  '✅ 100% Authentic — Pharmacist Curated Products',
-  '📦 Egypt-wide delivery in 2–5 business days',
-  '💊 Prescription advice? Chat with us on WhatsApp',
-];
-const ANNOUNCEMENTS_AR = [
-  '🚚 توصيل مجاني للطلبات أكثر من 500 جنيه',
-  '⚡ الدفع عبر InstaPay · Vodafone Cash · e& Cash',
-  '✅ منتجات أصلية 100% — اختيار صيادلة متخصصين',
-  '📦 توصيل لكافة محافظات مصر خلال 2–5 أيام عمل',
-  '💊 استشارة دوائية؟ تحدث معنا على واتساب',
-];
-
 // ─── Navbar ───────────────────────────────────────────────────
 interface NavbarProps { cartCount?: number; }
 
@@ -105,7 +86,6 @@ export default function Navbar({ cartCount }: NavbarProps) {
   const [activeMenu,   setActiveMenu]   = useState<string | null>(null);
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [adminLoggedIn,setAdminLoggedIn]= useState(false);
-  const [annoIdx,      setAnnoIdx]      = useState(0);
 
   const pathname    = usePathname();
   const storeCount  = useCartStore((s) => s.items.reduce((n, i) => n + i.qty, 0));
@@ -146,12 +126,6 @@ export default function Navbar({ cartCount }: NavbarProps) {
     setSearchOpen(false);
   }, [pathname]);
 
-  // Announcement rotator (No longer used as we switched to continuous marquee, keeping for backwards compat if needed, but not actively used in JSX now)
-  // useEffect(() => {
-  //   const id = setInterval(() => setAnnoIdx(i => (i + 1) % ANNOUNCEMENTS_EN.length), 3500);
-  //   return () => clearInterval(id);
-  // }, []);
-
   const isActive = (href: string) => pathname === href || (href !== '/' && pathname.startsWith(href));
 
   const openMenu  = (label: string) => { if (menuRef.current) clearTimeout(menuRef.current); setActiveMenu(label); };
@@ -159,29 +133,34 @@ export default function Navbar({ cartCount }: NavbarProps) {
 
   // Megamenu featured deal
   const getMegaDeal = (label: string) => {
-    const deals: Record<string, { emoji: string; title: string; titleAr: string; desc: string; descAr: string; badge: string; link: string }> = {
-      PHARMACY:  { emoji: '💊', title: "Pharmacist's Pick",  titleAr: 'اختيار الصيدلاني',  desc: 'Solgar Vitamin D3 (10,000 IU) — premium high-absorption immunity boost.', descAr: 'سولغار فيتامين د3 ١٠٠٠٠ وحدة — تعزيز المناعة فائق الامتصاص.', badge: '20% OFF', link: '/product/vitamin-d3-5000iu' },
-      BEAUTY:    { emoji: '✨', title: 'Derm Choice',        titleAr: 'اختيار الجلدية',    desc: 'Altruist SPF50 — ultra-hydrating broad-spectrum daily protection.', descAr: 'ألترويست SPF50 — واقي شمس مرطب طيف واسع.', badge: 'Best Seller', link: '/product/spf-50-sunscreen' },
-      WELLNESS:  { emoji: '🌿', title: 'Pure Nutrition',     titleAr: 'تغذية نقية',        desc: 'Nordic Naturals Omega-3 — pure heart & brain essential fatty acids.', descAr: 'نورديك ناتشورالز أوميغا 3 — أحماض دهنية نقية للقلب والذاكرة.', badge: '100% Pure', link: '/product/omega-3-fish-oil' },
-      'PERSONAL CARE': { emoji: '🧴', title: 'Daily Essentials', titleAr: 'أساسيات يومية', desc: 'CeraVe Hydrating Cleanser — fortify skin barrier with ceramides.', descAr: 'سيرافي غسول مرطب — حماية الحاجز الجلدي بالسيراميدات.', badge: 'NEW', link: '/product/whey-protein-chocolate' },
+    const deals: Record<string, { emoji: string; titleKey: string; descKey: string; badgeKey: string; link: string }> = {
+      PHARMACY:  { emoji: '💊', titleKey: 'dealPharmacyTitle', descKey: 'dealPharmacyDesc', badgeKey: 'dealPharmacyBadge', link: '/product/vitamin-d3-5000iu' },
+      BEAUTY:    { emoji: '✨', titleKey: 'dealBeautyTitle', descKey: 'dealBeautyDesc', badgeKey: 'dealBeautyBadge', link: '/product/spf-50-sunscreen' },
+      WELLNESS:  { emoji: '🌿', titleKey: 'dealWellnessTitle', descKey: 'dealWellnessDesc', badgeKey: 'dealWellnessBadge', link: '/product/omega-3-fish-oil' },
+      'PERSONAL CARE': { emoji: '🧴', titleKey: 'dealPersonalTitle', descKey: 'dealPersonalDesc', badgeKey: 'dealPersonalBadge', link: '/product/whey-protein-chocolate' },
     };
     return deals[label] ?? deals['PHARMACY'];
   };
 
+  const announcements = [
+    t('announcement1'),
+    t('announcement2'),
+    t('announcement3'),
+    t('announcement4'),
+    t('announcement5'),
+  ];
+
   return (
     <>
       {/* ── Announcement Bar ─────────────────────────────────── */}
-      <div
-        className="relative z-50 select-none overflow-hidden"
-        style={{ background: 'var(--color-brand-primary)', minHeight: '36px' }}
-      >
+      <div className="relative z-50 select-none overflow-hidden bg-primary min-h-[36px]">
         <div className="container-2m flex items-center justify-between h-9 gap-4">
           {/* Left: scrolling announcement marquee */}
           <div className="flex-1 overflow-hidden relative h-full flex items-center whitespace-nowrap mask-edges">
             <div className="flex w-max" style={{ animation: 'marquee 40s linear infinite' }}>
               {[...Array(2)].map((_, i) => (
                 <div key={i} className="flex gap-8 px-4 items-center">
-                  {(isRtl ? ANNOUNCEMENTS_AR : ANNOUNCEMENTS_EN).map((anno, idx) => (
+                  {announcements.map((anno, idx) => (
                     <span key={idx} className="text-[11px] font-semibold text-white/90">
                       {anno}
                     </span>
@@ -203,16 +182,16 @@ export default function Navbar({ cartCount }: NavbarProps) {
             </a>
             <span className="hidden md:inline text-white/20">|</span>
             <span className="hidden sm:flex items-center gap-1 text-[11px] text-white/70 font-medium">
-              <ShieldCheck size={11} style={{ color: 'var(--color-brand-gold)' }} />
-              {isRtl ? 'أصلي 100%' : '100% Authentic'}
+              <ShieldCheck size={11} className="text-gold" />
+              {t('authenticShort')}
             </span>
             {adminLoggedIn && (
               <Link
                 href="/admin/dashboard"
-                className="flex items-center gap-1 bg-[var(--color-brand-accent-soft)] text-[var(--color-brand-primary)] px-2.5 py-0.5 rounded-md text-[10px] font-semibold uppercase tracking-wider hover:bg-[var(--color-brand-primary-soft)] transition-colors"
+                className="flex items-center gap-1 bg-primary-foreground/10 text-white px-2.5 py-0.5 rounded-md text-[10px] font-semibold uppercase tracking-wider hover:bg-primary-foreground/20 transition-colors"
               >
                 <ShieldCheck size={10} />
-                {isRtl ? 'لوحة التحكم' : 'Admin'}
+                {t('admin')}
               </Link>
             )}
           </div>
@@ -223,8 +202,8 @@ export default function Navbar({ cartCount }: NavbarProps) {
       <nav
         className={`sticky top-0 z-40 transition-all duration-300 ${
           scrolled
-            ? 'bg-[var(--color-surface)]/95 backdrop-blur-xl border-b border-[var(--color-border)] shadow-lg py-0'
-            : 'bg-[var(--color-page-bg)] border-b border-[var(--color-border-subtle)] py-0'
+            ? 'bg-card/95 backdrop-blur-xl border-b border-border-theme shadow-lg py-0'
+            : 'bg-background border-b border-border-theme/40 py-0'
         }`}
       >
         <div className="container-2m">
@@ -235,21 +214,17 @@ export default function Navbar({ cartCount }: NavbarProps) {
               <motion.div
                 whileHover={{ scale: 1.06 }}
                 whileTap={{ scale: 0.94 }}
-                className="w-[46px] h-[46px] rounded-2xl flex items-center justify-center flex-shrink-0 relative overflow-hidden shadow-sm"
-                style={{ background: 'var(--color-brand-primary)' }}
+                className="w-[46px] h-[46px] rounded-2xl flex items-center justify-center flex-shrink-0 relative overflow-hidden shadow-sm bg-primary"
               >
                 <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent pointer-events-none" />
                 <span className="text-white font-black text-xl tracking-tight leading-none relative z-10">2M</span>
               </motion.div>
               <div className="hidden sm:flex flex-col">
-                <span
-                  className="font-black text-[1.25rem] leading-none tracking-tight"
-                  style={{ color: 'var(--color-text-primary)', fontFamily: 'var(--font-body)' }}
-                >
-                  {isRtl ? 'صيدلية 2M' : '2M Pharmacy'}
+                <span className="font-black text-[1.25rem] leading-none tracking-tight text-foreground font-body">
+                  {t('storeName')}
                 </span>
-                <span className="text-[9px] font-semibold uppercase tracking-[0.1em] mt-0.5" style={{ color: 'var(--color-brand-primary)' }}>
-                  {isRtl ? 'صحة فائقة' : 'Premium'}
+                <span className="text-[9px] font-semibold uppercase tracking-[0.1em] mt-0.5 text-primary">
+                  {t('premium')}
                 </span>
               </div>
             </Link>
@@ -276,14 +251,14 @@ export default function Navbar({ cartCount }: NavbarProps) {
                           isOffer
                             ? 'text-[#9B1239] bg-red-50 border border-red-100 hover:bg-red-100'
                             : active
-                            ? 'text-[var(--color-brand-primary)] bg-[var(--color-brand-primary-soft)]'
-                            : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-2)]'
+                            ? 'text-primary bg-primary/10'
+                            : 'text-muted-foreground hover:text-foreground hover:bg-surface-2'
                         }`}
                       >
                         {/* Category icon */}
                         {meta && (
                           <span
-                            className={`w-5 h-5 rounded-md flex items-center justify-center flex-shrink-0 transition-all duration-200`}
+                            className="w-5 h-5 rounded-md flex items-center justify-center flex-shrink-0 transition-all duration-200"
                             style={{ background: meta.bg, color: meta.color }}
                           >
                             {meta.icon}
@@ -294,7 +269,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
 
                         {isOffer && (
                           <span className="flex items-center gap-0.5 text-[9px] font-black uppercase bg-[#9B1239] text-white px-1.5 py-0.5 rounded-md leading-none">
-                            <Zap size={8} /> HOT
+                            <Zap size={8} /> {t('hot')}
                           </span>
                         )}
 
@@ -309,7 +284,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
                         {active && !isOffer && (
                           <motion.span
                             layoutId="nav-active-bar"
-                            className="absolute bottom-0 left-3 right-3 h-0.5 rounded-full bg-[var(--color-brand-primary)]"
+                            className="absolute bottom-0 left-3 right-3 h-0.5 rounded-full bg-primary"
                           />
                         )}
                       </Link>
@@ -324,8 +299,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
                             transition={{ duration: 0.18, ease: 'easeOut' }}
                             onMouseEnter={() => openMenu(link.label)}
                             onMouseLeave={closeMenu}
-                            className={`absolute top-full ${isRtl ? 'right-0' : 'left-0'} mt-1 w-[520px] bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl shadow-2xl z-50 overflow-hidden`}
-                            style={{ boxShadow: '0 24px 60px -12px rgba(10,22,40,0.18)' }}
+                            className={`absolute top-full ${isRtl ? 'right-0' : 'left-0'} mt-1 w-[520px] bg-card border border-border-theme rounded-2xl shadow-2xl z-50 overflow-hidden`}
                           >
                             {/* Top accent gradient */}
                             <div
@@ -336,37 +310,37 @@ export default function Navbar({ cartCount }: NavbarProps) {
                             <div className="p-5 grid grid-cols-5 gap-5">
                               {/* Left: subcategory links */}
                               <div className="col-span-3">
-                                <p className="text-[9px] font-black uppercase tracking-[0.15em] text-[var(--color-text-muted)] mb-3">
-                                  {isRtl ? 'التصنيفات الفرعية' : 'Browse Categories'}
+                                <p className="text-[9px] font-black uppercase tracking-[0.15em] text-muted mb-3">
+                                  {t('browseCategories')}
                                 </p>
                                 <div className="space-y-1">
                                   {link.submenu.map((sub) => (
                                     <Link
                                       key={sub.label}
                                       href={sub.href}
-                                      className="flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-[var(--color-surface-2)] group/sub transition-all duration-150 border border-transparent hover:border-[var(--color-border)]"
+                                      className="flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-surface-2 group/sub transition-all duration-150 border border-transparent hover:border-border-theme"
                                     >
-                                      <span className="text-xs font-semibold text-[var(--color-text-secondary)] group-hover/sub:text-[var(--color-text-primary)] transition-colors">
+                                      <span className="text-xs font-semibold text-muted-foreground group-hover/sub:text-foreground transition-colors">
                                         {sub.label}
                                       </span>
                                       <ArrowRight
                                         size={11}
-                                        className={`text-[var(--color-text-muted)] group-hover/sub:text-[var(--color-brand-primary)] transition-colors flex-shrink-0 ${isRtl ? 'rotate-180' : ''}`}
+                                        className={`text-muted group-hover/sub:text-primary transition-colors flex-shrink-0 ${isRtl ? 'rotate-180' : ''}`}
                                       />
                                     </Link>
                                   ))}
                                 </div>
                                 <Link
                                   href={link.href}
-                                  className="mt-3 flex items-center gap-1.5 text-[10px] font-black text-[var(--color-brand-primary)] hover:underline uppercase tracking-wider"
+                                  className="mt-3 flex items-center gap-1.5 text-[10px] font-black text-primary hover:underline uppercase tracking-wider"
                                 >
-                                  {isRtl ? 'عرض الكل' : 'View All'} <ArrowRight size={10} className={isRtl ? 'rotate-180' : ''} />
+                                  {t('viewAll')} <ArrowRight size={10} className={isRtl ? 'rotate-180' : ''} />
                                 </Link>
                               </div>
 
                               {/* Right: featured deal card */}
                               <div
-                                className="col-span-2 rounded-xl p-4 flex flex-col justify-between relative overflow-hidden border border-[var(--color-border-soft)]"
+                                className="col-span-2 rounded-xl p-4 flex flex-col justify-between relative overflow-hidden border border-border-theme/40"
                                 style={{ background: `linear-gradient(135deg, ${meta?.bg ?? '#EBF0FB'}, white)` }}
                               >
                                 <div className="absolute -bottom-8 -right-8 w-20 h-20 rounded-full opacity-20 blur-2xl pointer-events-none" style={{ background: meta?.color }} />
@@ -376,15 +350,15 @@ export default function Navbar({ cartCount }: NavbarProps) {
                                       className="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md border"
                                       style={{ background: meta?.bg, color: meta?.color, borderColor: meta?.color + '40' }}
                                     >
-                                      {getMegaDeal(link.label).badge}
+                                      {t(getMegaDeal(link.label).badgeKey)}
                                     </span>
                                     <span className="text-lg">{getMegaDeal(link.label).emoji}</span>
                                   </div>
-                                  <h4 className="text-xs font-black text-[var(--color-text-primary)] mb-1.5" style={{ fontFamily: 'var(--font-display)' }}>
-                                    {isRtl ? getMegaDeal(link.label).titleAr : getMegaDeal(link.label).title}
+                                  <h4 className="text-xs font-black text-foreground mb-1.5" style={{ fontFamily: 'var(--font-display)' }}>
+                                    {t(getMegaDeal(link.label).titleKey)}
                                   </h4>
-                                  <p className="text-[10px] text-[var(--color-text-secondary)] font-medium leading-relaxed">
-                                    {isRtl ? getMegaDeal(link.label).descAr : getMegaDeal(link.label).desc}
+                                  <p className="text-[10px] text-muted-foreground font-medium leading-relaxed">
+                                    {t(getMegaDeal(link.label).descKey)}
                                   </p>
                                 </div>
                                 <Link
@@ -392,7 +366,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
                                   className="mt-3 w-full py-2 text-[10px] font-black uppercase tracking-wider rounded-lg text-center transition-all duration-200 border text-white hover:opacity-90 hover:scale-[1.02] flex items-center justify-center gap-1.5"
                                   style={{ background: meta?.color ?? 'var(--color-brand-primary)', borderColor: 'transparent' }}
                                 >
-                                  {isRtl ? 'اكتشف الآن' : 'Shop Deal'} ⚡
+                                  {t('shopDeal')} ⚡
                                 </Link>
                               </div>
                             </div>
@@ -413,12 +387,11 @@ export default function Navbar({ cartCount }: NavbarProps) {
                 id="nav-search-btn"
                 onClick={() => setSearchOpen(!searchOpen)}
                 whileTap={{ scale: 0.88 }}
-                className="w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-200 border"
-                style={{
-                  background: searchOpen ? 'var(--color-brand-primary)' : 'var(--color-surface)',
-                  borderColor: searchOpen ? 'var(--color-brand-primary)' : 'var(--color-border)',
-                  color: searchOpen ? '#fff' : 'var(--color-text-secondary)',
-                }}
+                className={`w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-200 border ${
+                  searchOpen
+                    ? 'bg-primary border-primary text-white'
+                    : 'bg-card border-border-theme text-muted-foreground hover:bg-surface-2'
+                }`}
                 aria-label="Search"
               >
                 {searchOpen ? <X size={15} /> : <Search size={15} />}
@@ -434,10 +407,9 @@ export default function Navbar({ cartCount }: NavbarProps) {
                 id="nav-lang-btn"
                 whileTap={{ scale: 0.9 }}
                 onClick={() => setLocale(locale === 'en' ? 'ar' : 'en')}
-                className="hidden sm:flex items-center gap-1.5 h-9 px-3 rounded-lg border text-[10px] font-semibold uppercase tracking-wider transition-all duration-200 hover:bg-[var(--color-surface-2)]"
-                style={{ borderColor: 'var(--color-border)', color: 'var(--color-text-secondary)' }}
+                className="hidden sm:flex items-center gap-1.5 h-9 px-3 rounded-lg border border-border-theme text-[10px] font-semibold uppercase tracking-wider text-muted-foreground hover:bg-surface-2 transition-all duration-200"
               >
-                <Globe size={12} style={{ color: 'var(--color-brand-primary)' }} />
+                <Globe size={12} className="text-primary" />
                 {locale === 'en' ? 'ع' : 'EN'}
               </motion.button>
 
@@ -447,10 +419,9 @@ export default function Navbar({ cartCount }: NavbarProps) {
                 id="nav-account-btn"
                 className={`w-9 h-9 rounded-lg flex items-center justify-center border transition-all duration-200 relative ${
                   userLoggedIn
-                    ? 'border-[var(--color-brand-primary)] bg-[var(--color-brand-primary-soft)]'
-                    : 'border-[var(--color-border)] bg-[var(--color-surface)] hover:bg-[var(--color-surface-2)]'
+                    ? 'border-primary bg-primary/10 text-primary'
+                    : 'border-border-theme bg-card text-muted-foreground hover:bg-surface-2'
                 }`}
-                style={{ color: userLoggedIn ? 'var(--color-brand-primary)' : 'var(--color-text-secondary)' }}
                 aria-label="Account"
               >
                 <User size={15} />
@@ -463,8 +434,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
               <Link
                 href="/account?tab=wishlist"
                 id="nav-wishlist-btn"
-                className="w-9 h-9 rounded-lg hidden sm:flex items-center justify-center border transition-all duration-200 relative hover:bg-[var(--color-surface-2)]"
-                style={{ borderColor: 'var(--color-border)', color: 'var(--color-text-secondary)' }}
+                className="w-9 h-9 rounded-lg hidden sm:flex items-center justify-center border border-border-theme bg-card text-muted-foreground hover:bg-surface-2 transition-all duration-200 relative"
                 aria-label="Wishlist"
               >
                 <Heart size={15} />
@@ -474,7 +444,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
                       initial={{ scale: 0, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
                       exit={{ scale: 0, opacity: 0 }}
-                      className="absolute -top-1 -right-1 w-4 h-4 flex items-center justify-center text-[8px] font-bold rounded-full bg-[var(--color-brand-primary)] text-white shadow-sm"
+                      className="absolute -top-1 -right-1 w-4 h-4 flex items-center justify-center text-[8px] font-bold rounded-full bg-primary text-white shadow-sm"
                     >
                       {wishlistCount}
                     </motion.span>
@@ -487,12 +457,11 @@ export default function Navbar({ cartCount }: NavbarProps) {
                 <Link
                   href="/cart"
                   id="nav-cart-btn"
-                  className="relative flex items-center gap-2 pl-3 pr-3.5 h-9 rounded-lg text-white text-[11px] font-semibold uppercase tracking-wider transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0"
-                  style={{ background: 'var(--color-brand-primary)' }}
+                  className="relative flex items-center gap-2 pl-3 pr-3.5 h-9 rounded-lg text-white bg-primary text-[11px] font-semibold uppercase tracking-wider transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0"
                   aria-label={`Cart — ${displayCount} items`}
                 >
                   <ShoppingCart size={14} className="flex-shrink-0" />
-                  <span className="hidden sm:inline">{isRtl ? 'سلة' : 'Cart'}</span>
+                  <span className="hidden sm:inline">{t('cartShort')}</span>
                   <AnimatePresence>
                     {displayCount > 0 && (
                       <motion.span
@@ -500,7 +469,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
                         initial={{ scale: 0, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         exit={{   scale: 0, opacity: 0 }}
-                        className="w-5 h-5 flex items-center justify-center text-[9px] font-semibold rounded-full bg-[var(--color-brand-accent-soft)] text-[var(--color-brand-accent)] leading-none shadow-sm"
+                        className="w-5 h-5 flex items-center justify-center text-[9px] font-semibold rounded-full bg-white/20 text-white leading-none shadow-sm"
                       >
                         {displayCount}
                       </motion.span>
@@ -513,8 +482,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
               <button
                 id="nav-mobile-menu-btn"
                 onClick={() => setMobileOpen(!mobileOpen)}
-                className="lg:hidden w-9 h-9 rounded-lg flex items-center justify-center border transition-all duration-200 hover:bg-[var(--color-surface-2)]"
-                style={{ borderColor: 'var(--color-border)', color: 'var(--color-text-secondary)' }}
+                className="lg:hidden w-9 h-9 rounded-lg flex items-center justify-center border border-border-theme bg-card text-muted-foreground hover:bg-surface-2 transition-all duration-200"
                 aria-label="Menu"
               >
                 <AnimatePresence mode="wait" initial={false}>
@@ -556,8 +524,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="h-px"
-              style={{ background: 'linear-gradient(90deg, transparent, var(--color-brand-gold) 40%, var(--color-brand-gold) 60%, transparent)', opacity: 0.4 }}
+              className="bg-gradient-to-r from-transparent via-gold to-transparent h-px opacity-40"
             />
           )}
         </AnimatePresence>
@@ -578,25 +545,21 @@ export default function Navbar({ cartCount }: NavbarProps) {
 
             {/* Drawer panel */}
             <motion.aside
-              className={`fixed top-0 bottom-0 z-50 lg:hidden w-[300px] flex flex-col overflow-hidden ${isRtl ? 'left-0' : 'right-0'}`}
+              className={`fixed top-0 bottom-0 z-50 lg:hidden w-[300px] flex flex-col overflow-hidden bg-card shadow-2xl ${isRtl ? 'left-0' : 'right-0'}`}
               initial={{ x: isRtl ? '-100%' : '100%' }}
               animate={{ x: 0 }}
               exit={{   x: isRtl ? '-100%' : '100%' }}
               transition={{ type: 'spring', damping: 28, stiffness: 240 }}
-              style={{ background: 'var(--color-surface)', boxShadow: isRtl ? '20px 0 64px rgba(0,0,0,0.2)' : '-20px 0 64px rgba(0,0,0,0.2)' }}
             >
               {/* Drawer header */}
-              <div
-                className="relative flex items-center justify-between px-5 py-4 flex-shrink-0"
-                style={{ background: 'var(--color-brand-primary)' }}
-              >
+              <div className="relative flex items-center justify-between px-5 py-4 flex-shrink-0 bg-primary">
                 <div className="flex items-center gap-3">
                   <div className="w-9 h-9 rounded-xl bg-white/15 flex items-center justify-center text-white font-black text-sm border border-white/20">
                     2M
                   </div>
                   <div>
-                    <div className="text-white font-black text-sm leading-none">{isRtl ? 'صيدلية 2M' : '2M Pharmacy'}</div>
-                    <div className="text-white/70 text-[9px] font-semibold uppercase tracking-wider mt-0.5">{isRtl ? 'صحة فائقة' : 'Premium'}</div>
+                    <div className="text-white font-black text-sm leading-none">{t('storeName')}</div>
+                    <div className="text-white/70 text-[9px] font-semibold uppercase tracking-wider mt-0.5">{t('premium')}</div>
                   </div>
                 </div>
                 <button
@@ -623,8 +586,8 @@ export default function Navbar({ cartCount }: NavbarProps) {
                           isOffer
                             ? 'text-[#9B1239] bg-red-50 border border-red-100'
                             : active
-                            ? 'text-[var(--color-brand-primary)] bg-[var(--color-brand-primary-soft)] border border-[var(--color-brand-primary)]/15'
-                            : 'text-[var(--color-text-primary)] hover:bg-[var(--color-surface-2)] border border-transparent cursor-pointer'
+                            ? 'text-primary bg-primary/10 border border-primary/15'
+                            : 'text-foreground hover:bg-surface-2 border border-transparent cursor-pointer'
                         }`}
                         onClick={() => {
                           if (hasSub) {
@@ -646,10 +609,10 @@ export default function Navbar({ cartCount }: NavbarProps) {
                           <span>{isRtl ? link.labelAr : link.label}</span>
                         </div>
                         {isOffer
-                          ? <span className="text-[9px] font-black bg-[#9B1239] text-white px-1.5 py-0.5 rounded">HOT</span>
+                          ? <span className="text-[9px] font-black bg-[#9B1239] text-white px-1.5 py-0.5 rounded">{t('hot')}</span>
                           : hasSub
-                          ? <ChevronDown size={14} className={`text-[var(--color-text-muted)] transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} />
-                          : <ArrowRight size={12} className={`text-[var(--color-text-muted)] ${isRtl ? 'rotate-180' : ''}`} />
+                          ? <ChevronDown size={14} className="text-muted-foreground transition-transform duration-200 rotate-0" />
+                          : <ArrowRight size={12} className={`text-muted-foreground ${isRtl ? 'rotate-180' : ''}`} />
                         }
                       </div>
 
@@ -660,7 +623,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: 'auto', opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
-                            className="overflow-hidden ml-4 mr-4 border-l border-[var(--color-border)] mt-1"
+                            className="overflow-hidden ml-4 mr-4 border-l border-border-theme mt-1"
                           >
                             <div className="flex flex-col gap-1 py-2 pl-3">
                               {link.submenu!.map((sub) => (
@@ -668,7 +631,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
                                   key={sub.label}
                                   href={sub.href}
                                   onClick={() => setMobileOpen(false)}
-                                  className="text-xs font-semibold text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] py-2"
+                                  className="text-xs font-semibold text-muted-foreground hover:text-foreground py-2"
                                 >
                                   {sub.label}
                                 </Link>
@@ -676,9 +639,9 @@ export default function Navbar({ cartCount }: NavbarProps) {
                               <Link
                                 href={link.href}
                                 onClick={() => setMobileOpen(false)}
-                                className="text-[10px] font-black text-[var(--color-brand-primary)] uppercase py-2 flex items-center gap-1 mt-1"
+                                className="text-[10px] font-black text-primary uppercase py-2 flex items-center gap-1 mt-1"
                               >
-                                {isRtl ? 'عرض الكل' : 'View All'} <ArrowRight size={10} className={isRtl ? 'rotate-180' : ''} />
+                                {t('viewAll')} <ArrowRight size={10} className={isRtl ? 'rotate-180' : ''} />
                               </Link>
                             </div>
                           </motion.div>
@@ -690,16 +653,15 @@ export default function Navbar({ cartCount }: NavbarProps) {
               </nav>
 
               {/* Drawer footer */}
-              <div className="p-4 border-t border-[var(--color-border)] space-y-3 flex-shrink-0 bg-[var(--color-surface-2)]">
+              <div className="p-4 border-t border-border-theme space-y-3 flex-shrink-0 bg-surface-2">
                 {/* Lang + dark mode row */}
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => setLocale(locale === 'en' ? 'ar' : 'en')}
-                    className="flex-1 flex items-center justify-center gap-2 h-10 rounded-lg border text-[11px] font-semibold uppercase tracking-wider transition-colors hover:bg-[var(--color-surface)]"
-                    style={{ borderColor: 'var(--color-border)', color: 'var(--color-text-primary)' }}
+                    className="flex-1 flex items-center justify-center gap-2 h-10 rounded-lg border border-border-theme text-[11px] font-semibold uppercase tracking-wider text-foreground transition-colors hover:bg-card"
                   >
-                    <Globe size={13} style={{ color: 'var(--color-brand-primary)' }} />
-                    {locale === 'en' ? 'العربية' : 'English'}
+                    <Globe size={13} className="text-primary" />
+                    {t('languageName')}
                   </button>
                   <DarkModeToggle />
                 </div>
@@ -707,13 +669,12 @@ export default function Navbar({ cartCount }: NavbarProps) {
                 {/* Cart CTA */}
                 <Link
                   href="/cart"
-                  className="w-full h-11 flex items-center justify-center gap-2 rounded-lg text-white font-semibold text-[11px] uppercase tracking-wider transition-all hover:opacity-90"
-                  style={{ background: 'var(--color-brand-primary)' }}
+                  className="w-full h-11 flex items-center justify-center gap-2 rounded-lg text-white bg-primary font-semibold text-[11px] uppercase tracking-wider transition-all hover:opacity-90"
                 >
                   <ShoppingCart size={14} />
-                  {isRtl ? 'سلة التسوق' : 'Shopping Cart'}
+                  {t('shoppingCart')}
                   {displayCount > 0 && (
-                    <span className="w-5 h-5 text-[9px] font-semibold rounded-full bg-[var(--color-brand-accent-soft)] text-[var(--color-brand-accent)] flex items-center justify-center">
+                    <span className="w-5 h-5 text-[9px] font-semibold rounded-full bg-white/20 text-white flex items-center justify-center">
                       {displayCount}
                     </span>
                   )}
@@ -723,7 +684,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
                 <a
                   href="https://wa.me/201115160947"
                   target="_blank" rel="noopener noreferrer"
-                  className="w-full h-10 flex items-center justify-center gap-2 rounded-lg border text-[11px] font-semibold text-emerald-700 border-emerald-200 bg-emerald-50 hover:bg-emerald-100 transition-colors"
+                  className="w-full h-10 flex items-center justify-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50 text-[11px] font-semibold text-emerald-700 hover:bg-emerald-100 transition-colors"
                 >
                   <Phone size={13} /> 01115160947 (WhatsApp)
                 </a>

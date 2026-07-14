@@ -21,7 +21,7 @@ export default function HomePage() {
   return (
     <>
       <Navbar />
-      <main id="main-content">
+      <main id="main-content" className="flex flex-col min-h-screen bg-background">
         <Hero />
         <TrustBar />
         <CategoryGrid />

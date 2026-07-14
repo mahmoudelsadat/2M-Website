@@ -5,25 +5,27 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useCartStore } from '@/lib/store';
+import { useTranslations } from 'next-intl';
 
 export default function FloatingButtons() {
   const [visible, setVisible] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
+  const t = useTranslations('Layout');
 
   useEffect(() => {
-    const t = setTimeout(() => setVisible(true), 2000);
-    return () => clearTimeout(t);
+    const tTimer = setTimeout(() => setVisible(true), 2000);
+    return () => clearTimeout(tTimer);
   }, []);
 
   useEffect(() => {
     if (!visible) return;
-    const t  = setTimeout(() => setShowTooltip(true), 1200);
+    const t1  = setTimeout(() => setShowTooltip(true), 1200);
     const t2 = setTimeout(() => setShowTooltip(false), 5000);
     const iv = setInterval(() => {
       setShowTooltip(true);
       setTimeout(() => setShowTooltip(false), 3500);
     }, 10000);
-    return () => { clearTimeout(t); clearTimeout(t2); clearInterval(iv); };
+    return () => { clearTimeout(t1); clearTimeout(t2); clearInterval(iv); };
   }, [visible]);
 
   return (
@@ -39,28 +41,23 @@ export default function FloatingButtons() {
         }`}
       >
         <div
-          className="text-xs font-bold text-white px-3.5 py-2 rounded-full shadow-lg flex items-center gap-1.5"
-          style={{ background: '#25D366', whiteSpace: 'nowrap', boxShadow: '0 4px 16px rgba(37,211,102,0.35)' }}
+          className="text-xs font-bold text-white px-3.5 py-2 rounded-full shadow-whatsapp flex items-center gap-1.5 bg-whatsapp whitespace-nowrap"
         >
           <MessageCircle size={11} className="fill-white" />
-          Chat with us on WhatsApp!
+          {t('whatsappChatPrompt')}
         </div>
         {/* Arrow */}
-        <div className="w-0 h-0 ml-auto mr-5 mt-0.5 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px]" style={{ borderTopColor: '#25D366' }} />
+        <div className="w-0 h-0 ml-auto mr-5 mt-0.5 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px] border-t-whatsapp" />
       </div>
 
       {/* WhatsApp Button with wa-pulse animation */}
       <a
-        href="https://wa.me/201115160947?text=Hi%2C%20I%20have%20a%20question%20about%20a%20product%20at%202M%20Premium%20Pharmacy"
+        href={`https://wa.me/201115160947?text=${encodeURIComponent(t('whatsappMessage'))}`}
         target="_blank"
         rel="noopener noreferrer"
         id="whatsapp-float-btn"
-        className="w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 wa-pulse"
-        style={{
-          background: 'linear-gradient(135deg, #25D366, #128C7E)',
-          boxShadow: '0 8px 32px rgba(37,211,102,0.4)',
-        }}
-        aria-label="Chat on WhatsApp"
+        className="w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 wa-pulse bg-gradient-to-br from-whatsapp to-whatsapp-dark shadow-whatsapp-btn"
+        aria-label={t('chatOnWhatsapp')}
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
       >
@@ -74,23 +71,21 @@ export default function FloatingButtons() {
 export function MobileBottomNav() {
   const pathname = usePathname();
   const cartCount = useCartStore((s) => s.totalItems());
+  const t = useTranslations('Layout');
 
   const navItems = [
-    { id: 'home',    label: 'Home',    icon: Home,        href: '/' },
-    { id: 'search',  label: 'Search',  icon: Search,      href: '/pharmacy' },
-    { id: 'shop',    label: 'Shop',    icon: ShoppingBag, href: '/pharmacy' },
-    { id: 'cart',    label: 'Cart',    icon: ShoppingCart, href: '/cart', badge: cartCount },
-    { id: 'account', label: 'Account', icon: User,        href: '/account' },
+    { id: 'home',    labelKey: 'home' as const,    icon: Home,        href: '/' },
+    { id: 'search',  labelKey: 'search' as const,  icon: Search,      href: '/pharmacy' },
+    { id: 'shop',    labelKey: 'shop' as const,    icon: ShoppingBag, href: '/pharmacy' },
+    { id: 'cart',    labelKey: 'cart' as const,    icon: ShoppingCart, href: '/cart', badge: cartCount },
+    { id: 'account', labelKey: 'account' as const, icon: User,        href: '/account' },
   ];
 
   return (
     <nav
-      className="fixed bottom-0 left-0 right-0 z-40 lg:hidden border-t"
+      className="fixed bottom-0 left-0 right-0 z-40 lg:hidden border-t bg-card border-border shadow-mobile-nav"
       style={{
         paddingBottom: 'env(safe-area-inset-bottom)',
-        boxShadow: '0 -4px 24px rgba(26,35,50,0.08)',
-        background: 'var(--color-surface)',
-        borderColor: 'var(--color-border)',
       }}
     >
       <div className="flex items-center justify-around py-1.5">
@@ -108,29 +103,25 @@ export function MobileBottomNav() {
                 <Icon
                   size={20}
                   strokeWidth={isActive ? 2.5 : 1.75}
-                  style={{ color: isActive ? 'var(--color-brand-primary)' : 'var(--color-text-muted)' }}
-                  className={`transition-transform duration-200 ${isActive ? 'scale-110' : 'scale-100'}`}
+                  className={`transition-transform duration-200 ${isActive ? 'scale-110 text-primary' : 'scale-100 text-muted'}`}
                 />
                 {item.badge !== undefined && item.badge > 0 && (
                   <span
-                    className="absolute -top-1.5 -right-1.5 w-4 h-4 text-white text-[9px] font-black rounded-full flex items-center justify-center"
-                    style={{ background: 'var(--color-brand-primary)' }}
+                    className="absolute -top-1.5 -right-1.5 w-4 h-4 text-white text-[9px] font-black rounded-full flex items-center justify-center bg-primary"
                   >
                     {item.badge > 9 ? '9+' : item.badge}
                   </span>
                 )}
               </div>
               <span
-                className="text-[10px] font-semibold transition-colors"
-                style={{ color: isActive ? 'var(--color-brand-primary)' : 'var(--color-text-muted)' }}
+                className={`text-[10px] font-semibold transition-colors ${isActive ? 'text-primary' : 'text-muted'}`}
               >
-                {item.label}
+                {t(item.labelKey)}
               </span>
               {/* Active indicator dot */}
               {isActive && (
                 <div
-                  className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full"
-                  style={{ background: 'var(--color-brand-primary)' }}
+                  className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-primary"
                 />
               )}
             </Link>

@@ -5,17 +5,47 @@ import Link from 'next/link';
 import { ArrowRight, Pill, Sparkles, Leaf, Droplets } from 'lucide-react';
 import { getCategories } from '@/lib/api';
 import { type Category } from '@/lib/data';
+import { useTranslations } from 'next-intl';
 
 const COLORS = {
-  pharmacy:      { bg: 'var(--color-brand-primary-soft)', accent: 'var(--color-brand-primary)', text: 'var(--color-brand-primary)', border: 'var(--color-brand-primary)/20' },
-  beauty:        { bg: 'var(--color-brand-accent-soft)', accent: 'var(--color-brand-accent)', text: 'var(--color-brand-accent)', border: 'var(--color-brand-accent)/20' },
-  wellness:      { bg: '#E0F8F6', accent: '#2FA9A0', text: '#1A6F69', border: '#A8D8D4' },
-  'personal-care': { bg: '#F0F4FF', accent: '#667EC9', text: '#3B5A9C', border: '#D4DCF7' },
+  pharmacy: {
+    bgClass: 'bg-brand-primary-soft',
+    accentClass: 'text-primary',
+    textClass: 'text-primary',
+    borderClass: 'border-primary/20',
+    accentBgClass: 'bg-primary',
+    accentBorderClass: 'border-primary/20',
+  },
+  beauty: {
+    bgClass: 'bg-brand-accent-soft',
+    accentClass: 'text-brand-accent',
+    textClass: 'text-brand-accent',
+    borderClass: 'border-brand-accent/20',
+    accentBgClass: 'bg-brand-accent',
+    accentBorderClass: 'border-brand-accent/20',
+  },
+  wellness: {
+    bgClass: 'bg-wellness-bg',
+    accentClass: 'text-teal-light',
+    textClass: 'text-wellness-text',
+    borderClass: 'border-wellness-border',
+    accentBgClass: 'bg-teal-light',
+    accentBorderClass: 'border-wellness-border',
+  },
+  'personal-care': {
+    bgClass: 'bg-personal-bg',
+    accentClass: 'text-personal-accent',
+    textClass: 'text-personal-text',
+    borderClass: 'border-personal-border',
+    accentBgClass: 'bg-personal-accent',
+    accentBorderClass: 'border-personal-border',
+  },
 };
 
 export default function CategoryGrid() {
   const sectionRef = useRef<HTMLElement>(null);
   const [cats, setCats] = useState<Category[]>([]);
+  const t = useTranslations('Product');
 
   useEffect(() => {
     getCategories().then(setCats).catch(err => console.error(err));
@@ -33,17 +63,17 @@ export default function CategoryGrid() {
   }, [cats]);
 
   return (
-    <section ref={sectionRef} className="py-16" style={{ background: 'var(--color-page-bg)' }}>
+    <section ref={sectionRef} className="py-16 bg-background">
       <div className="container-2m">
         {/* Header */}
         <div className="flex items-end justify-between mb-8">
           <div>
-            <div className="section-label">Browse</div>
-            <h2 className="section-title">Shop by Category</h2>
-            <p className="section-subtitle mt-1">Find exactly what you need across our curated departments</p>
+            <div className="section-label">{t('browse')}</div>
+            <h2 className="section-title">{t('shopByCategory')}</h2>
+            <p className="section-subtitle mt-1">{t('findExactlyWhatYouNeed')}</p>
           </div>
-          <Link href="/pharmacy" className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-brand-primary)] transition-colors group">
-            All <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
+          <Link href="/pharmacy" className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-primary transition-colors group">
+            {t('all')} <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
           </Link>
         </div>
 
@@ -56,47 +86,42 @@ export default function CategoryGrid() {
                 key={cat.id}
                 href={`/${cat.slug}`}
                 id={`category-${cat.slug}`}
-                className="cat-card group block rounded-2xl p-6 border transition-all duration-300 hover:-translate-y-1 hover:shadow-xl relative overflow-hidden"
+                className={`cat-card group block rounded-2xl p-6 border transition-all duration-300 hover:-translate-y-1 hover:shadow-xl relative overflow-hidden shadow-xs ${palette.bgClass} ${palette.borderClass}`}
                 style={{
-                  background: palette.bg,
-                  borderColor: palette.border,
                   transitionDelay: `${i * 50}ms`,
-                  boxShadow: '0 1px 2px rgba(26,35,50,0.04)',
                 }}
                 data-category={cat.id}
               >
                 {/* Top: Icon + Badge */}
                 <div className="flex items-start justify-between mb-4">
                   <div
-                    className="w-12 h-12 rounded-lg flex items-center justify-center text-2xl transition-transform duration-300 group-hover:scale-110 relative z-10"
-                    style={{ background: 'white', boxShadow: '0 2px 4px rgba(26,35,50,0.06)' }}
+                    className="w-12 h-12 rounded-lg flex items-center justify-center text-2xl transition-transform duration-300 group-hover:scale-110 relative z-10 bg-white shadow-sm"
                   >
-                    {cat.id === 'pharmacy' && <Pill className="text-[var(--color-brand-primary)]" />}
-                    {cat.id === 'beauty' && <Sparkles className="text-[var(--color-brand-accent)]" />}
-                    {cat.id === 'wellness' && <Leaf style={{ color: '#2FA9A0' }} />}
-                    {cat.id === 'personal-care' && <Droplets style={{ color: '#667EC9' }} />}
+                    {cat.id === 'pharmacy' && <Pill className="text-primary" />}
+                    {cat.id === 'beauty' && <Sparkles className="text-brand-accent" />}
+                    {cat.id === 'wellness' && <Leaf className="text-teal-light" />}
+                    {cat.id === 'personal-care' && <Droplets className="text-personal-accent" />}
                   </div>
                   
-                  <span className="text-[10px] font-black px-2 py-0.5 rounded-full border bg-white shadow-sm transition-colors duration-300 relative z-10" style={{ color: palette.accent, borderColor: palette.border }}>
-                    {cat.productCount} items
+                  <span className={`text-[10px] font-black px-2 py-0.5 rounded-full border bg-white shadow-sm transition-colors duration-300 relative z-10 ${palette.accentClass} ${palette.borderClass}`}>
+                    {cat.productCount} {t('items')}
                   </span>
                 </div>
 
                 {/* Color Overlay */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-2xl pointer-events-none" style={{ background: palette.accent }}></div>
+                <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-2xl pointer-events-none ${palette.accentBgClass}`}></div>
 
                 {/* Text */}
-                <h3 className="text-[1rem] font-semibold mb-1 relative z-10" style={{ color: palette.text }}>{cat.name}</h3>
-                <p className="text-[0.8rem] text-[var(--color-text-secondary)] leading-snug mb-4 line-clamp-2 relative z-10">{cat.description}</p>
+                <h3 className={`text-[1rem] font-semibold mb-1 relative z-10 ${palette.textClass}`}>{cat.name}</h3>
+                <p className="text-[0.8rem] text-muted-foreground leading-snug mb-4 line-clamp-2 relative z-10">{cat.description}</p>
 
                 {/* Footer */}
                 <div className="flex items-center justify-between relative z-10">
-                  <span className="text-[0.72rem] font-semibold uppercase tracking-wider" style={{ color: palette.accent }}>
-                    Explore Category
+                  <span className={`text-[0.72rem] font-semibold uppercase tracking-wider ${palette.accentClass}`}>
+                    {t('exploreCategory')}
                   </span>
                   <div
-                    className="w-7 h-7 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:translate-x-1 group-hover:shadow-md"
-                    style={{ background: palette.accent }}
+                    className={`w-7 h-7 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:translate-x-1 group-hover:shadow-md ${palette.accentBgClass}`}
                   >
                     <ArrowRight size={12} className="text-white" />
                   </div>

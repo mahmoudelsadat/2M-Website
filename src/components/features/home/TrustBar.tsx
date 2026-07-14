@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { trustStats } from '@/lib/data';
 import { ShieldCheck, Truck, CreditCard, RotateCcw, Stethoscope } from 'lucide-react';
+import { useTranslation } from '@/lib/LanguageContext';
 
 function useCountUp(target: number, duration = 1800, start = false) {
   const [count, setCount] = useState(0);
@@ -22,18 +23,21 @@ function useCountUp(target: number, duration = 1800, start = false) {
 }
 
 const STAT_COLORS = [
-  { color: '#2B7CC1', bg: '#EBF4FB', glow: 'rgba(43,124,193,0.2)' },
-  { color: 'var(--color-brand-primary)', bg: 'var(--color-brand-primary-soft)', glow: 'rgba(13,115,119,0.2)' },
-  { color: '#4A7C59', bg: '#EDF3EE', glow: 'rgba(74,124,89,0.2)' },
-  { color: '#B8922A', bg: '#FDF8EC', glow: 'rgba(184,146,42,0.2)' },
+  { colorClass: 'text-primary', bgClass: 'bg-primary/10 border-primary/20', glowClass: 'shadow-primary/10' },
+  { colorClass: 'text-gold',    bgClass: 'bg-gold/10 border-gold/20',       glowClass: 'shadow-gold/10' },
+  { colorClass: 'text-accent',  bgClass: 'bg-accent/10 border-accent/20',   glowClass: 'shadow-accent/10' },
+  { colorClass: 'text-primary', bgClass: 'bg-primary/10 border-primary/20', glowClass: 'shadow-primary/10' },
 ];
 
+const labelKeys = ['premiumBrands', 'happyCustomers', 'governoratesCovered', 'authenticProducts'];
+
 function Stat({
-  value, suffix, label, labelAr, color, bg, glow, isRtl,
+  value, suffix, labelKey, colorClass, bgClass, glowClass,
 }: {
-  value: number; suffix: string; label: string; labelAr: string;
-  color: string; bg: string; glow: string; isRtl: boolean;
+  value: number; suffix: string; labelKey: string;
+  colorClass: string; bgClass: string; glowClass: string;
 }) {
+  const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const count = useCountUp(value, 1800, visible);
@@ -51,78 +55,65 @@ function Stat({
     <div ref={ref} className="flex flex-col items-center text-center px-4 group">
       {/* Glow ring on scroll reveal */}
       <div
-        className="relative w-16 h-16 rounded-2xl flex items-center justify-center mb-3 transition-transform duration-300 group-hover:-translate-y-1"
-        style={{ background: bg, boxShadow: visible ? `0 8px 24px ${glow}` : 'none', transition: 'box-shadow 0.6s ease, transform 0.3s ease' }}
+        className={`relative w-20 h-20 rounded-2xl flex items-center justify-center mb-4 transition-all duration-300 group-hover:-translate-y-1 border ${bgClass} ${
+          visible ? `shadow-xl ${glowClass}` : 'shadow-none'
+        }`}
       >
-        <div className="text-2xl font-black tabular-nums" style={{ color, fontVariantNumeric: 'tabular-nums', fontSize: '1.1rem' }}>
+        <div className={`text-2xl font-black tabular-nums ${colorClass}`}>
           {formatted}{suffix}
         </div>
       </div>
-      <div className="text-sm font-semibold" style={{ color: 'var(--color-text-secondary)' }}>
-        {isRtl ? labelAr : label}
+      <div className="text-sm font-semibold text-muted-foreground">
+        {t(labelKey)}
       </div>
     </div>
   );
 }
 
 const TRUST_ITEMS = [
-  { icon: ShieldCheck, text: 'Authentic Products Guaranteed', textAr: 'منتجات أصلية مضمونة',   color: 'var(--color-brand-primary)' },
-  { icon: CreditCard,  text: 'Cash on Delivery Available',   textAr: 'الدفع عند الاستلام',     color: '#2B7CC1' },
-  { icon: Truck,       text: 'Egypt-Wide Delivery',          textAr: 'توصيل لكل مصر',          color: '#4A7C59' },
-  { icon: RotateCcw,   text: '14-Day Easy Returns',          textAr: 'إرجاع مجاني ١٤ يوم',     color: '#B8922A' },
-  { icon: Stethoscope, text: 'Pharmacist Curated',           textAr: 'اختيار صيادلة متخصصين', color: '#9B1239' },
+  { icon: ShieldCheck, textKey: 'authenticGuarantee', colorClass: 'text-primary' },
+  { icon: CreditCard,  textKey: 'codAvailable',        colorClass: 'text-accent' },
+  { icon: Truck,       textKey: 'egyptWideDelivery',   colorClass: 'text-primary' },
+  { icon: RotateCcw,   textKey: 'easyReturns',         colorClass: 'text-gold' },
+  { icon: Stethoscope, textKey: 'pharmacistCurated',   colorClass: 'text-primary' },
 ];
 
 export default function TrustBar() {
-  const [isRtl, setIsRtl] = useState(false);
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setIsRtl(document.documentElement.dir === 'rtl');
-    const obs = new MutationObserver(() => setIsRtl(document.documentElement.dir === 'rtl'));
-    obs.observe(document.documentElement, { attributes: true, attributeFilter: ['dir'] });
-    return () => obs.disconnect();
-  }, []);
+  const { t } = useTranslation();
 
   return (
-    <section className="py-14 border-y" style={{ background: 'var(--color-surface)', borderColor: 'var(--color-border)' }}>
+    <section className="py-20 border-y bg-card border-border-theme">
       <div className="container-2m">
 
         {/* Stats row */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-12">
           {trustStats.map((s, i) => (
             <Stat
               key={s.label}
               value={s.value}
               suffix={s.suffix}
-              label={s.label}
-              labelAr={s.labelAr}
-              color={STAT_COLORS[i].color}
-              bg={STAT_COLORS[i].bg}
-              glow={STAT_COLORS[i].glow}
-              isRtl={isRtl}
+              labelKey={labelKeys[i]}
+              colorClass={STAT_COLORS[i].colorClass}
+              bgClass={STAT_COLORS[i].bgClass}
+              glowClass={STAT_COLORS[i].glowClass}
             />
           ))}
         </div>
 
         {/* Divider */}
-        <div className="section-divider mb-8" />
+        <div className="section-divider my-12" />
 
         {/* Trust signal pills */}
-        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
+        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-4">
           {TRUST_ITEMS.map((item) => {
             const Icon = item.icon;
             return (
               <div
-                key={item.text}
-                className="flex items-center gap-2 px-4 py-2 rounded-full border text-[0.8rem] font-semibold transition-all duration-200 hover:-translate-y-0.5"
-                style={{
-                  background: 'var(--color-surface-2)',
-                  borderColor: 'var(--color-border)',
-                  color: 'var(--color-text-secondary)',
-                }}
+                key={item.textKey}
+                className="flex items-center gap-2 px-5 py-2.5 rounded-full border border-border-theme bg-surface-2 text-[0.8rem] font-semibold text-muted-foreground transition-all duration-200 hover:-translate-y-0.5 hover:bg-card shadow-sm"
               >
-                <Icon size={13} style={{ color: item.color }} />
-                <span>{isRtl ? item.textAr : item.text}</span>
+                <Icon size={14} className={item.colorClass} />
+                <span>{t(item.textKey)}</span>
               </div>
             );
           })}

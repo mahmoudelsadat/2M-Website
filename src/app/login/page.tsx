@@ -9,11 +9,13 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import FloatingButtons, { MobileBottomNav } from '@/components/layout/FloatingButtons';
 import { useTranslation } from '@/lib/LanguageContext';
+import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 
 export default function LoginPage() {
   const router = useRouter();
-  const { t, isRtl } = useTranslation();
+  const { isRtl } = useTranslation();
+  const t = useTranslations('Login');
   
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
@@ -41,20 +43,20 @@ export default function LoginPage() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!isLogin && !name.trim()) {
-      newErrors.name = isRtl ? 'الاسم بالكامل مطلوب' : 'Full name is required';
+      newErrors.name = t('fullNameRequired');
     }
     if (!email.trim()) {
-      newErrors.email = isRtl ? 'البريد الإلكتروني مطلوب' : 'Email is required';
+      newErrors.email = t('emailRequired');
     } else if (!emailRegex.test(email)) {
-      newErrors.email = isRtl ? 'صيغة البريد الإلكتروني غير صالحة' : 'Invalid email format';
+      newErrors.email = t('emailInvalid');
     }
     if (!password.trim()) {
-      newErrors.password = isRtl ? 'كلمة المرور مطلوبة' : 'Password is required';
+      newErrors.password = t('passwordRequired');
     } else if (password.length < 6) {
-      newErrors.password = isRtl ? 'يجب أن تكون كلمة المرور 6 أحرف على الأقل' : 'Password must be at least 6 characters';
+      newErrors.password = t('passwordMin');
     }
     if (!isLogin && password !== confirmPassword) {
-      newErrors.confirmPassword = isRtl ? 'كلمتا المرور غير متطابقتين' : 'Passwords do not match';
+      newErrors.confirmPassword = t('passwordsMismatch');
     }
 
     setErrors(newErrors);
@@ -75,13 +77,11 @@ export default function LoginPage() {
     localStorage.setItem('2m-user-email', email);
     
     toast.success(
-      isLogin 
-        ? (isRtl ? 'تم تسجيل الدخول بنجاح!' : 'Logged in successfully!') 
-        : (isRtl ? 'تم إنشاء الحساب بنجاح!' : 'Account created successfully!'),
+      isLogin ? t('loginSuccess') : t('registerSuccess'),
       {
         description: isLogin
-          ? (isRtl ? `مرحباً بك مجدداً، ${localStorage.getItem('2m-user-name')}` : `Welcome back, ${localStorage.getItem('2m-user-name')}`)
-          : (isRtl ? 'دعنا نبدأ رحلتك الصحية معنا' : 'Let\'s start your health journey with us'),
+          ? t('welcomeUser', { name: localStorage.getItem('2m-user-name') || '' })
+          : t('journeyStart'),
         duration: 3000
       }
     );
@@ -94,18 +94,18 @@ export default function LoginPage() {
   return (
     <>
       <Navbar />
-      <main className="flex-grow flex items-center justify-center min-h-[85vh] py-16 px-4 bg-gray-50 dark:bg-[#060700]">
+      <main className="flex-grow flex items-center justify-center min-h-[85vh] py-16 px-4 bg-gray-50 dark:bg-dark-hero">
         <div className="w-full max-w-[460px] relative">
           
           {/* Decorative ambient blobs */}
-          <div className="absolute -top-12 -left-12 w-64 h-64 bg-slate-200 rounded-full blur-3xl pointer-events-none opacity-50" />
-          <div className="absolute -bottom-12 -right-12 w-64 h-64 bg-gray-200 rounded-full blur-3xl pointer-events-none opacity-50" />
+          <div className="absolute -top-12 -left-12 w-64 h-64 bg-slate-200 rounded-full blur-3xl pointer-events-none opacity-50 dark:opacity-10" />
+          <div className="absolute -bottom-12 -right-12 w-64 h-64 bg-gray-200 rounded-full blur-3xl pointer-events-none opacity-50 dark:opacity-10" />
 
           {/* Portal Card */}
-          <div className="shadow-xl rounded-xl border border-gray-200 dark:border-slate-800 bg-white dark:bg-[#0a0a0a] relative z-10 overflow-hidden">
+          <div className="shadow-xl rounded-xl border border-gray-200 dark:border-slate-800 bg-white dark:bg-dark-card relative z-10 overflow-hidden">
             
             {/* Top decorative branding tag */}
-            <div className="h-1.5 w-full bg-gradient-to-r from-[var(--color-brand-primary)] to-[var(--color-brand-gold)]" />
+            <div className="h-1.5 w-full bg-gradient-to-r from-primary to-brand-gold" />
             
             <div className="p-8">
               {/* Header */}
@@ -113,34 +113,28 @@ export default function LoginPage() {
                 <Link href="/" className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-black text-white font-black text-xl mb-4 shadow-lg hover:scale-105 transition-transform">
                   2M
                 </Link>
-                <h1 className="text-2xl font-black text-[var(--color-text-primary)] font-display">
-                  {isLogin 
-                    ? (isRtl ? 'تسجيل الدخول' : 'Welcome Back') 
-                    : (isRtl ? 'إنشاء حساب جديد' : 'Join 2M Pharmacy')
-                  }
+                <h1 className="text-2xl font-black text-foreground font-display">
+                  {isLogin ? t('welcomeBack') : t('join2M')}
                 </h1>
-                <p className="text-xs text-[var(--color-text-secondary)] mt-1.5 font-semibold">
-                  {isLogin 
-                    ? (isRtl ? 'ادخل إلى بوابتك الصحية الآمنة' : 'Access your secure premium health panel') 
-                    : (isRtl ? 'ابدأ بالحصول على الرعاية والمزايا الحصرية' : 'Get exclusive loyalty points & express tracking')
-                  }
+                <p className="text-xs text-muted-foreground mt-1.5 font-semibold">
+                  {isLogin ? t('loginSubtitle') : t('registerSubtitle')}
                 </p>
               </div>
 
               {/* Tab Switcher */}
-              <div className="flex bg-[var(--color-surface-2)] p-1 rounded-xl mb-8 border border-[var(--color-border-soft)] relative">
+              <div className="flex bg-surface-2 p-1 rounded-xl mb-8 border border-border relative">
                 <button
                   type="button"
                   onClick={() => { setIsLogin(true); setErrors({}); }}
                   className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all duration-200 relative z-10 ${
-                    isLogin ? 'text-[var(--color-text-primary)]' : 'text-[var(--color-text-secondary)]'
+                    isLogin ? 'text-foreground' : 'text-muted-foreground'
                   }`}
                 >
-                  {isRtl ? 'تسجيل الدخول' : 'Login'}
+                  {t('login')}
                   {isLogin && (
                     <motion.div
                       layoutId="active-auth-tab"
-                      className="absolute inset-0 bg-[var(--color-surface)] shadow-md rounded-lg -z-10 border border-[var(--color-border-soft)]"
+                      className="absolute inset-0 bg-card shadow-xs rounded-lg -z-10 border border-border"
                     />
                   )}
                 </button>
@@ -148,14 +142,14 @@ export default function LoginPage() {
                   type="button"
                   onClick={() => { setIsLogin(false); setErrors({}); }}
                   className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all duration-200 relative z-10 ${
-                    !isLogin ? 'text-[var(--color-text-primary)]' : 'text-[var(--color-text-secondary)]'
+                    !isLogin ? 'text-foreground' : 'text-muted-foreground'
                   }`}
                 >
-                  {isRtl ? 'إنشاء حساب' : 'Register'}
+                  {t('register')}
                   {!isLogin && (
                     <motion.div
                       layoutId="active-auth-tab"
-                      className="absolute inset-0 bg-[var(--color-surface)] shadow-md rounded-lg -z-10 border border-[var(--color-border-soft)]"
+                      className="absolute inset-0 bg-card shadow-xs rounded-lg -z-10 border border-border"
                     />
                   )}
                 </button>
@@ -175,21 +169,21 @@ export default function LoginPage() {
                       className="overflow-hidden"
                     >
                       <div className="flex flex-col gap-1.5">
-                        <label className="text-xs font-bold text-gray-700 dark:text-slate-300">{isRtl ? 'الاسم بالكامل' : 'Full Name'}</label>
+                        <label className="text-xs font-bold text-muted-foreground">{t('fullNameLabel')}</label>
                         <div className="relative">
                           <User size={16} className="absolute start-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-slate-500" />
                           <input
                             type="text"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            placeholder={t('fullName')}
+                            placeholder={t('fullNameLabel')}
                             className={`w-full p-3 bg-gray-50 dark:bg-slate-800 border ${
-                              errors.name ? 'border-red-400 focus:ring-red-500' : 'border-gray-200 dark:border-slate-700 focus:border-gray-400 dark:focus:border-slate-600 focus:ring-black dark:focus:ring-white'
-                            } rounded-lg ps-11 pe-4 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 transition-all`}
+                              errors.name ? 'border-red-400 focus:ring-red-500/10' : 'border-border focus:border-primary focus:ring-primary/5'
+                            } rounded-lg ps-11 pe-4 text-sm text-foreground dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 transition-all`}
                           />
                         </div>
                         {errors.name && (
-                          <div className="bg-red-50 text-red-800 p-2.5 rounded-lg text-xs font-bold mt-1 flex items-center gap-2">
+                          <div className="bg-destructive/10 text-destructive p-2.5 rounded-lg text-xs font-bold mt-1 flex items-center gap-2">
                             <span>⚠️</span> {errors.name}
                           </div>
                         )}
@@ -200,21 +194,21 @@ export default function LoginPage() {
 
                 {/* Email Address */}
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-gray-700 dark:text-slate-300">{t('email')}</label>
+                  <label className="text-xs font-bold text-muted-foreground">{t('emailLabel')}</label>
                   <div className="relative">
                     <Mail size={16} className="absolute start-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-slate-500" />
                     <input
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder={t('email')}
+                      placeholder="email@example.com"
                       className={`w-full p-3 bg-gray-50 dark:bg-slate-800 border ${
-                        errors.email ? 'border-red-400 focus:ring-red-500' : 'border-gray-200 dark:border-slate-700 focus:border-gray-400 dark:focus:border-slate-600 focus:ring-black dark:focus:ring-white'
-                      } rounded-lg ps-11 pe-4 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 transition-all`}
+                        errors.email ? 'border-red-400 focus:ring-red-500/10' : 'border-border focus:border-primary focus:ring-primary/5'
+                      } rounded-lg ps-11 pe-4 text-sm text-foreground dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 transition-all`}
                     />
                   </div>
                   {errors.email && (
-                    <div className="bg-red-50 text-red-800 p-2.5 rounded-lg text-xs font-bold mt-1 flex items-center gap-2">
+                    <div className="bg-destructive/10 text-destructive p-2.5 rounded-lg text-xs font-bold mt-1 flex items-center gap-2">
                       <span>⚠️</span> {errors.email}
                     </div>
                   )}
@@ -222,7 +216,7 @@ export default function LoginPage() {
 
                 {/* Password */}
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-gray-700 dark:text-slate-300">{isRtl ? 'كلمة المرور' : 'Password'}</label>
+                  <label className="text-xs font-bold text-muted-foreground">{t('passwordLabel')}</label>
                   <div className="relative">
                     <Lock size={16} className="absolute start-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-slate-500" />
                     <input
@@ -231,8 +225,8 @@ export default function LoginPage() {
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••"
                       className={`w-full p-3 bg-gray-50 dark:bg-slate-800 border ${
-                        errors.password ? 'border-red-400 focus:ring-red-500' : 'border-gray-200 dark:border-slate-700 focus:border-gray-400 dark:focus:border-slate-600 focus:ring-black dark:focus:ring-white'
-                      } rounded-lg ps-11 pe-11 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 transition-all`}
+                        errors.password ? 'border-red-400 focus:ring-red-500/10' : 'border-border focus:border-primary focus:ring-primary/5'
+                      } rounded-lg ps-11 pe-11 text-sm text-foreground dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 transition-all`}
                     />
                     <button
                       type="button"
@@ -244,7 +238,7 @@ export default function LoginPage() {
                     </button>
                   </div>
                   {errors.password && (
-                    <div className="bg-red-50 text-red-800 p-2.5 rounded-lg text-xs font-bold mt-1 flex items-center gap-2">
+                    <div className="bg-destructive/10 text-destructive p-2.5 rounded-lg text-xs font-bold mt-1 flex items-center gap-2">
                       <span>⚠️</span> {errors.password}
                     </div>
                   )}
@@ -261,7 +255,7 @@ export default function LoginPage() {
                       className="overflow-hidden"
                     >
                       <div className="flex flex-col gap-1.5">
-                        <label className="text-xs font-bold text-gray-700 dark:text-slate-300">{isRtl ? 'تأكيد كلمة المرور' : 'Confirm Password'}</label>
+                        <label className="text-xs font-bold text-muted-foreground">{t('confirmPasswordLabel')}</label>
                         <div className="relative">
                           <Lock size={16} className="absolute start-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-slate-500" />
                           <input
@@ -270,12 +264,12 @@ export default function LoginPage() {
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             placeholder="••••••••"
                             className={`w-full p-3 bg-gray-50 dark:bg-slate-800 border ${
-                              errors.confirmPassword ? 'border-red-400 focus:ring-red-500' : 'border-gray-200 dark:border-slate-700 focus:border-gray-400 dark:focus:border-slate-600 focus:ring-black dark:focus:ring-white'
-                            } rounded-lg ps-11 pe-4 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 transition-all`}
+                              errors.confirmPassword ? 'border-red-400 focus:ring-red-500/10' : 'border-border focus:border-primary focus:ring-primary/5'
+                            } rounded-lg ps-11 pe-4 text-sm text-foreground dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 transition-all`}
                           />
                         </div>
                         {errors.confirmPassword && (
-                          <div className="bg-red-50 text-red-800 p-2.5 rounded-lg text-xs font-bold mt-1 flex items-center gap-2">
+                          <div className="bg-destructive/10 text-destructive p-2.5 rounded-lg text-xs font-bold mt-1 flex items-center gap-2">
                             <span>⚠️</span> {errors.confirmPassword}
                           </div>
                         )}
@@ -294,7 +288,7 @@ export default function LoginPage() {
                     <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                   ) : (
                     <>
-                      {isLogin ? t('login') : t('signup')}
+                      {isLogin ? t('login') : t('register')}
                       <ArrowRight size={14} className={isRtl ? 'rotate-180' : ''} />
                     </>
                   )}
@@ -302,27 +296,21 @@ export default function LoginPage() {
               </form>
 
               {/* Portal Switcher Footer info */}
-              <div className="mt-8 pt-6 border-t border-[var(--color-border-soft)] text-center">
-                <p className="text-xs text-[var(--color-text-secondary)] font-semibold">
-                  {isLogin 
-                    ? (isRtl ? 'ليس لديك حساب؟ ' : 'New to 2M Pharmacy? ')
-                    : (isRtl ? 'لديك حساب بالفعل؟ ' : 'Already have an account? ')
-                  }
+              <div className="mt-8 pt-6 border-t border-border text-center">
+                <p className="text-xs text-muted-foreground font-semibold">
+                  {isLogin ? t('newTo2M') : t('alreadyHaveAccount')}
                   <button
                     onClick={() => { setIsLogin(!isLogin); setErrors({}); }}
-                    className="text-[var(--color-brand-primary)] font-bold hover:underline"
+                    className="text-primary font-bold hover:underline"
                   >
-                    {isLogin 
-                      ? (isRtl ? 'أنشئ حساباً الآن' : 'Create an account')
-                      : (isRtl ? 'سجل دخولك' : 'Sign in here')
-                    }
+                    {isLogin ? t('createAccount') : t('signInHere')}
                   </button>
                 </p>
                 
                 {/* Admin Access Redirect */}
                 <Link
                   href="/admin"
-                  className="inline-flex items-center gap-1.5 text-[10px] font-bold text-[var(--color-brand-gold)] uppercase tracking-wider mt-4 hover:text-[var(--color-brand-primary)] transition-colors"
+                  className="inline-flex items-center gap-1.5 text-[10px] font-bold text-brand-gold uppercase tracking-wider mt-4 hover:text-primary transition-colors"
                 >
                   <ShieldCheck size={12} />
                   {t('adminPortal')}

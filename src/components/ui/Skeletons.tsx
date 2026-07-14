@@ -1,10 +1,10 @@
 function Pulse({ className = '' }: { className?: string }) {
-  return <div className={`animate-pulse bg-[var(--color-surface-2)] rounded-xl ${className}`} />;
+  return <div className={`animate-pulse bg-surface-2 rounded-xl ${className}`} />;
 }
 
 export function ProductCardSkeleton() {
   return (
-    <div className="rounded-2xl border border-[var(--color-border)] overflow-hidden bg-white">
+    <div className="rounded-2xl border border-border overflow-hidden bg-card">
       <Pulse className="aspect-square w-full rounded-none" />
       <div className="p-4 space-y-2.5">
         <Pulse className="h-2.5 w-16" />
@@ -19,7 +19,7 @@ export function ProductCardSkeleton() {
 
 export function CategoryCardSkeleton() {
   return (
-    <div className="rounded-2xl border border-[var(--color-border)] p-5 bg-white">
+    <div className="rounded-2xl border border-border p-5 bg-card">
       <Pulse className="w-12 h-12 rounded-xl mb-4" />
       <Pulse className="h-4 w-2/3 mb-2" />
       <Pulse className="h-3 w-full mb-1" />
@@ -54,7 +54,7 @@ export function CategoryGridSkeleton() {
 
 export function NavbarSkeleton() {
   return (
-    <div className="h-16 bg-white border-b border-[var(--color-border)] flex items-center px-6 gap-4">
+    <div className="h-16 bg-card border-b border-border flex items-center px-6 gap-4">
       <Pulse className="w-11 h-11 rounded-xl" />
       <Pulse className="h-4 w-28 hidden sm:block" />
       <div className="flex-1" />

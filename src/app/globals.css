@@ -6,12 +6,74 @@
    ───────────────────────────────────────────────────────────── */
 
 @theme inline {
+  /* Semantic Tokens for Quiet Luxury styling */
+  --color-background:          var(--color-page-bg);
+  --color-foreground:          var(--color-text-primary);
+  --color-primary:             var(--color-brand-primary);
+  --color-primary-foreground:  var(--color-text-inverse);
+  --color-muted:               var(--color-text-muted);
+  --color-muted-foreground:    var(--color-text-secondary);
+  --color-border-theme:        var(--color-border);
+  --color-card:                var(--color-surface);
+  --color-card-foreground:     var(--color-text-primary);
+
   /* Brand — Cool Blues & Teals */
   --color-brand-primary:       #0D7377; /* Rich Teal */
   --color-brand-primary-dark:  #055160; /* Deep Teal */
   --color-brand-primary-soft:  #E0F5F7;
   --color-brand-accent:        #14919B; /* Medium Teal */
   --color-brand-accent-soft:   #D4EFEF;
+
+  /* Layout Custom Variables */
+  --color-back-to-top:         #060700;
+  --color-whatsapp:            #25D366;
+  --color-whatsapp-dark:       #128C7E;
+  --color-pay-cod:             #4A7C59;
+  --color-pay-instapay:        #8B5CF6;
+  --color-pay-vodafone:        #EF4444;
+  --color-pay-ecash:           #F59E0B;
+  --color-secure-payment:      #667EC9;
+  --color-easy-returns:        #2FA9A0;
+  --color-footer-bg:           #0D5962;
+  --color-footer-text:         #E8F0F2;
+  --color-footer-muted:        #A8D4D8;
+
+  /* Home Features Custom Variables */
+  --color-surface-warm:        #F8F7F4;
+  --color-surface-warm-dark:   #F3F0EB;
+  --color-border-warm:         #E4E0D8;
+  --color-step-1-text:         #4A90C4;
+  --color-step-1-bg:           #EBF4FB;
+  --color-step-1-border:       #C6E0F5;
+  --color-step-2-text:         #D4856A;
+  --color-step-2-bg:           #FAEEE9;
+  --color-step-2-border:       #F4CCBA;
+  --color-step-3-text:         #6B8F71;
+  --color-step-3-bg:           #EDF3EE;
+  --color-step-3-border:       #C0D9C2;
+  --color-step-4-text:         #B8922A;
+  --color-step-4-bg:           #FDF6E8;
+  --color-step-4-border:       #EDD2A0;
+
+  /* Product Categories Custom Colors */
+  --color-wellness-bg:         #E0F8F6;
+  --color-wellness-text:       #1A6F69;
+  --color-wellness-border:     #A8D8D4;
+  --color-personal-bg:         #F0F4FF;
+  --color-personal-accent:     #667EC9;
+  --color-personal-text:       #3B5A9C;
+  --color-personal-border:     #D4DCF7;
+  --color-star-empty:          #D4CCC0;
+
+  /* Dark Theme Semantic Colors (About, Login & Contact Pages) */
+  --color-dark-bg:             #0D0D0D;
+  --color-dark-surface:        #111111;
+  --color-dark-hero:           #060700;
+  --color-dark-card:           #0A0A0A;
+
+
+
+
 
   /* Surfaces — Minimal & Clean */
   --color-page-bg:         #FAFBFC;
@@ -74,6 +136,13 @@
   --shadow-md:   0 4px 12px rgba(26,35,50,0.08);
   --shadow-lg:   0 8px 24px rgba(26,35,50,0.10);
   --shadow-xl:   0 16px 40px rgba(26,35,50,0.12);
+  --shadow-back-to-top: 0 4px 20px rgba(6,7,0,0.25);
+  --shadow-whatsapp: 0 4px 16px rgba(37,211,102,0.35);
+  --shadow-whatsapp-btn: 0 8px 32px rgba(37,211,102,0.4);
+  --shadow-mobile-nav: 0 -4px 24px rgba(26,35,50,0.08);
+
+
+
 
   /* Transitions */
   --transition-fast:   120ms cubic-bezier(0.4, 0, 0.2, 1);
