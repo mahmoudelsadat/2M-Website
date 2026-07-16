@@ -44,6 +44,10 @@ export default function CheckoutPage() {
   const [paymentMethod, setPaymentMethod] = useState<'instapay' | 'vodafone' | 'ecash'>('instapay');
   const [orderNumber] = useState(() => `2M-${Date.now().toString().slice(-6)}`);
 
+  const [transactionCode, setTransactionCode] = useState('');
+  const [receiptFile, setReceiptFile] = useState<File | null>(null);
+  const [receiptFileName, setReceiptFileName] = useState('');
+
   const cartItems = items;
   const subtotal = getSubtotal();
   const deliveryFee = subtotal >= 500 ? 0 : 50;
@@ -56,6 +60,18 @@ export default function CheckoutPage() {
     if (!form.phone.trim())      errs.phone      = t('phoneRequired');
     if (!form.governorate)       errs.governorate = t('governorateRequired');
     if (!form.address.trim())    errs.address    = t('addressRequired');
+    setFormErrors(errs);
+    return Object.keys(errs).length === 0;
+  };
+
+  const validatePayment = (): boolean => {
+    const errs: Record<string, string> = {};
+    if (!transactionCode.trim()) {
+      errs.transactionCode = 'Transaction reference code is required';
+    }
+    if (!receiptFileName) {
+      errs.receiptFile = 'Please upload a screenshot of your transfer receipt';
+    }
     setFormErrors(errs);
     return Object.keys(errs).length === 0;
   };
@@ -156,18 +172,16 @@ export default function CheckoutPage() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3">
-              <Link href="/" className="btn w-full sm:flex-1 py-3 text-xs font-black uppercase tracking-wider border border-border bg-card hover:bg-surface-2 text-foreground rounded-xl transition-colors">
+              <Link href="/" className="btn w-full sm:flex-1 py-3 text-xs font-black uppercase tracking-wider border border-white/10 bg-white/5 hover:bg-white/10 text-white rounded-xl transition-colors text-center flex items-center justify-center">
                 {t('backToHome')}
               </Link>
-              <a
-                href={`https://wa.me/201115160947?text=Hi!%20My%20order%20is%20${orderNumber}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn w-full sm:flex-1 py-3 text-xs font-black uppercase tracking-wider text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl transition-all shadow-md flex items-center justify-center gap-1.5"
+              <Link
+                href="/account"
+                className="btn w-full sm:flex-1 py-3 text-xs font-black uppercase tracking-wider text-black bg-brand-gold hover:bg-brand-gold/90 rounded-xl transition-all shadow-md flex items-center justify-center gap-1.5 border border-brand-gold/20"
               >
-                <Phone size={13} /> 
+                <Check size={13} /> 
                 {t('trackOnWhatsApp')}
-              </a>
+              </Link>
             </div>
           </div>
         </main>
@@ -203,34 +217,34 @@ export default function CheckoutPage() {
               
               {/* Step 1 — Cart Review */}
               {step === 1 && (
-                <div className="card border border-border bg-card p-6 rounded-2xl shadow-lg">
-                  <h2 className="text-lg font-black text-foreground font-display mb-5 uppercase tracking-wider flex items-center gap-2">
+                <div className="glass-panel border border-white/10 p-6 rounded-2xl shadow-lg neon-edge">
+                  <h2 className="text-lg font-black text-white font-display mb-5 uppercase tracking-wider flex items-center gap-2">
                     <span>🛒</span>
                     {t('reviewSelectedItems')}
                   </h2>
                   
                   <div className="space-y-4 mb-6">
                     {cartItems.length === 0 ? (
-                      <p className="text-sm text-center py-4 text-muted">
-                        {t('noItemsInCart')} <Link href="/pharmacy" className="text-primary">{t('shopNow')}</Link>
+                      <p className="text-sm text-center py-4 text-text-muted">
+                        {t('noItemsInCart')} <Link href="/pharmacy" className="text-brand-primary">{t('shopNow')}</Link>
                       </p>
                     ) : cartItems.map((p) => (
-                      <div key={p.id} className="flex gap-4 p-4 rounded-xl border border-border-soft bg-surface-2/30 hover:bg-surface-2/50 transition-colors">
-                        <div className="w-16 h-16 rounded-xl flex-shrink-0 overflow-hidden bg-white border border-border-soft p-0.5 shadow-sm">
+                      <div key={p.id} className="flex gap-4 p-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-colors">
+                        <div className="w-16 h-16 rounded-xl flex-shrink-0 overflow-hidden bg-white border border-white/10 p-0.5 shadow-sm">
                           <Image src={p.image} alt={p.name} width={64} height={64} className="w-full h-full object-contain p-1" />
                         </div>
                         <div className={`flex-1 min-w-0 ${isRtl ? 'text-right' : 'text-left'}`}>
                           <p className="text-[10px] text-brand-gold uppercase font-black tracking-wider">{p.brand}</p>
-                          <p className="text-xs font-bold text-foreground line-clamp-2 mt-0.5">{p.name}</p>
-                          <p className="text-xs font-black text-primary mt-1.5">EGP {p.price.toLocaleString()}</p>
+                          <p className="text-xs font-bold text-white line-clamp-2 mt-0.5">{p.name}</p>
+                          <p className="text-xs font-black text-brand-primary mt-1.5">EGP {p.price.toLocaleString()}</p>
                         </div>
                       </div>
                     ))}
                   </div>
 
-                  <div className="mb-4 p-3 rounded-xl flex justify-between text-sm font-semibold bg-surface-2 border border-border">
-                    <span className="text-muted-foreground">{t('totalItems', { count: cartItems.reduce((s, i) => s + (i.qty || 1), 0) })}</span>
-                    <span className="text-foreground font-black">{formatEGP(total)}</span>
+                  <div className="mb-4 p-3 rounded-xl flex justify-between text-sm font-semibold bg-white/5 border border-white/10">
+                    <span className="text-text-muted">{t('totalItems', { count: cartItems.reduce((s, i) => s + (i.qty || 1), 0) })}</span>
+                    <span className="text-white font-black">{formatEGP(total)}</span>
                   </div>
                   <button
                     onClick={() => setStep(2)}
@@ -243,11 +257,11 @@ export default function CheckoutPage() {
                 </div>
               )}
 
-              {/* Step 2 — Delivery details */}
+              {/* Step 2 — Delivery Details */}
               {step === 2 && (
-                <div className="card border border-border bg-card p-6 rounded-2xl shadow-lg">
-                  <h2 className="text-lg font-black text-foreground font-display mb-6 uppercase tracking-wider flex items-center gap-2">
-                    <MapPin size={18} className="text-primary" /> 
+                <div className="glass-panel border border-white/10 p-6 rounded-2xl shadow-lg neon-edge">
+                  <h2 className="text-lg font-black text-white font-display mb-5 uppercase tracking-wider flex items-center gap-2">
+                    <MapPin size={18} className="text-brand-primary" /> 
                     {t('deliveryDetails')}
                   </h2>
                   
@@ -257,47 +271,47 @@ export default function CheckoutPage() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       {/* Name */}
                       <div>
-                        <label className="block text-[10px] font-bold text-muted-foreground mb-1.5 uppercase tracking-wider">{tContact('fullName')} *</label>
+                        <label className="block text-[10px] font-bold text-text-muted mb-1.5 uppercase tracking-wider">{tContact('fullName')} *</label>
                         <input
                           type="text"
                           required
                           value={form.name}
                           onChange={(e) => setForm({ ...form, name: e.target.value })}
-                          className="w-full bg-surface-2 border border-border rounded-xl px-3 py-3 text-xs text-foreground placeholder-muted focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all"
+                          className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-3 text-xs text-white placeholder-white/35 focus:outline-none focus:border-brand-primary/45 focus:ring-4 focus:ring-brand-primary/20 transition-all"
                         />
                         {formErrors.name && <p className="text-red-500 text-[10px] mt-1 font-bold">{formErrors.name}</p>}
                       </div>
                       {/* Phone */}
                       <div>
-                        <label className="block text-[10px] font-bold text-muted-foreground mb-1.5 uppercase tracking-wider">{tContact('phone')} *</label>
+                        <label className="block text-[10px] font-bold text-text-muted mb-1.5 uppercase tracking-wider">{tContact('phone')} *</label>
                         <input
                           type="tel"
                           required
                           placeholder="e.g. 01115160947"
                           value={form.phone}
                           onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                          className="w-full bg-surface-2 border border-border rounded-xl px-3 py-3 text-xs text-foreground placeholder-muted focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all"
+                          className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-3 text-xs text-white placeholder-white/35 focus:outline-none focus:border-brand-primary/45 focus:ring-4 focus:ring-brand-primary/20 transition-all"
                         />
                         {formErrors.phone && <p className="text-red-500 text-[10px] mt-1 font-bold">{formErrors.phone}</p>}
                       </div>
                       {/* Alt Phone */}
                       <div>
-                        <label className="block text-[10px] font-bold text-muted-foreground mb-1.5 uppercase tracking-wider">{t('alternativePhone')}</label>
+                        <label className="block text-[10px] font-bold text-text-muted mb-1.5 uppercase tracking-wider">{t('alternativePhone')}</label>
                         <input
                           type="tel"
                           value={form.altPhone}
                           onChange={(e) => setForm({ ...form, altPhone: e.target.value })}
-                          className="w-full bg-surface-2 border border-border rounded-xl px-3 py-3 text-xs text-foreground placeholder-muted focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all"
+                          className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-3 text-xs text-white placeholder-white/35 focus:outline-none focus:border-brand-primary/45 focus:ring-4 focus:ring-brand-primary/20 transition-all"
                         />
                       </div>
                       {/* Email */}
                       <div>
-                        <label className="block text-[10px] font-bold text-muted-foreground mb-1.5 uppercase tracking-wider">{tContact('email')}</label>
+                        <label className="block text-[10px] font-bold text-text-muted mb-1.5 uppercase tracking-wider">{tContact('email')}</label>
                         <input
                           type="email"
                           value={form.email}
                           onChange={(e) => setForm({ ...form, email: e.target.value })}
-                          className="w-full bg-surface-2 border border-border rounded-xl px-3 py-3 text-xs text-foreground placeholder-muted focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all"
+                          className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-3 text-xs text-white placeholder-white/35 focus:outline-none focus:border-brand-primary/45 focus:ring-4 focus:ring-brand-primary/20 transition-all"
                         />
                       </div>
                     </div>
@@ -306,12 +320,12 @@ export default function CheckoutPage() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       {/* Governorate select */}
                       <div>
-                        <label className="block text-[10px] font-bold text-muted-foreground mb-1.5 uppercase tracking-wider">{t('governorate')}</label>
+                        <label className="block text-[10px] font-bold text-text-muted mb-1.5 uppercase tracking-wider">{t('governorate')}</label>
                         <select
                           required
                           value={form.governorate}
                           onChange={(e) => setForm({ ...form, governorate: e.target.value })}
-                          className="w-full bg-surface-2 border border-border rounded-xl px-3 py-3 text-xs text-foreground focus:outline-none focus:border-primary transition-all cursor-pointer"
+                          className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-3 text-xs text-white focus:outline-none focus:border-brand-primary/45 transition-all cursor-pointer"
                         >
                           <option value="">{t('selectGovernorate')}</option>
                           {govs.map((g) => (
@@ -324,27 +338,27 @@ export default function CheckoutPage() {
                       </div>
                       {/* City */}
                       <div>
-                        <label className="block text-[10px] font-bold text-muted-foreground mb-1.5 uppercase tracking-wider">{t('cityDistrict')}</label>
+                        <label className="block text-[10px] font-bold text-text-muted mb-1.5 uppercase tracking-wider">{t('cityDistrict')}</label>
                         <input
                           type="text"
                           required
                           value={form.city}
                           onChange={(e) => setForm({ ...form, city: e.target.value })}
-                          className="w-full bg-surface-2 border border-border rounded-xl px-3 py-3 text-xs text-foreground placeholder-muted focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all"
+                          className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-3 text-xs text-white placeholder-white/35 focus:outline-none focus:border-brand-primary/45 focus:ring-4 focus:ring-brand-primary/20 transition-all"
                         />
                       </div>
                     </div>
 
                     {/* Address Detail */}
                     <div>
-                      <label className="block text-[10px] font-bold text-muted-foreground mb-1.5 uppercase tracking-wider">{t('streetAddress')}</label>
+                      <label className="block text-[10px] font-bold text-text-muted mb-1.5 uppercase tracking-wider">{t('streetAddress')}</label>
                       <input
                         type="text"
                         placeholder={t('streetAddressPlaceholder')}
                         required
                         value={form.address}
                         onChange={(e) => setForm({ ...form, address: e.target.value })}
-                        className="w-full bg-surface-2 border border-border rounded-xl px-3 py-3 text-xs text-foreground placeholder-muted focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all"
+                        className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-3 text-xs text-white placeholder-white/35 focus:outline-none focus:border-brand-primary/45 focus:ring-4 focus:ring-brand-primary/20 transition-all"
                       />
                       {formErrors.address && <p className="text-red-500 text-[10px] mt-1 font-bold">{formErrors.address}</p>}
                     </div>
@@ -352,7 +366,7 @@ export default function CheckoutPage() {
                     {/* NOTES TEXTAREA */}
                     <div>
                       <div className="flex justify-between items-center mb-1.5">
-                        <label className="block text-[10px] font-bold text-muted-foreground uppercase tracking-wider">{tContact('message')}</label>
+                        <label className="block text-[10px] font-bold text-text-muted uppercase tracking-wider">{tContact('message')}</label>
                         <span className={`text-[9px] font-black ${
                           form.notes.length >= maxNotesLength ? 'text-primary' : 'text-muted'
                         }`}>
@@ -365,7 +379,7 @@ export default function CheckoutPage() {
                         placeholder={tContact('messagePlaceholder')}
                         value={form.notes}
                         onChange={(e) => setForm({ ...form, notes: e.target.value })}
-                        className="w-full bg-surface-2 border border-border rounded-xl px-3 py-3 text-xs text-foreground placeholder-muted focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all resize-none leading-relaxed"
+                        className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-3 text-xs text-white placeholder-white/35 focus:outline-none focus:border-brand-primary/45 focus:ring-4 focus:ring-brand-primary/20 transition-all resize-none leading-relaxed"
                       />
                     </div>
 
@@ -374,7 +388,7 @@ export default function CheckoutPage() {
                       <button 
                         type="button"
                         onClick={() => setStep(1)} 
-                        className="btn border border-border bg-card hover:bg-surface-2 text-foreground text-xs font-black uppercase tracking-wider px-5 py-3 rounded-xl flex-1 transition-all"
+                        className="btn border border-white/10 bg-white/5 hover:bg-white/10 text-white text-xs font-black uppercase tracking-wider px-5 py-3 rounded-xl flex-1 transition-all"
                       >
                         {t('back')}
                       </button>
@@ -393,12 +407,12 @@ export default function CheckoutPage() {
 
               {/* Step 3 — Payment via Egyptian Mobile Transfers */}
               {step === 3 && (
-                <div className="card border border-border bg-card p-6 rounded-2xl shadow-lg">
-                  <h2 className="text-lg font-black text-foreground font-display mb-2 uppercase tracking-wider flex items-center gap-2">
+                <div className="glass-panel border border-white/10 p-6 rounded-2xl shadow-lg neon-edge">
+                  <h2 className="text-lg font-black text-white font-display mb-2 uppercase tracking-wider flex items-center gap-2">
                     <Sparkles size={18} className="text-brand-gold" />
                     {t('payment')}
                   </h2>
-                  <p className="text-[10px] text-muted-foreground font-semibold mb-6">
+                  <p className="text-[10px] text-text-muted font-semibold mb-6">
                     {t('paymentSubtitle')}
                   </p>
 
@@ -410,27 +424,27 @@ export default function CheckoutPage() {
                       onClick={() => setPaymentMethod('instapay')}
                       className={`w-full flex items-center gap-4 p-4 rounded-2xl border-2 transition-all duration-200 text-left ${
                         paymentMethod === 'instapay'
-                          ? 'border-instapay-brand bg-purple-500/5 shadow-inner'
-                          : 'border-border bg-surface-2/30 hover:border-purple-300'
+                          ? 'border-purple-500 bg-purple-500/5 shadow-inner'
+                          : 'border-white/10 bg-white/5 hover:border-purple-300'
                       }`}
                     >
                       <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-                        paymentMethod === 'instapay' ? 'border-instapay-brand' : 'border-muted'
+                        paymentMethod === 'instapay' ? 'border-purple-500' : 'border-white/10'
                       }`}>
-                        {paymentMethod === 'instapay' && <div className="w-2.5 h-2.5 rounded-full bg-instapay-brand" />}
+                        {paymentMethod === 'instapay' && <div className="w-2.5 h-2.5 rounded-full bg-purple-500" />}
                       </div>
-                      <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-instapay-brand to-[#8B5CF6] flex items-center justify-center flex-shrink-0 shadow-md">
+                      <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-purple-600 to-[#8B5CF6] flex items-center justify-center flex-shrink-0 shadow-md">
                         <span className="text-white font-black text-[10px] leading-none text-center">insta<br/>pay</span>
                       </div>
                       <div className="flex-1">
-                        <div className="font-black text-xs text-foreground">InstaPay</div>
-                        <div className="text-[10px] text-muted-foreground font-semibold mt-0.5">
+                        <div className="font-black text-xs text-white">InstaPay</div>
+                        <div className="text-[10px] text-text-muted font-semibold mt-0.5">
                           {t('instaPayDesc')}
                         </div>
-                        <div className="text-[10px] text-instapay-brand font-black mt-1">@2mpharmacy</div>
+                        <div className="text-[10px] text-purple-400 font-black mt-1">@2mpharmacy</div>
                       </div>
                       {paymentMethod === 'instapay' && (
-                        <span className="text-[9px] font-black uppercase bg-purple-500/10 text-instapay-brand border border-purple-500/20 px-2 py-0.5 rounded ml-auto flex-shrink-0">
+                        <span className="text-[9px] font-black uppercase bg-purple-500/10 text-purple-400 border border-purple-500/20 px-2 py-0.5 rounded ml-auto flex-shrink-0">
                           {t('selected')}
                         </span>
                       )}
@@ -441,27 +455,27 @@ export default function CheckoutPage() {
                       onClick={() => setPaymentMethod('vodafone')}
                       className={`w-full flex items-center gap-4 p-4 rounded-2xl border-2 transition-all duration-200 text-left ${
                         paymentMethod === 'vodafone'
-                          ? 'border-vodafone-brand bg-red-500/5 shadow-inner'
-                          : 'border-border bg-surface-2/30 hover:border-red-300'
+                          ? 'border-red-500 bg-red-500/5 shadow-inner'
+                          : 'border-white/10 bg-white/5 hover:border-red-300'
                       }`}
                     >
                       <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-                        paymentMethod === 'vodafone' ? 'border-vodafone-brand' : 'border-muted'
+                        paymentMethod === 'vodafone' ? 'border-red-500' : 'border-white/10'
                       }`}>
-                        {paymentMethod === 'vodafone' && <div className="w-2.5 h-2.5 rounded-full bg-vodafone-brand" />}
+                        {paymentMethod === 'vodafone' && <div className="w-2.5 h-2.5 rounded-full bg-red-500" />}
                       </div>
-                      <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-vodafone-brand to-red-500 flex items-center justify-center flex-shrink-0 shadow-md">
+                      <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-red-600 to-red-500 flex items-center justify-center flex-shrink-0 shadow-md">
                         <span className="text-white font-black text-[9px] leading-none text-center">Voda<br/>fone<br/>Cash</span>
                       </div>
                       <div className="flex-1">
-                        <div className="font-black text-xs text-foreground">Vodafone Cash</div>
-                        <div className="text-[10px] text-muted-foreground font-semibold mt-0.5">
+                        <div className="font-black text-xs text-white">Vodafone Cash</div>
+                        <div className="text-[10px] text-text-muted font-semibold mt-0.5">
                           {t('vodafoneDesc')}
                         </div>
-                        <div className="text-[10px] text-vodafone-brand font-black mt-1">01115160947</div>
+                        <div className="text-[10px] text-red-400 font-black mt-1">Official 2M Wallet</div>
                       </div>
                       {paymentMethod === 'vodafone' && (
-                        <span className="text-[9px] font-black uppercase bg-red-500/10 text-vodafone-brand border border-red-500/20 px-2 py-0.5 rounded ml-auto flex-shrink-0">
+                        <span className="text-[9px] font-black uppercase bg-red-500/10 text-red-400 border border-red-500/20 px-2 py-0.5 rounded ml-auto flex-shrink-0">
                           {t('selected')}
                         </span>
                       )}
@@ -472,24 +486,24 @@ export default function CheckoutPage() {
                       onClick={() => setPaymentMethod('ecash')}
                       className={`w-full flex items-center gap-4 p-4 rounded-2xl border-2 transition-all duration-200 text-left ${
                         paymentMethod === 'ecash'
-                          ? 'border-ecash-brand bg-orange-500/5 shadow-inner'
-                          : 'border-border bg-surface-2/30 hover:border-orange-300'
+                          ? 'border-orange-500 bg-orange-500/5 shadow-inner'
+                          : 'border-white/10 bg-white/5 hover:border-orange-300'
                       }`}
                     >
                       <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-                        paymentMethod === 'ecash' ? 'border-ecash-brand' : 'border-muted'
+                        paymentMethod === 'ecash' ? 'border-orange-500' : 'border-white/10'
                       }`}>
-                        {paymentMethod === 'ecash' && <div className="w-2.5 h-2.5 rounded-full bg-ecash-brand" />}
+                        {paymentMethod === 'ecash' && <div className="w-2.5 h-2.5 rounded-full bg-orange-500" />}
                       </div>
-                      <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#FF6600] to-ecash-brand flex items-center justify-center flex-shrink-0 shadow-md">
+                      <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#FF6600] to-orange-500 flex items-center justify-center flex-shrink-0 shadow-md">
                         <span className="text-white font-black text-[11px] leading-none">e&</span>
                       </div>
                       <div className="flex-1">
-                        <div className="font-black text-xs text-foreground">e& Cash</div>
-                        <div className="text-[10px] text-muted-foreground font-semibold mt-0.5">
+                        <div className="font-black text-xs text-white">e& Cash</div>
+                        <div className="text-[10px] text-text-muted font-semibold mt-0.5">
                           {t('ecashDesc')}
                         </div>
-                        <div className="text-[10px] text-ecash-brand font-black mt-1">01115160947</div>
+                        <div className="text-[10px] text-orange-400 font-black mt-1">Official 2M Wallet</div>
                       </div>
                       {paymentMethod === 'ecash' && (
                         <span className="text-[9px] font-black uppercase bg-orange-500/10 text-[#FF6600] border border-orange-500/20 px-2 py-0.5 rounded ml-auto flex-shrink-0">
@@ -507,26 +521,26 @@ export default function CheckoutPage() {
                     'bg-orange-500/5 border-orange-500/15'
                   }`}>
                     <p className={`font-black mb-2 flex items-center gap-1.5 ${
-                      paymentMethod === 'instapay' ? 'text-purple-700' :
-                      paymentMethod === 'vodafone' ? 'text-red-600' :
+                      paymentMethod === 'instapay' ? 'text-purple-400' :
+                      paymentMethod === 'vodafone' ? 'text-red-400' :
                       'text-[#FF6600]'
                     }`}>
                       {paymentMethod === 'instapay' && t('instaPayInstructions')}
                       {paymentMethod === 'vodafone' && t('vodafoneInstructions')}
                       {paymentMethod === 'ecash' && t('ecashInstructions')}
                     </p>
-                    <ol className="text-muted-foreground font-semibold space-y-1.5 list-decimal list-inside">
+                    <ol className="text-text-muted font-semibold space-y-1.5 list-decimal list-inside">
                       {paymentMethod === 'instapay' && (<>
                         <li>{t('instaPayStep1')}</li>
                         <li>{t('instaPayStep2')}</li>
                         <li>
                           {t.rich('instaPayStep3', {
-                            amount: () => <strong className="text-foreground">EGP {total.toLocaleString()}</strong>
+                            amount: () => <strong className="text-white">EGP {total.toLocaleString()}</strong>
                           })}
                         </li>
                         <li>
                           {t.rich('instaPayStep4', {
-                            orderNumber: () => <strong>{orderNumber}</strong>
+                            orderNumber: () => <strong className="text-white">{orderNumber}</strong>
                           })}
                         </li>
                         <li>{t('instaPayStep5')}</li>
@@ -536,12 +550,12 @@ export default function CheckoutPage() {
                         <li>{t('vodafoneStep2')}</li>
                         <li>
                           {t.rich('vodafoneStep3', {
-                            amount: () => <strong className="text-foreground">EGP {total.toLocaleString()}</strong>
+                            amount: () => <strong className="text-white">EGP {total.toLocaleString()}</strong>
                           })}
                         </li>
                         <li>
                           {t.rich('vodafoneStep4', {
-                            orderNumber: () => <strong>{orderNumber}</strong>
+                            orderNumber: () => <strong className="text-white">{orderNumber}</strong>
                           })}
                         </li>
                         <li>{t('vodafoneStep5')}</li>
@@ -551,12 +565,12 @@ export default function CheckoutPage() {
                         <li>{t('ecashStep2')}</li>
                         <li>
                           {t.rich('ecashStep3', {
-                            amount: () => <strong className="text-foreground">EGP {total.toLocaleString()}</strong>
+                            amount: () => <strong className="text-white">EGP {total.toLocaleString()}</strong>
                           })}
                         </li>
                         <li>
                           {t.rich('ecashStep4', {
-                            orderNumber: () => <strong>{orderNumber}</strong>
+                            orderNumber: () => <strong className="text-white">{orderNumber}</strong>
                           })}
                         </li>
                         <li>{t('ecashStep5')}</li>
@@ -564,16 +578,58 @@ export default function CheckoutPage() {
                     </ol>
                   </div>
 
-                  {/* WhatsApp confirmation CTA */}
-                  <div className="p-4 rounded-xl mb-5 bg-emerald-500/5 border border-emerald-500/15 flex items-start gap-3">
-                    <span className="text-xl flex-shrink-0">📲</span>
+                  {/* Verification inputs */}
+                  <div className="space-y-4 mb-6 border-t border-white/10 pt-5">
+                    <h3 className="text-xs font-black text-white uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                      <span>🛡️</span>
+                      {t('afterTransferTitle')}
+                    </h3>
+                    <p className="text-[10px] text-text-muted font-semibold mb-4 leading-relaxed">
+                      {t('afterTransferDesc')}
+                    </p>
+                    
+                    {/* Transaction Reference Input */}
                     <div>
-                      <p className="text-xs font-black text-emerald-700 mb-1">
-                        {t('afterTransferTitle')}
-                      </p>
-                      <p className="text-[10px] text-muted-foreground font-semibold leading-relaxed">
-                        {t('afterTransferDesc')}
-                      </p>
+                      <label className="block text-[10px] font-bold text-text-muted mb-1.5 uppercase tracking-wider">
+                        Transaction Reference Code / ID *
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="e.g. TXN102948576"
+                        value={transactionCode}
+                        onChange={(e) => setTransactionCode(e.target.value)}
+                        className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-3 text-xs text-white placeholder-white/35 focus:outline-none focus:border-brand-primary/45 focus:ring-4 focus:ring-brand-primary/20 transition-all font-mono"
+                      />
+                      {formErrors.transactionCode && <p className="text-red-500 text-[10px] mt-1 font-bold">{formErrors.transactionCode}</p>}
+                    </div>
+
+                    {/* Receipt Screenshot Upload */}
+                    <div>
+                      <label className="block text-[10px] font-bold text-text-muted mb-1.5 uppercase tracking-wider">
+                        Transfer Receipt Screenshot *
+                      </label>
+                      <div className="relative flex items-center justify-center border border-dashed border-white/15 rounded-xl p-4 bg-white/2 hover:bg-white/5 transition-all cursor-pointer">
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              setReceiptFile(file);
+                              setReceiptFileName(file.name);
+                            }
+                          }}
+                          className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+                        />
+                        <div className="text-center">
+                          <span className="text-lg block mb-1">📸</span>
+                          <span className="text-[10px] font-bold text-brand-gold">
+                            {receiptFileName ? receiptFileName : 'Choose Image / Drop screenshot here'}
+                          </span>
+                        </div>
+                      </div>
+                      {formErrors.receiptFile && <p className="text-red-500 text-[10px] mt-1 font-bold">{formErrors.receiptFile}</p>}
                     </div>
                   </div>
 
@@ -582,23 +638,25 @@ export default function CheckoutPage() {
                     <button
                       type="button"
                       onClick={() => setStep(2)}
-                      className="btn border border-border bg-card hover:bg-surface-2 text-foreground text-xs font-black uppercase tracking-wider px-5 py-3 rounded-xl flex-1 transition-all"
+                      className="btn border border-white/10 bg-white/5 hover:bg-white/10 text-white text-xs font-black uppercase tracking-wider px-5 py-3 rounded-xl flex-1 transition-all"
                     >
                       {t('back')}
                     </button>
-                    <a
-                      href={`https://wa.me/201115160947?text=${encodeURIComponent(`Hi! I placed order ${orderNumber} for EGP ${total.toLocaleString()} via ${paymentMethod === 'instapay' ? 'InstaPay (@2mpharmacy)' : paymentMethod === 'vodafone' ? 'Vodafone Cash (01115160947)' : 'e& Cash (01115160947)'}. Attaching transfer receipt now.`)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => setTimeout(() => setStep(4), 300)}
-                      className="btn text-xs font-black uppercase tracking-wider py-4 rounded-xl flex-1 flex items-center justify-center gap-1.5 btn-shimmer btn-elevated text-white bg-emerald-600 hover:bg-emerald-700 transition-all"
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (validatePayment()) {
+                          setTimeout(() => setStep(4), 300);
+                        }
+                      }}
+                      className="btn text-xs font-black uppercase tracking-wider py-4 rounded-xl flex-1 flex items-center justify-center gap-1.5 btn-shimmer btn-elevated text-white bg-brand-primary hover:bg-brand-primary/95 transition-all border border-brand-primary/20"
                     >
-                      <Phone size={13} />
+                      <Check size={13} />
                       <span>{t('confirmSendReceipt')} — EGP {total.toLocaleString()}</span>
-                    </a>
+                    </button>
                   </div>
 
-                  <p className="text-center text-[10px] text-muted mt-4 flex items-center justify-center gap-2 font-semibold">
+                  <p className="text-center text-[10px] text-text-muted mt-4 flex items-center justify-center gap-2 font-semibold">
                     <Shield size={11} />
                     <span>Secure Checkout</span>
                     <span>·</span>
@@ -621,31 +679,31 @@ export default function CheckoutPage() {
                 <div className="p-4 space-y-4">
                   {cartItems.map((p) => (
                     <div key={p.id} className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg flex-shrink-0 overflow-hidden bg-white border border-border-soft p-0.5 shadow-sm">
+                      <div className="w-10 h-10 rounded-lg flex-shrink-0 overflow-hidden bg-white border border-white/10 p-0.5 shadow-sm">
                         <Image src={p.image} alt={p.name} width={40} height={40} className="w-full h-full object-contain" />
                       </div>
                       <div className={`flex-1 min-w-0 ${isRtl ? 'text-right' : 'text-left'}`}>
-                        <p className="text-[11px] font-bold text-foreground truncate">{p.name}</p>
-                        <p className="text-[9px] text-muted font-semibold">{p.brand}</p>
+                        <p className="text-[11px] font-bold text-white truncate">{p.name}</p>
+                        <p className="text-[9px] text-text-muted font-semibold">{p.brand}</p>
                       </div>
-                      <span className="text-[11px] font-black text-foreground flex-shrink-0">EGP {p.price.toLocaleString()}</span>
+                      <span className="text-[11px] font-black text-white flex-shrink-0">EGP {p.price.toLocaleString()}</span>
                     </div>
                   ))}
                   
-                  <div className="border-t border-border-soft pt-3.5 space-y-2">
+                  <div className="border-t border-white/10 pt-3.5 space-y-2">
                     <div className="flex justify-between text-xs font-bold">
-                      <span className="text-muted-foreground">{t('subtotal')}</span>
-                      <span className="text-foreground">EGP {subtotal.toLocaleString()}</span>
+                      <span className="text-text-muted">{t('subtotal')}</span>
+                      <span className="text-white font-semibold">EGP {subtotal.toLocaleString()}</span>
                     </div>
                     <div className="flex justify-between text-xs font-bold">
-                      <span className="text-muted-foreground">{t('deliveryFee')}</span>
-                      <span className={deliveryFee === 0 ? 'text-emerald-600 font-black' : 'text-foreground'}>
+                      <span className="text-text-muted">{t('deliveryFee')}</span>
+                      <span className={deliveryFee === 0 ? 'text-emerald-600 font-black' : 'text-white'}>
                         {deliveryFee === 0 ? t('free') : `EGP ${deliveryFee}`}
                       </span>
                     </div>
-                    <div className="flex justify-between text-xs font-black pt-2 border-t border-border-soft/60">
-                      <span className="text-foreground uppercase">{t('payment')}</span>
-                      <span className="text-primary text-sm">EGP {total.toLocaleString()}</span>
+                    <div className="flex justify-between text-xs font-black pt-2 border-t border-white/10">
+                      <span className="text-white uppercase">{t('payment')}</span>
+                      <span className="text-brand-primary text-sm">EGP {total.toLocaleString()}</span>
                     </div>
                   </div>
                 </div>

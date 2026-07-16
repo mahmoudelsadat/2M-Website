@@ -53,37 +53,37 @@ export default function CartPage() {
         <Navbar />
         <main className="min-h-screen flex flex-col items-center justify-center py-20 bg-background">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-            className="text-center"
+            className="luxury-empty-state shadow-2xl"
           >
-            <div className="w-28 h-28 rounded-full flex items-center justify-center mx-auto mb-6 bg-brand-primary-soft">
-              <Package size={44} className="text-primary" />
+            <div className="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 bg-white/5 border border-white/10 text-brand-gold">
+              <Package size={36} />
             </div>
-            <h1 className="text-3xl font-black mb-3 text-foreground">{t('cartEmpty')}</h1>
-            <p className="mb-8 max-w-sm text-center text-muted-foreground">
+            <h1 className="text-2xl font-black mb-3 text-white font-display uppercase tracking-wide">{t('cartEmpty')}</h1>
+            <p className="mb-8 max-w-xs text-center text-text-muted text-xs leading-relaxed font-semibold">
               {t('cartEmptyDesc')}
             </p>
-            <Link href="/pharmacy" className="btn btn-primary btn-shimmer btn-elevated px-10 text-base">
-              {t('startShopping')} <ArrowRight size={16} />
+            <Link href="/pharmacy" className="btn btn-primary btn-shimmer btn-elevated px-8 text-xs font-black uppercase tracking-wider">
+              {t('startShopping')} <ArrowRight size={14} />
             </Link>
           </motion.div>
 
           {/* Suggested picks */}
           <div className="mt-16 container-2m w-full">
-            <h2 className="text-lg font-bold mb-5 text-center text-muted-foreground">{t('popularRightNow')}</h2>
+            <h2 className="text-sm font-black uppercase tracking-widest mb-6 text-center text-text-muted">{t('popularRightNow')}</h2>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               {upsellProducts.map(p => (
                 <Link key={p.id} href={`/product/${p.slug}`}
-                  className="rounded-2xl border overflow-hidden group transition-all hover:-translate-y-1 hover:shadow-lg bg-card border-border">
-                  <div className="aspect-square relative bg-surface-2">
+                  className="rounded-2xl border overflow-hidden group transition-all hover:-translate-y-1 hover:shadow-lg glass-panel border-white/10">
+                  <div className="aspect-square relative bg-white/5">
                     <Image src={p.image} alt={p.name} fill sizes="(max-width: 640px) 50vw, 200px" className="w-full h-full object-contain p-3 transition-transform duration-300 group-hover:scale-105" />
                   </div>
                   <div className="p-3">
-                    <p className="text-[11px] font-bold uppercase tracking-wider mb-1 text-muted">{p.brand}</p>
-                    <p className="text-xs font-semibold line-clamp-2 mb-1 text-foreground">{p.name}</p>
-                    <p className="text-sm font-black text-primary">{formatEGP(p.price)}</p>
+                    <p className="text-[11px] font-bold uppercase tracking-wider mb-1 text-text-muted">{p.brand}</p>
+                    <p className="text-xs font-semibold line-clamp-2 mb-1 text-white">{p.name}</p>
+                    <p className="text-sm font-black text-brand-primary">{formatEGP(p.price)}</p>
                   </div>
                 </Link>
               ))}
@@ -124,7 +124,7 @@ export default function CartPage() {
                     animate={{ opacity: removingId === item.id ? 0 : 1, x: removingId === item.id ? -40 : 0, y: 0 }}
                     exit={{ opacity: 0, x: -40 }}
                     transition={{ duration: 0.28, ease: 'easeOut' }}
-                    className="flex gap-4 p-4 rounded-2xl border group hover:shadow-md transition-all duration-200 bg-card border-border"
+                    className="flex gap-4 p-4 rounded-2xl border group hover:shadow-md transition-all duration-200 glass-panel border-white/10"
                   >
                     {/* Image */}
                     <Link href={`/product/${item.slug}`} className="flex-shrink-0">
@@ -144,7 +144,7 @@ export default function CartPage() {
 
                       <div className="flex items-center justify-between mt-3 flex-wrap gap-2">
                         {/* Qty stepper */}
-                        <div className="flex items-center rounded-xl overflow-hidden border bg-surface-2 border-border">
+                        <div className="flex items-center rounded-xl overflow-hidden border bg-white/5 border-white/10">
                           <button
                             onClick={() => item.qty <= 1 ? handleRemove(item.id) : updateQty(item.id, item.qty - 1)}
                             className="w-9 h-9 flex items-center justify-center transition-all text-muted hover:bg-surface-3"
@@ -196,14 +196,14 @@ export default function CartPage() {
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                   {upsellProducts.map(p => (
                     <Link key={p.id} href={`/product/${p.slug}`}
-                      className="rounded-xl border overflow-hidden group transition-all hover:-translate-y-0.5 hover:shadow-md bg-card border-border">
-                      <div className="aspect-square relative bg-surface-2">
+                      className="rounded-xl border overflow-hidden group transition-all hover:-translate-y-0.5 hover:shadow-md glass-panel border-white/10">
+                      <div className="aspect-square relative bg-white/5">
                         <Image src={p.image} alt={p.name} fill sizes="(max-width: 640px) 50vw, 150px" className="w-full h-full object-contain p-2 transition-transform duration-300 group-hover:scale-105" />
                       </div>
                       <div className="p-2">
-                        <p className="text-[10px] font-bold uppercase tracking-wider mb-0.5 text-muted">{p.brand}</p>
-                        <p className="text-[11px] font-semibold line-clamp-2 mb-1 text-foreground">{p.name}</p>
-                        <p className="text-xs font-black text-primary">{formatEGP(p.price)}</p>
+                        <p className="text-[10px] font-bold uppercase tracking-wider mb-0.5 text-text-muted">{p.brand}</p>
+                        <p className="text-[11px] font-semibold line-clamp-2 mb-1 text-white">{p.name}</p>
+                        <p className="text-xs font-black text-brand-primary">{formatEGP(p.price)}</p>
                       </div>
                     </Link>
                   ))}
@@ -213,8 +213,8 @@ export default function CartPage() {
 
             {/* ── Order Summary ── */}
             <div className="lg:col-span-1">
-              <div className="sticky top-24 rounded-2xl border overflow-hidden bg-card border-border">
-                <div className="p-5 border-b border-border">
+              <div className="sticky top-24 rounded-2xl border overflow-hidden glass-panel border-white/10 neon-edge">
+                <div className="p-5 border-b border-white/10">
                   <h2 className="font-black text-lg text-foreground">{t('orderSummary')}</h2>
                 </div>
 

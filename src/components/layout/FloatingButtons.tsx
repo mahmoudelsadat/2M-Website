@@ -1,6 +1,6 @@
 'use client';
 
-import { MessageCircle, Home, Search, ShoppingBag, ShoppingCart, User } from 'lucide-react';
+import { Sparkles, Home, Search, ShoppingBag, ShoppingCart, User } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -9,7 +9,6 @@ import { useTranslations } from 'next-intl';
 
 export default function FloatingButtons() {
   const [visible, setVisible] = useState(false);
-  const [showTooltip, setShowTooltip] = useState(false);
   const t = useTranslations('Layout');
 
   useEffect(() => {
@@ -17,52 +16,20 @@ export default function FloatingButtons() {
     return () => clearTimeout(tTimer);
   }, []);
 
-  useEffect(() => {
-    if (!visible) return;
-    const t1  = setTimeout(() => setShowTooltip(true), 1200);
-    const t2 = setTimeout(() => setShowTooltip(false), 5000);
-    const iv = setInterval(() => {
-      setShowTooltip(true);
-      setTimeout(() => setShowTooltip(false), 3500);
-    }, 10000);
-    return () => { clearTimeout(t1); clearTimeout(t2); clearInterval(iv); };
-  }, [visible]);
-
   return (
     <div
-      className={`fixed bottom-[76px] lg:bottom-6 right-5 z-50 flex flex-col items-end gap-3 transition-all duration-500 ${
+      className={`fixed bottom-6 right-5 z-30 transition-all duration-500 ${
         visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 pointer-events-none'
       }`}
     >
-      {/* Tooltip bubble */}
-      <div
-        className={`transition-all duration-300 ${
-          showTooltip ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4 pointer-events-none'
-        }`}
+      <Link
+        href="/pharmacy"
+        className="glass-panel flex items-center gap-2 rounded-full px-4 py-3 text-[11px] font-semibold text-white/90 hover:text-white transition-all duration-200"
+        aria-label={t('shop')}
       >
-        <div
-          className="text-xs font-bold text-white px-3.5 py-2 rounded-full shadow-whatsapp flex items-center gap-1.5 bg-whatsapp whitespace-nowrap"
-        >
-          <MessageCircle size={11} className="fill-white" />
-          {t('whatsappChatPrompt')}
-        </div>
-        {/* Arrow */}
-        <div className="w-0 h-0 ml-auto mr-5 mt-0.5 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px] border-t-whatsapp" />
-      </div>
-
-      {/* WhatsApp Button with wa-pulse animation */}
-      <a
-        href={`https://wa.me/201115160947?text=${encodeURIComponent(t('whatsappMessage'))}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        id="whatsapp-float-btn"
-        className="w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 wa-pulse bg-gradient-to-br from-whatsapp to-whatsapp-dark shadow-whatsapp-btn"
-        aria-label={t('chatOnWhatsapp')}
-        onMouseEnter={() => setShowTooltip(true)}
-        onMouseLeave={() => setShowTooltip(false)}
-      >
-        <MessageCircle size={26} className="text-white fill-white" />
-      </a>
+        <Sparkles size={14} className="text-brand-accent" />
+        <span>{t('shop')}</span>
+      </Link>
     </div>
   );
 }
@@ -83,7 +50,7 @@ export function MobileBottomNav() {
 
   return (
     <nav
-      className="fixed bottom-0 left-0 right-0 z-40 lg:hidden border-t bg-card border-border shadow-mobile-nav"
+      className="fixed bottom-0 left-0 right-0 z-40 lg:hidden border-t border-white/10 bg-[#060700]/90 backdrop-blur-xl shadow-[0_-12px_40px_rgba(0,0,0,0.35)]"
       style={{
         paddingBottom: 'env(safe-area-inset-bottom)',
       }}

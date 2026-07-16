@@ -70,7 +70,8 @@ export default function RootLayout({
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${manrope.variable} ${hankenGrotesk.variable} ${cairo.variable}`}
+      className={`dark ${manrope.variable} ${hankenGrotesk.variable} ${cairo.variable}`}
+      style={{ colorScheme: 'dark' }}
     >
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />

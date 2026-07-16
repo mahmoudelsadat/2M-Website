@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation';
 import {
   ShoppingCart, User, Menu, X, ChevronDown, Sun, Moon,
   ShieldCheck, Globe, Search, Pill, Sparkles, Leaf, Droplets,
-  Tag, Package, Phone, ArrowRight, Zap, Heart
+  Tag, Package, ArrowRight, Zap, Heart
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { navLinks } from '@/lib/data';
@@ -27,17 +27,16 @@ const CAT_META: Record<string, { icon: React.ReactNode; color: string; bg: strin
 
 // ─── Dark Mode Toggle ──────────────────────────────────────────
 function DarkModeToggle({ compact = false }: { compact?: boolean }) {
-  const [dark, setDark] = useState(false);
+  const [dark, setDark] = useState(true);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
     const saved = localStorage.getItem('2m-theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if (saved === 'dark' || (!saved && prefersDark)) {
-      setDark(true);
-      document.documentElement.classList.add('dark');
-    }
+    const nextDark = saved === 'light' ? false : true;
+    setDark(nextDark);
+    document.documentElement.classList.toggle('dark', nextDark);
+    document.documentElement.classList.toggle('light', !nextDark);
   }, []);
 
   const toggle = () => {
@@ -45,6 +44,7 @@ function DarkModeToggle({ compact = false }: { compact?: boolean }) {
     setDark(next);
     localStorage.setItem('2m-theme', next ? 'dark' : 'light');
     document.documentElement.classList.toggle('dark', next);
+    document.documentElement.classList.toggle('light', !next);
   };
 
   if (!mounted) return <div className={compact ? 'w-8 h-8' : 'w-9 h-9'} />;
@@ -151,7 +151,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
   return (
     <>
       {/* ── Announcement Bar ─────────────────────────────────── */}
-      <div className="relative z-50 select-none overflow-hidden bg-[#060700]/95 border-b border-neutral-900 min-h-[36px]">
+      <div className="relative z-50 select-none overflow-hidden bg-[#060700]/95 border-b border-white/10 min-h-[36px]">
         <div className="container-2m flex items-center justify-between h-9 gap-4">
           {/* Left: scrolling announcement marquee */}
           <div className="flex-1 overflow-hidden relative h-full flex items-center whitespace-nowrap mask-edges">
@@ -159,7 +159,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
               {[...Array(2)].map((_, i) => (
                 <div key={i} className="flex gap-8 px-4 items-center">
                   {announcements.map((anno, idx) => (
-                    <span key={idx} className="text-[11px] font-semibold text-neutral-400">
+                    <span key={idx} className="text-[11px] font-semibold text-white/70">
                       {anno}
                     </span>
                   ))}
@@ -170,17 +170,9 @@ export default function Navbar({ cartCount }: NavbarProps) {
 
           {/* Right: trust badges + admin pill */}
           <div className="flex items-center gap-3 flex-shrink-0">
-            <a
-              href="https://wa.me/201115160947"
-              target="_blank" rel="noopener noreferrer"
-              className="hidden md:flex items-center gap-1.5 text-[11px] font-bold text-emerald-500 hover:text-emerald-400 transition-colors"
-            >
-              <Phone size={11} />
-              <span>01115160947</span>
-            </a>
-            <span className="hidden md:inline text-neutral-800">|</span>
-            <span className="hidden sm:flex items-center gap-1 text-[11px] text-neutral-400 font-medium">
-              <ShieldCheck size={11} className="text-teal-500" />
+            <span className="hidden md:inline text-white/20">|</span>
+            <span className="hidden sm:flex items-center gap-1 text-[11px] text-white/70 font-medium">
+              <ShieldCheck size={11} className="text-teal-400" />
               {t('authenticShort')}
             </span>
             {adminLoggedIn && (
@@ -198,20 +190,22 @@ export default function Navbar({ cartCount }: NavbarProps) {
 
       {/* ── Main Navbar ──────────────────────────────────────── */}
       <nav
-        className={`sticky top-0 z-40 transition-all duration-300 bg-white/85 dark:bg-[#1A1C1C]/90 backdrop-blur-[12px] border-b border-border shadow-sm py-0`}
+        className="sticky top-0 z-40 transition-all duration-300 py-0 glass-nav"
       >
         <div className="container-2m">
           <div className="flex items-center justify-between h-[72px] gap-4">
 
             {/* ── Logo ── */}
-            <Link href="/" className="flex flex-col select-none justify-center group" aria-label="2M Pharmacy">
-              <div className="flex items-baseline gap-1">
-                <span className="text-xl font-black tracking-tight text-text-primary">2M</span>
-                <span className="text-base font-semibold text-text-primary">Pharmacy</span>
+            <Link href="/" className="flex items-center gap-2.5 select-none justify-center group" aria-label="2M Pharmacy">
+              <div className="w-10 h-10 rounded-xl bg-white text-black flex items-center justify-center font-black text-xl tracking-tighter shadow-md border border-white/20 transition-all duration-300 group-hover:scale-105">
+                2M
               </div>
-              <span className="text-[7.5px] font-bold tracking-[0.2em] text-text-muted uppercase leading-none mt-0.5">
-                {t('premiumHealth')}
-              </span>
+              <div className="flex flex-col items-start leading-none">
+                <span className="text-sm font-black tracking-wider text-text-primary uppercase">Pharmacy</span>
+                <span className="text-[7.5px] font-bold tracking-[0.18em] text-text-muted uppercase mt-0.5">
+                  {t('premiumHealth')}
+                </span>
+              </div>
             </Link>
 
             {/* ── Desktop Nav Links ── */}
@@ -273,7 +267,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
                             transition={{ duration: 0.18, ease: 'easeOut' }}
                             onMouseEnter={() => openMenu(link.label)}
                             onMouseLeave={closeMenu}
-                            className={`absolute top-full ${isRtl ? 'right-0 origin-top-right' : 'left-0 origin-top-left'} mt-1 w-[520px] min-w-[520px] max-w-[95vw] bg-white dark:bg-dark-surface border border-border rounded-2xl shadow-lg z-50 overflow-hidden`}
+                            className={`absolute top-full ${isRtl ? 'right-0 origin-top-right' : 'left-0 origin-top-left'} mt-1 w-[520px] min-w-[520px] max-w-[95vw] glass-panel border border-white/10 rounded-2xl z-50 overflow-hidden`}
                           >
                             <div className="h-1 w-full bg-gradient-to-r from-brand-primary to-brand-accent" />
 
@@ -309,7 +303,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
                               </div>
 
                               {/* Right: featured deal card */}
-                              <div className="col-span-2 rounded-xl p-4 flex flex-col justify-between relative overflow-hidden border border-border bg-surface-2">
+                              <div className="col-span-2 rounded-xl p-4 flex flex-col justify-between relative overflow-hidden border border-white/10 bg-white/5">
                                 <div>
                                   <div className="flex items-center justify-between mb-2">
                                     <span className="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md border border-brand-accent/20 bg-brand-accent-soft text-brand-accent">
@@ -410,9 +404,6 @@ export default function Navbar({ cartCount }: NavbarProps) {
               </div>
 
               {/* Accessibility toggles inside submenus/clean buttons */}
-              <div className="hidden sm:block">
-                <DarkModeToggle />
-              </div>
 
               <motion.button
                 id="nav-lang-btn"
@@ -452,7 +443,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{   opacity: 0, height: 0 }}
-                className="overflow-hidden"
+                className="overflow-visible"
               >
                 <div className="pb-4 pt-1">
                   <SearchAutocomplete onClose={() => setSearchOpen(false)} />
@@ -486,9 +477,14 @@ export default function Navbar({ cartCount }: NavbarProps) {
             >
               {/* Drawer header */}
               <div className="relative flex items-center justify-between px-5 py-4 flex-shrink-0 bg-surface-2 border-b border-border">
-                <div className="flex flex-col">
-                  <div className="text-text-primary font-black text-sm leading-none">{t('storeName')}</div>
-                  <div className="text-text-muted text-[9px] font-semibold uppercase tracking-wider mt-0.5">{t('premium')}</div>
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-lg bg-white text-black flex items-center justify-center font-black text-base tracking-tighter shadow-sm border border-white/10">
+                    2M
+                  </div>
+                  <div className="flex flex-col items-start leading-none">
+                    <span className="text-xs font-black text-text-primary uppercase">Pharmacy</span>
+                    <span className="text-[7.5px] font-bold tracking-[0.12em] text-text-muted uppercase mt-0.5">{t('premium')}</span>
+                  </div>
                 </div>
                 <button
                   onClick={() => setMobileOpen(false)}
@@ -582,16 +578,15 @@ export default function Navbar({ cartCount }: NavbarProps) {
 
               {/* Drawer footer */}
               <div className="p-4 border-t border-border space-y-3 flex-shrink-0 bg-surface-2">
-                {/* Lang + dark mode row */}
-                <div className="flex items-center gap-2">
+                {/* Lang row */}
+                <div className="flex items-center">
                   <button
                     onClick={() => setLocale(locale === 'en' ? 'ar' : 'en')}
-                    className="flex-1 flex items-center justify-center gap-2 h-10 rounded-lg border border-border text-[11px] font-semibold uppercase tracking-wider text-text-secondary hover:bg-surface-3 transition-colors"
+                    className="w-full flex items-center justify-center gap-2 h-10 rounded-lg border border-border text-[11px] font-semibold uppercase tracking-wider text-text-secondary hover:bg-surface-3 transition-colors"
                   >
                     <Globe size={13} className="text-brand-primary" />
                     {t('languageName')}
                   </button>
-                  <DarkModeToggle />
                 </div>
 
                 {/* Cart CTA */}
@@ -608,14 +603,10 @@ export default function Navbar({ cartCount }: NavbarProps) {
                   )}
                 </Link>
 
-                {/* WhatsApp quick link */}
-                <a
-                  href="https://wa.me/201115160947"
-                  target="_blank" rel="noopener noreferrer"
-                  className="w-full h-10 flex items-center justify-center gap-2 rounded-lg border border-emerald-500/20 bg-emerald-500/10 text-[11px] font-semibold text-emerald-600 hover:bg-emerald-500/20 transition-colors"
-                >
-                  <Phone size={13} /> 01115160947 (WhatsApp)
-                </a>
+                <div className="w-full h-10 flex items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/5 text-[11px] font-semibold text-text-secondary">
+                  <ShieldCheck size={13} className="text-brand-accent" />
+                  Curated access only
+                </div>
               </div>
             </motion.aside>
           </>

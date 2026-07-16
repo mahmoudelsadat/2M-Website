@@ -102,15 +102,15 @@ export default function LoginPage() {
           <div className="absolute -bottom-12 -right-12 w-64 h-64 bg-gray-200 rounded-full blur-3xl pointer-events-none opacity-50 dark:opacity-10" />
 
           {/* Portal Card */}
-          <div className="shadow-xl rounded-xl border border-border bg-card relative z-10 overflow-hidden">
+          <div className="glass-panel neon-edge rounded-3xl relative z-10 overflow-hidden">
             
             {/* Top decorative branding tag */}
-            <div className="h-1.5 w-full bg-gradient-to-r from-primary to-brand-gold" />
+            <div className="h-1.5 w-full bg-gradient-to-r from-brand-primary to-brand-gold" />
             
             <div className="p-8">
               {/* Header */}
               <div className="text-center mb-8">
-                <Link href="/" className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-black text-white font-black text-xl mb-4 shadow-lg hover:scale-105 transition-transform">
+                <Link href="/" className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-white text-black font-black text-xl mb-4 shadow-lg hover:scale-105 transition-transform border border-white/20">
                   2M
                 </Link>
                 <h1 className="text-2xl font-black text-foreground font-display">
@@ -122,7 +122,7 @@ export default function LoginPage() {
               </div>
 
               {/* Tab Switcher */}
-              <div className="flex bg-surface-2 p-1 rounded-xl mb-8 border border-border relative">
+              <div className="flex bg-white/5 p-1 rounded-xl mb-8 border border-white/10 relative">
                 <button
                   type="button"
                   onClick={() => { setIsLogin(true); setErrors({}); }}
@@ -134,7 +134,7 @@ export default function LoginPage() {
                   {isLogin && (
                     <motion.div
                       layoutId="active-auth-tab"
-                      className="absolute inset-0 bg-card shadow-xs rounded-lg -z-10 border border-border"
+                      className="absolute inset-0 bg-white/5 shadow-xs rounded-lg -z-10 border border-white/10"
                     />
                   )}
                 </button>
@@ -149,7 +149,7 @@ export default function LoginPage() {
                   {!isLogin && (
                     <motion.div
                       layoutId="active-auth-tab"
-                      className="absolute inset-0 bg-card shadow-xs rounded-lg -z-10 border border-border"
+                      className="absolute inset-0 bg-white/5 shadow-xs rounded-lg -z-10 border border-white/10"
                     />
                   )}
                 </button>
@@ -177,9 +177,9 @@ export default function LoginPage() {
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             placeholder={t('fullNameLabel')}
-                            className={`w-full p-3 bg-surface-2 border ${
-                              errors.name ? 'border-red-400 focus:ring-red-500/10' : 'border-border focus:border-brand-primary focus:ring-brand-primary/5'
-                            } rounded-lg ps-11 pe-4 text-sm text-foreground placeholder-gray-400 focus:outline-none focus:ring-2 transition-all`}
+                            className={`w-full p-3 bg-white/5 border ${
+                              errors.name ? 'border-red-400 focus:ring-red-500/10' : 'border-white/10 focus:border-brand-primary/45 focus:ring-brand-primary/20'
+                            } rounded-lg ps-11 pe-4 text-sm text-white placeholder-white/35 focus:outline-none focus:ring-2 transition-all`}
                           />
                         </div>
                         {errors.name && (
@@ -202,9 +202,9 @@ export default function LoginPage() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="email@example.com"
-                      className={`w-full p-3 bg-surface-2 border ${
-                        errors.email ? 'border-red-400 focus:ring-red-500/10' : 'border-border focus:border-brand-primary focus:ring-brand-primary/5'
-                      } rounded-lg ps-11 pe-4 text-sm text-foreground placeholder-gray-400 focus:outline-none focus:ring-2 transition-all`}
+                      className={`w-full p-3 bg-white/5 border ${
+                        errors.email ? 'border-red-400 focus:ring-red-500/10' : 'border-white/10 focus:border-brand-primary/45 focus:ring-brand-primary/20'
+                      } rounded-lg ps-11 pe-4 text-sm text-white placeholder-white/35 focus:outline-none focus:ring-2 transition-all`}
                     />
                   </div>
                   {errors.email && (
@@ -224,9 +224,9 @@ export default function LoginPage() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••"
-                      className={`w-full p-3 bg-surface-2 border ${
-                        errors.password ? 'border-red-400 focus:ring-red-500/10' : 'border-border focus:border-brand-primary focus:ring-brand-primary/5'
-                      } rounded-lg ps-11 pe-11 text-sm text-foreground placeholder-gray-400 focus:outline-none focus:ring-2 transition-all`}
+                      className={`w-full p-3 bg-white/5 border ${
+                        errors.password ? 'border-red-400 focus:ring-red-500/10' : 'border-white/10 focus:border-brand-primary/45 focus:ring-brand-primary/20'
+                      } rounded-lg ps-11 pe-11 text-sm text-white placeholder-white/35 focus:outline-none focus:ring-2 transition-all`}
                     />
                     <button
                       type="button"
@@ -263,9 +263,9 @@ export default function LoginPage() {
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             placeholder="••••••••"
-                            className={`w-full p-3 bg-surface-2 border ${
-                              errors.confirmPassword ? 'border-red-400 focus:ring-red-500/10' : 'border-border focus:border-brand-primary focus:ring-brand-primary/5'
-                            } rounded-lg ps-11 pe-4 text-sm text-foreground placeholder-gray-400 focus:outline-none focus:ring-2 transition-all`}
+                            className={`w-full p-3 bg-white/5 border ${
+                              errors.confirmPassword ? 'border-red-400 focus:ring-red-500/10' : 'border-white/10 focus:border-brand-primary/45 focus:ring-brand-primary/20'
+                            } rounded-lg ps-11 pe-4 text-sm text-white placeholder-white/35 focus:outline-none focus:ring-2 transition-all`}
                           />
                         </div>
                         {errors.confirmPassword && (

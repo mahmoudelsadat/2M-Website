@@ -105,7 +105,7 @@ export const DEFAULT_PRODUCTS: AdminProduct[] = [
 ];
 
 export const DEFAULT_ORDERS: AdminOrder[] = [
-  { id: '2M-91044', customer: 'Mahmoud El Sadat', phone: '01115160947', items: 'Solgar D3 + Altruist Dry Skin', total: 890, status: 'shipped', paymentMethod: 'instapay', address: 'Cairo, Maadi', date: '2026-05-22', notes: '' },
+  { id: '2M-91044', customer: 'Mahmoud El Sadat', phone: '01234567890', items: 'Solgar D3 + Altruist Dry Skin', total: 890, status: 'shipped', paymentMethod: 'instapay', address: 'Cairo, Maadi', date: '2026-05-22', notes: '' },
   { id: '2M-90821', customer: 'Yasmin Nour', phone: '01098765432', items: 'Altruist Sunscreen + Solgar Zinc', total: 720, status: 'delivered', paymentMethod: 'vodafone', address: 'Giza, Dokki', date: '2026-05-18', notes: '' },
   { id: '2M-90765', customer: 'Tarek Aly', phone: '01234567890', items: 'Nordic Naturals Omega-3 120ct', total: 1250, status: 'pending', paymentMethod: 'ecash', address: 'Alexandria, Sidi Gaber', date: '2026-05-22', notes: 'Please pack carefully' },
   { id: '2M-90510', customer: 'Farida Kamel', phone: '01122334455', items: 'CeraVe Hydrating Cleanser 473ml', total: 680, status: 'canceled', paymentMethod: 'instapay', address: 'Cairo, Heliopolis', date: '2026-05-15', notes: '' },
@@ -113,7 +113,7 @@ export const DEFAULT_ORDERS: AdminOrder[] = [
 ];
 
 export const DEFAULT_CUSTOMERS: AdminCustomer[] = [
-  { id: 'c1', name: 'Mahmoud El Sadat', phone: '01115160947', email: 'mahmoud@example.com', address: 'Cairo, Maadi', totalOrders: 4, totalSpent: 2890, joinDate: '2026-01-15' },
+  { id: 'c1', name: 'Mahmoud El Sadat', phone: '01234567890', email: 'mahmoud@example.com', address: 'Cairo, Maadi', totalOrders: 4, totalSpent: 2890, joinDate: '2026-01-15' },
   { id: 'c2', name: 'Yasmin Nour', phone: '01098765432', email: 'yasmin@example.com', address: 'Giza, Dokki', totalOrders: 2, totalSpent: 1420, joinDate: '2026-02-20' },
   { id: 'c3', name: 'Tarek Aly', phone: '01234567890', email: 'tarek@example.com', address: 'Alexandria', totalOrders: 3, totalSpent: 3100, joinDate: '2026-03-05' },
   { id: 'c4', name: 'Farida Kamel', phone: '01122334455', email: 'farida@example.com', address: 'Cairo, Heliopolis', totalOrders: 1, totalSpent: 680, joinDate: '2026-04-12' },
@@ -132,14 +132,14 @@ export const DEFAULT_ANNOUNCEMENTS: Announcement[] = [
   { id: 'a2', textEn: '⚡ Pay via InstaPay · Vodafone Cash · e& Cash', textAr: '⚡ الدفع عبر InstaPay · Vodafone Cash · e& Cash', active: true },
   { id: 'a3', textEn: '✅ 100% Authentic — Pharmacist Curated Products', textAr: '✅ منتجات أصلية 100% — اختيار صيادلة متخصصين', active: true },
   { id: 'a4', textEn: '📦 Egypt-wide delivery in 2–5 business days', textAr: '📦 توصيل لكافة محافظات مصر خلال 2–5 أيام عمل', active: true },
-  { id: 'a5', textEn: '💊 Prescription advice? Chat with us on WhatsApp', textAr: '💊 استشارة دوائية؟ تحدث معنا على واتساب', active: true },
+  { id: 'a5', textEn: '💊 Request Curated Formulation Advisory Desk', textAr: '💊 طلب استشارات وتركيبات علاجية مخصصة لدى مكتب الاستعلامات', active: true },
 ];
 
 export const DEFAULT_SETTINGS: SiteSettings = {
   storeNameEn: '2M Premium Pharmacy',
   storeNameAr: 'صيدلية 2M المتميزة',
-  whatsapp: '201115160947',
-  phone: '01115160947',
+  whatsapp: '',
+  phone: '',
   email: 'hello@2mpharmacy.com',
   address: 'Cairo, Egypt',
   freeDeliveryThreshold: 500,

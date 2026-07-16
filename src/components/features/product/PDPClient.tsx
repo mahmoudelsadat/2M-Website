@@ -275,7 +275,7 @@ export default function PDPClient({ product, related }: PDPClientProps) {
               {TRUST_ITEMS.map(({ icon: Icon, labelKey, color }) => (
                 <div
                   key={labelKey}
-                  className="flex flex-col items-center gap-1.5 p-3 rounded-xl text-center shadow-sm bg-card border border-border"
+                  className="flex flex-col items-center gap-1.5 p-3 rounded-xl text-center shadow-sm glass-panel border border-white/10"
                 >
                   <Icon size={16} style={{ color }} />
                   <span className="text-[10px] text-muted-foreground font-semibold leading-tight">{t(labelKey)}</span>
@@ -283,18 +283,16 @@ export default function PDPClient({ product, related }: PDPClientProps) {
               ))}
             </div>
 
-            {/* WhatsApp CTA */}
+            {/* Concierge CTA */}
             <a
-              href={`https://wa.me/201115160947?text=Hi%2C%20I%27m%20interested%20in%20${encodeURIComponent(product.name)}%20at%202M%20Premium%20Pharmacy`}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={`mailto:concierge@2mpharmacy.com?subject=Inquiry%20regarding%20${encodeURIComponent(product.name)}`}
               id="pdp-whatsapp-cta"
-              className="flex items-center gap-3 p-4 rounded-xl border border-green-500/20 bg-green-50/50 dark:bg-green-950/20 hover:bg-green-100/50 dark:hover:bg-green-950/30 transition-all duration-200 group"
+              className="flex items-center gap-3 p-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-200 group"
             >
-              <MessageCircle size={20} className="text-green-600 flex-shrink-0" />
+              <MessageCircle size={20} className="text-brand-gold flex-shrink-0" />
               <div>
-                <div className="text-sm font-bold text-green-900 dark:text-green-100">{t('haveQuestions')}</div>
-                <div className="text-xs text-green-700 dark:text-green-400 group-hover:text-green-800 dark:group-hover:text-green-300 transition-colors font-medium">{t('chatPharmacist')}</div>
+                <div className="text-sm font-bold text-white">{t('haveQuestions')}</div>
+                <div className="text-xs text-brand-gold group-hover:underline transition-colors font-medium">{t('chatPharmacist')}</div>
               </div>
             </a>
           </div>
@@ -302,7 +300,7 @@ export default function PDPClient({ product, related }: PDPClientProps) {
 
         {/* Product Detail Tabs */}
         <div className="mb-16">
-          <div className="flex gap-0 border-b border-border mb-8 overflow-x-auto">
+          <div className="flex gap-0 border-b border-white/10 mb-8 overflow-x-auto">
             {TABS.map((tab) => (
               <button
                 key={tab.id}
@@ -310,7 +308,7 @@ export default function PDPClient({ product, related }: PDPClientProps) {
                 onClick={() => setActiveTab(tab.id)}
                 className={`flex-shrink-0 px-5 py-3 text-sm font-semibold transition-all duration-200 border-b-2 -mb-px ${
                   activeTab === tab.id
-                    ? 'border-primary text-primary'
+                    ? 'border-brand-primary text-brand-primary'
                     : 'border-transparent text-muted-foreground hover:text-foreground'
                 }`}
               >
@@ -337,7 +335,7 @@ export default function PDPClient({ product, related }: PDPClientProps) {
             {activeTab === 'ingredients' && (
               <div className="text-muted-foreground text-sm leading-relaxed">
                 <p className="mb-4">{t('ingredientsNotice')}</p>
-                <div className="p-4 rounded-xl border border-border bg-card">
+                <div className="p-4 rounded-xl border border-white/10 bg-white/5">
                   <p className="text-muted text-xs">{t('ingredientsRefer')}</p>
                 </div>
               </div>
@@ -449,7 +447,7 @@ export default function PDPClient({ product, related }: PDPClientProps) {
             initial={{ y: 100 }}
             animate={{ y: 0 }}
             exit={{ y: 100 }}
-            className="fixed bottom-0 left-0 right-0 z-40 p-3 sm:p-4 border-t border-border bg-card/95 backdrop-blur-xl shadow-[0_-8px_30px_rgba(0,0,0,0.08)] flex items-center justify-between gap-4"
+            className="fixed bottom-20 left-0 right-0 z-30 p-3 sm:p-4 border-t border-white/10 bg-[#060700]/90 backdrop-blur-xl shadow-[0_-18px_45px_rgba(0,0,0,0.35)] flex items-center justify-between gap-4 sm:bottom-0"
           >
             <div className="hidden sm:flex items-center gap-3">
               <div className="w-12 h-12 rounded-lg border border-border bg-background p-1 overflow-hidden">

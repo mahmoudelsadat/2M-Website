@@ -19,7 +19,7 @@ export default function BackToTop() {
       id="back-to-top"
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
       aria-label={t('backToTop')}
-      className={`fixed bottom-24 right-5 z-40 w-10 h-10 rounded-full flex items-center justify-center shadow-back-to-top transition-all duration-300 lg:bottom-8 bg-back-to-top text-white ${
+      className={`fixed bottom-24 right-5 z-30 w-10 h-10 rounded-full flex items-center justify-center border border-white/10 bg-[#060700]/90 backdrop-blur-xl text-white shadow-[0_12px_35px_rgba(0,0,0,0.35)] transition-all duration-300 ${
         visible ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto' : 'opacity-0 translate-y-2 scale-[0.85] pointer-events-none'
       }`}
     >

@@ -90,7 +90,7 @@ export default function AccountPage() {
         <div className="max-w-6xl mx-auto px-4">
           
           {/* Main User Dashboard Header */}
-          <div className="mb-10 bg-gradient-to-r from-brand-primary/10 via-brand-gold/5 to-brand-primary/5 rounded-3xl p-6 md:p-8 border border-border-soft relative overflow-hidden flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+          <div className="mb-10 glass-panel neon-edge rounded-3xl p-6 md:p-8 relative overflow-hidden flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
             <div className="absolute top-0 right-0 w-64 h-64 bg-brand-gold/5 rounded-full blur-3xl pointer-events-none" />
             <div className="flex items-center gap-5 relative z-10">
               <div className="w-16 h-16 rounded-2xl bg-surface border-2 border-brand-gold flex items-center justify-center text-brand-primary shadow-lg font-black text-2xl uppercase">
@@ -127,7 +127,7 @@ export default function AccountPage() {
             <div className="space-y-8 lg:col-span-1">
               
               {/* Loyalty Score Card */}
-              <div className="card border border-border p-6 rounded-2xl bg-card shadow-sm relative overflow-hidden">
+              <div className="glass-panel neon-edge p-6 rounded-2xl relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-brand-gold/5 rounded-full blur-2xl pointer-events-none" />
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-xs font-black text-text-secondary uppercase tracking-wider flex items-center gap-1.5">
@@ -145,7 +145,7 @@ export default function AccountPage() {
                 </div>
 
                 {/* Progress bar container */}
-                <div className="w-full bg-surface-2 h-3 rounded-full overflow-hidden border border-border-soft mb-3 relative">
+                <div className="w-full bg-white/5 h-3 rounded-full overflow-hidden border border-white/10 mb-3 relative">
                   <motion.div 
                     initial={{ width: 0 }}
                     animate={{ width: `${(loyaltyPoints / 500) * 100}%` }}
@@ -177,7 +177,7 @@ export default function AccountPage() {
               </div>
 
               {/* Delivery Address Card */}
-              <div className="card border border-border p-6 rounded-2xl bg-card shadow-sm">
+              <div className="glass-panel neon-edge p-6 rounded-2xl">
                 <div className="flex items-center gap-2 mb-4 border-b border-border-soft pb-3">
                   <MapPin size={16} className="text-brand-gold" />
                   <h3 className="text-sm font-black text-text-primary font-display uppercase tracking-wider">
@@ -204,7 +204,7 @@ export default function AccountPage() {
             <div className="lg:col-span-2 space-y-8">
               
               {/* Active Order Tracker */}
-              <div className="card border border-border p-6 rounded-2xl bg-card shadow-sm relative overflow-hidden">
+              <div className="glass-panel neon-edge p-6 rounded-2xl relative overflow-hidden">
                 <div className="flex items-center justify-between mb-6 border-b border-border-soft pb-3">
                   <div className="flex items-center gap-2">
                     <Package size={16} className="text-brand-primary" />
@@ -218,7 +218,7 @@ export default function AccountPage() {
                 </div>
 
                 {/* Items & Shipping Address summary */}
-                <div className="mb-6 bg-surface-2 p-4 rounded-xl border border-border-soft flex justify-between items-start flex-col sm:flex-row gap-3">
+                <div className="mb-6 bg-white/5 p-4 rounded-xl border border-white/10 flex justify-between items-start flex-col sm:flex-row gap-3">
                   <div>
                     <span className="text-[10px] uppercase font-bold text-text-secondary block mb-1">
                       {t('itemsInShipment')}
@@ -246,7 +246,7 @@ export default function AccountPage() {
                   <div className="relative flex justify-between items-center w-full px-2 sm:px-6">
                     
                     {/* Background connector line */}
-                    <div className="absolute top-1/2 left-0 right-0 h-1 bg-surface-2 -translate-y-1/2 z-0 border border-border-soft rounded-full" />
+                    <div className="absolute top-1/2 left-0 right-0 h-1 bg-white/5 -translate-y-1/2 z-0 border border-white/10 rounded-full" />
                     
                     {/* Active dynamic connector line */}
                     <motion.div 
@@ -321,7 +321,7 @@ export default function AccountPage() {
 
                 {/* Simulate Delivery Action Button for review ease */}
                 {activeStep < 3 && (
-                  <div className="bg-brand-gold-soft/20 rounded-xl p-4 border border-brand-gold/10 text-center flex flex-col items-center justify-center">
+                  <div className="bg-brand-gold-soft/10 rounded-xl p-4 border border-brand-gold/20 text-center flex flex-col items-center justify-center">
                     <p className="text-xs text-text-secondary font-bold mb-3">
                       {t('simulateDeliveryTitle')}
                     </p>
@@ -337,7 +337,7 @@ export default function AccountPage() {
               </div>
 
               {/* Order History */}
-              <div className="card border border-border p-6 rounded-2xl bg-card shadow-sm">
+              <div className="glass-panel neon-edge p-6 rounded-2xl">
                 <div className="flex items-center gap-2 mb-6 border-b border-border-soft pb-3">
                   <History size={16} className="text-brand-gold" />
                   <h3 className="text-sm font-black text-text-primary font-display uppercase tracking-wider">
@@ -347,7 +347,7 @@ export default function AccountPage() {
 
                 <div className="space-y-4">
                   {orders.map((ord) => (
-                    <div key={ord.id} className="border border-border-soft rounded-xl p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover:bg-surface-2/30 transition-colors">
+                    <div key={ord.id} className="border border-white/10 rounded-xl p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover:bg-white/5 transition-colors">
                       <div>
                         <div className="flex items-center gap-2.5 mb-1.5">
                           <span className="text-xs font-black text-text-primary">{ord.id}</span>

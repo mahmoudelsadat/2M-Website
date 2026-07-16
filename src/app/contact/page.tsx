@@ -26,13 +26,13 @@ export default function ContactPage() {
       icon: MessageCircle,
       title: t('whatsappTitle'),
       subtitle: t('whatsappSubtitle'),
-      value: '01115160947',
-      href: 'https://wa.me/201115160947',
-      colorClass: 'text-whatsapp-brand',
-      bgClass: 'bg-whatsapp-brand/10',
-      borderClass: 'border-whatsapp-brand/25',
-      accentBgClass: 'bg-whatsapp-brand/15',
-      accentBorderClass: 'border-whatsapp-brand/20',
+      value: 'concierge@2mpharmacy.com',
+      href: 'mailto:concierge@2mpharmacy.com?subject=Concierge%20Desk%20Inquiry',
+      colorClass: 'text-brand-gold',
+      bgClass: 'bg-brand-gold/10',
+      borderClass: 'border-brand-gold/25',
+      accentBgClass: 'bg-brand-gold/15',
+      accentBorderClass: 'border-brand-gold/20',
       cta: t('chatNow'),
     },
     {
@@ -52,13 +52,13 @@ export default function ContactPage() {
       icon: Phone,
       title: t('phoneTitle'),
       subtitle: t('phoneSubtitle'),
-      value: '01115160947',
-      href: 'tel:01115160947',
-      colorClass: 'text-brand-gold',
-      bgClass: 'bg-brand-gold/10',
-      borderClass: 'border-brand-gold/25',
-      accentBgClass: 'bg-brand-gold/15',
-      accentBorderClass: 'border-brand-gold/20',
+      value: 'Private Member Hotline',
+      href: '#',
+      colorClass: 'text-brand-primary',
+      bgClass: 'bg-brand-primary/10',
+      borderClass: 'border-brand-primary/25',
+      accentBgClass: 'bg-brand-primary/15',
+      accentBorderClass: 'border-brand-primary/20',
       cta: t('callNow'),
     },
   ];
@@ -100,7 +100,7 @@ export default function ContactPage() {
                     href={method.href}
                     target={method.href.startsWith('http') ? '_blank' : undefined}
                     rel="noopener noreferrer"
-                    className="group p-6 rounded-2xl border border-border bg-card shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 block"
+                    className="group p-6 rounded-2xl border border-white/10 glass-panel shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 block"
                   >
                     <div
                       className={`w-12 h-12 rounded-xl flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-110 shadow-inner border ${method.bgClass} ${method.borderClass}`}
@@ -124,7 +124,7 @@ export default function ContactPage() {
             <div className="grid lg:grid-cols-2 gap-10">
               
               {/* Message Composer Card */}
-              <div className="card border border-border bg-card p-6 sm:p-8 rounded-2xl shadow-xs">
+              <div className="glass-panel border border-white/10 p-6 sm:p-8 rounded-2xl shadow-xs">
                 <h2 className="text-xl font-black text-foreground font-display mb-6 uppercase tracking-wider flex items-center gap-2">
                   <span>✉️</span>
                   {t('composeMessage')}
@@ -157,7 +157,7 @@ export default function ContactPage() {
                           required
                           value={form.name}
                           onChange={(e) => setForm({ ...form, name: e.target.value })}
-                          className="w-full bg-surface-2 border border-border rounded-xl px-3 py-3 text-xs text-foreground placeholder-muted focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all"
+                          className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-3 text-xs text-white placeholder-white/35 focus:outline-none focus:border-brand-primary/45 focus:ring-4 focus:ring-brand-primary/20 transition-all"
                         />
                       </div>
                       
@@ -171,7 +171,7 @@ export default function ContactPage() {
                           placeholder="e.g. 01115160947"
                           value={form.phone}
                           onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                          className="w-full bg-surface-2 border border-border rounded-xl px-3 py-3 text-xs text-foreground placeholder-muted focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all"
+                          className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-3 text-xs text-white placeholder-white/35 focus:outline-none focus:border-brand-primary/45 focus:ring-4 focus:ring-brand-primary/20 transition-all"
                         />
                       </div>
                     </div>
@@ -186,7 +186,7 @@ export default function ContactPage() {
                         required
                         value={form.email}
                         onChange={(e) => setForm({ ...form, email: e.target.value })}
-                        className="w-full bg-surface-2 border border-border rounded-xl px-3 py-3 text-xs text-foreground placeholder-muted focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all"
+                        className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-3 text-xs text-white placeholder-white/35 focus:outline-none focus:border-brand-primary/45 focus:ring-4 focus:ring-brand-primary/20 transition-all"
                       />
                     </div>
 
@@ -198,7 +198,7 @@ export default function ContactPage() {
                       <select
                         value={form.subject}
                         onChange={(e) => setForm({ ...form, subject: e.target.value })}
-                        className="w-full bg-surface-2 border border-border rounded-xl px-3 py-3 text-xs text-foreground focus:outline-none focus:border-primary transition-all cursor-pointer"
+                        className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-3 text-xs text-white focus:outline-none focus:border-brand-primary/45 transition-all cursor-pointer"
                       >
                         <option value="">{t('selectTopic')}</option>
                         <option value={t('topicProduct')}>{t('topicProduct')}</option>
@@ -228,7 +228,7 @@ export default function ContactPage() {
                         placeholder={t('messagePlaceholder')}
                         value={form.message}
                         onChange={(e) => setForm({ ...form, message: e.target.value })}
-                        className="w-full bg-surface-2 border border-border rounded-xl px-3 py-3 text-xs text-foreground placeholder-muted focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all resize-none leading-relaxed"
+                        className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-3 text-xs text-white placeholder-white/35 focus:outline-none focus:border-brand-primary/45 focus:ring-4 focus:ring-brand-primary/20 transition-all resize-none leading-relaxed"
                       />
                     </div>
 
@@ -248,8 +248,8 @@ export default function ContactPage() {
               {/* Info panel + Fast WhatsApp redirect */}
               <div className="space-y-8">
                 {/* Details card */}
-                <div className="card border border-border bg-card p-6 rounded-2xl shadow-xs">
-                  <h3 className="text-sm font-black text-foreground uppercase tracking-wider border-b border-border pb-3 mb-4 font-display">
+                <div className="glass-panel border border-white/10 p-6 rounded-2xl shadow-xs">
+                  <h3 className="text-sm font-black text-white uppercase tracking-wider border-b border-white/10 pb-3 mb-4 font-display">
                     {t('contactInformation')}
                   </h3>
                   
@@ -282,7 +282,7 @@ export default function ContactPage() {
                     </div>
 
                     <div className="flex items-start gap-3">
-                      <MessageCircle size={16} className="text-whatsapp-brand mt-0.5 shrink-0" />
+                      <MessageCircle size={16} className="text-brand-gold mt-0.5 shrink-0" />
                       <div>
                         <div className="text-xs font-black text-foreground uppercase tracking-wide">
                           {t('whatsappSupport')}
@@ -295,13 +295,13 @@ export default function ContactPage() {
                   </div>
                 </div>
 
-                {/* Glassy WhatsApp quick launcher */}
+                {/* Glassy Concierge advisory quick launcher */}
                 <div
-                  className="p-6 rounded-2xl border border-emerald-500/15 bg-emerald-500/5 shadow-xs flex flex-col justify-between"
+                  className="p-6 rounded-2xl border border-brand-gold/15 bg-brand-gold/5 shadow-xs flex flex-col justify-between"
                 >
                   <div>
                     <h3 className="text-foreground font-black text-sm mb-2 flex items-center gap-2 font-display uppercase tracking-wider">
-                      <MessageCircle size={18} className="text-emerald-500 animate-pulse" />
+                      <MessageCircle size={18} className="text-brand-gold animate-pulse" />
                       {t('whatsappHotline')}
                     </h3>
                     <p className="text-muted-foreground text-xs font-semibold leading-relaxed mb-5">
@@ -309,10 +309,8 @@ export default function ContactPage() {
                     </p>
                   </div>
                   <a
-                    href="https://wa.me/201115160947"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn w-full py-3.5 text-xs font-black uppercase tracking-wider text-white bg-emerald-600 hover:bg-emerald-700 shadow-xs transition-all text-center rounded-xl hover:-translate-y-0.5 active:translate-y-0 block btn-shimmer"
+                    href="mailto:concierge@2mpharmacy.com?subject=Concierge%20Advisory%20Hotline"
+                    className="btn w-full py-3.5 text-xs font-black uppercase tracking-wider text-black bg-brand-gold hover:bg-brand-gold/90 shadow-xs transition-all text-center rounded-xl hover:-translate-y-0.5 active:translate-y-0 block btn-shimmer border border-brand-gold/20"
                   >
                     {t('launchWhatsapp')}
                   </a>

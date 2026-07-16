@@ -60,10 +60,8 @@ export default function FAQsPage() {
               {t('faqSubtitle')}
             </p>
             <a
-              href="https://wa.me/201115160947"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 mt-6 text-sm text-emerald-600 hover:text-emerald-500 font-semibold transition-colors"
+              href="mailto:concierge@2mpharmacy.com?subject=FAQ%20Inquiry"
+              className="inline-flex items-center gap-2 mt-6 text-sm text-brand-gold hover:text-brand-gold/90 font-semibold transition-colors"
             >
               <MessageCircle size={16} /> {t('chatWhatsapp')}
             </a>
@@ -111,10 +109,8 @@ export default function FAQsPage() {
               <h3 className="text-text-primary font-black text-xl mb-2">{t('stillHaveQuestion')}</h3>
               <p className="text-text-secondary text-sm mb-5">{t('teamAvailable')}</p>
               <a
-                href="https://wa.me/201115160947"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-primary"
+                href="mailto:concierge@2mpharmacy.com?subject=FAQ%20Inquiry"
+                className="btn btn-primary btn-shimmer btn-elevated px-8 py-3 text-xs font-black uppercase tracking-wider"
               >
                 <MessageCircle size={16} /> {t('chatOnWhatsapp')}
               </a>

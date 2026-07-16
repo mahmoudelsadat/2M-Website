@@ -19,31 +19,35 @@ export default function NotFound() {
   return (
     <>
       <Navbar />
-      <main className="bg-background">
+      <main className="bg-background min-h-[80vh] flex flex-col justify-center">
         {/* Hero */}
-        <section className="py-24 text-center bg-gradient-to-b from-white to-surface-2 dark:from-stone-900 dark:to-stone-900/40">
-          <div className="container-2m max-w-lg">
-            <div className="text-8xl mb-6 select-none" aria-hidden="true">🔍</div>
-            <h1 className="text-4xl font-black text-foreground mb-4">{t('title')}</h1>
-            <p className="text-muted-foreground mb-8 text-base leading-relaxed">
-              {t('description')}
-            </p>
-            <div className="flex flex-wrap gap-3 justify-center">
-              <Link href="/" className="btn btn-primary px-7 py-3">
-                <Home size={16} /> {t('backHome')}
-              </Link>
-              <Link href="/pharmacy" className="btn btn-ghost px-7 py-3">
-                {t('browseProducts')} <ArrowRight size={16} className={isRtl ? 'rotate-180' : ''} />
-              </Link>
+        <section className="py-16 text-center">
+          <div className="container-2m flex justify-center">
+            <div className="luxury-empty-state shadow-2xl">
+              <div className="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 bg-white/5 border border-white/10 text-brand-gold">
+                <span className="text-3xl">🔍</span>
+              </div>
+              <h1 className="text-2xl font-black text-white font-display uppercase tracking-wide mb-3">{t('title')}</h1>
+              <p className="text-xs mb-8 text-text-muted font-semibold max-w-xs leading-relaxed">
+                {t('description')}
+              </p>
+              <div className="flex flex-wrap gap-3 justify-center">
+                <Link href="/" className="btn btn-primary btn-shimmer btn-elevated px-6 py-2.5 text-xs font-black uppercase tracking-wider">
+                  <Home size={14} /> {t('backHome')}
+                </Link>
+                <Link href="/pharmacy" className="btn btn-ghost px-6 py-2.5 text-xs font-black uppercase tracking-wider border border-white/10 hover:bg-white/5 text-white">
+                  {t('browseProducts')} <ArrowRight size={14} className={isRtl ? 'rotate-180' : ''} />
+                </Link>
+              </div>
             </div>
           </div>
         </section>
 
         {/* Trending */}
-        <section className="py-16 bg-white dark:bg-dark-bg border-t border-border">
+        <section className="py-16 bg-[#060700]/50 border-t border-white/10">
           <div className="container-2m">
-            <div className="section-label mb-1">{t('whileHere')}</div>
-            <h2 className="section-title mb-8">{t('trendingProducts')}</h2>
+            <div className="section-label mb-1 uppercase tracking-widest text-brand-gold">{t('whileHere')}</div>
+            <h2 className="section-title mb-8 text-white font-display uppercase">{t('trendingProducts')}</h2>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               {trending.map((p) => (
                 <Link key={p.id} href={`/product/${p.slug}`} className="product-card group block">
@@ -57,9 +61,9 @@ export default function NotFound() {
                     />
                   </div>
                   <div className="product-card-body">
-                    <p className="text-[11px] text-muted font-semibold uppercase tracking-wider mb-1">{p.brand}</p>
-                    <h3 className="text-sm font-semibold text-foreground line-clamp-2 mb-2 group-hover:text-primary transition-colors">{p.name}</h3>
-                    <span className="text-base font-black text-foreground">{formatEGP(p.price)}</span>
+                    <p className="text-[11px] text-text-muted font-semibold uppercase tracking-wider mb-1">{p.brand}</p>
+                    <h3 className="text-sm font-semibold text-white line-clamp-2 mb-2 group-hover:text-brand-primary transition-colors">{p.name}</h3>
+                    <span className="text-base font-black text-white">{formatEGP(p.price)}</span>
                   </div>
                 </Link>
               ))}

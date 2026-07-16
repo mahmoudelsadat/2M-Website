@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { newsletterSchema, type NewsletterFormValues } from '@/lib/schemas';
 import { toast } from 'sonner';
 import { useTranslations } from 'next-intl';
-import { InstagramIcon, FacebookIcon, WhatsAppIcon } from '@/components/ui/icons';
+import { InstagramIcon, FacebookIcon } from '@/components/ui/icons';
 
 const footerLinks = {
   shop: [
@@ -18,7 +18,6 @@ const footerLinks = {
     { labelKey: 'linkOffersDeals' as const, href: '/pharmacy' },
   ],
   service: [
-    { labelKey: 'linkContactUs' as const, href: '/contact' },
     { labelKey: 'linkTrackOrder' as const, href: '/account' },
     { labelKey: 'linkPrivacyPolicy' as const, href: '/about' },
     { labelKey: 'linkAllBrands' as const, href: '/brands' },
@@ -48,26 +47,28 @@ function NewsletterForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex items-center gap-0 w-full max-w-sm mt-3" noValidate>
-      <div className="flex-1 min-w-0">
-        <input
-          id="newsletter-email"
-          type="email"
-          placeholder={t('newsletterPlaceholder')}
-          {...register('email')}
-          className="w-full bg-white/10 text-white placeholder-white/45 rounded-l-xl px-4 py-2 text-xs focus:outline-none border border-white/20 focus:border-white/40"
-        />
-      </div>
-      <button
-        id="newsletter-submit"
-        type="submit"
-        disabled={isSubmitting}
-        className="bg-brand-accent hover:bg-brand-accent/95 text-white border border-brand-accent/30 rounded-r-xl px-4 py-2 text-xs font-bold transition-colors flex-shrink-0"
-      >
-        {isSubmitting ? t('newsletterSubmitting') : t('subscribe')}
-      </button>
-      {errors.email && <p className="text-[10px] text-red-200 mt-1 absolute -bottom-5">{errors.email.message}</p>}
-    </form>
+    <div className="relative w-full max-w-sm mt-3">
+      <form onSubmit={handleSubmit(onSubmit)} className="relative flex items-center gap-0 w-full" noValidate>
+        <div className="flex-1 min-w-0">
+          <input
+            id="newsletter-email"
+            type="email"
+            placeholder={t('newsletterPlaceholder')}
+            {...register('email')}
+            className="w-full bg-white/5 text-white placeholder-white/45 rounded-l-xl px-4 py-2 text-xs focus:outline-none border border-white/10 focus:border-white/30"
+          />
+        </div>
+        <button
+          id="newsletter-submit"
+          type="submit"
+          disabled={isSubmitting}
+          className="bg-brand-accent hover:bg-brand-accent/95 text-white border border-brand-accent/30 rounded-r-xl px-4 py-2 text-xs font-bold transition-colors flex-shrink-0"
+        >
+          {isSubmitting ? t('newsletterSubmitting') : t('subscribe')}
+        </button>
+      </form>
+      {errors.email && <p className="text-[10px] text-red-400 mt-1.5">{errors.email.message}</p>}
+    </div>
   );
 }
 
@@ -75,16 +76,21 @@ export default function Footer() {
   const t = useTranslations('Layout');
 
   return (
-    <footer className="bg-footer-bg text-footer-muted border-t border-brand-primary/20">
+    <footer className="bg-[#060700]/95 text-footer-muted border-t border-white/10 backdrop-blur-xl">
       {/* Main footer area */}
       <div className="container-2m py-16">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-10">
           {/* Logo & Newsletter column */}
           <div className="md:col-span-2 flex flex-col justify-start">
-            <Link href="/" className="flex flex-col select-none mb-6">
-              <div className="flex items-baseline gap-1">
-                <span className="text-xl font-black tracking-tight text-footer-text">2M</span>
-                <span className="text-base font-semibold text-footer-text/90">Pharmacy</span>
+            <Link href="/" className="flex items-center gap-2.5 select-none mb-6 group">
+              <div className="w-10 h-10 rounded-xl bg-white text-black flex items-center justify-center font-black text-xl tracking-tighter shadow-md border border-white/20 transition-all duration-300 group-hover:scale-105">
+                2M
+              </div>
+              <div className="flex flex-col items-start leading-none text-left">
+                <span className="text-sm font-black tracking-wider text-footer-text uppercase">Pharmacy</span>
+                <span className="text-[7.5px] font-bold tracking-[0.18em] text-footer-muted uppercase mt-0.5">
+                  {t('brandSubTitle')}
+                </span>
               </div>
             </Link>
 
@@ -144,9 +150,6 @@ export default function Footer() {
             </a>
             <a href="https://www.facebook.com/people/2M-Pharmacy/100068944428141/" target="_blank" rel="noopener noreferrer" className="text-footer-muted hover:text-white transition-colors">
               <FacebookIcon size={14} />
-            </a>
-            <a href="https://wa.me/201115160947" target="_blank" rel="noopener noreferrer" className="text-footer-muted hover:text-white transition-colors">
-              <WhatsAppIcon size={14} />
             </a>
           </div>
 

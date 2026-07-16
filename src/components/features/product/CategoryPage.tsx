@@ -34,7 +34,7 @@ const DEFAULT_FILTERS: FilterState = {
 function FilterSection({ title, children, defaultOpen = true }: { title: string; children: React.ReactNode; defaultOpen?: boolean }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
-    <div className="border-b pb-4 mb-4 border-border">
+    <div className="border-b pb-4 mb-4 border-white/10">
       <button
         onClick={() => setOpen(!open)}
         className="flex items-center justify-between w-full text-sm font-bold mb-3 transition-colors text-foreground"
@@ -391,11 +391,11 @@ export default function CategoryPage({ categoryId }: CategoryPageProps) {
                 <div className="flex items-center gap-2 mb-3">
                   <input type="number" value={filters.priceMin}
                     onChange={(e) => setFilters((f) => ({ ...f, priceMin: Number(e.target.value) }))}
-                    className={`${inputCls} bg-surface-2 border-border text-foreground`} placeholder="Min" />
+                    className={`${inputCls} bg-white/5 border-white/10 text-white placeholder-white/35`} placeholder="Min" />
                   <span className="text-xs text-muted">–</span>
                   <input type="number" value={filters.priceMax}
                     onChange={(e) => setFilters((f) => ({ ...f, priceMax: Number(e.target.value) }))}
-                    className={`${inputCls} bg-surface-2 border-border text-foreground`} placeholder="Max" />
+                    className={`${inputCls} bg-white/5 border-white/10 text-white placeholder-white/35`} placeholder="Max" />
                 </div>
                 <input type="range" min={0} max={5000} value={filters.priceMax}
                   onChange={(e) => setFilters((f) => ({ ...f, priceMax: Number(e.target.value) }))}
@@ -483,13 +483,13 @@ export default function CategoryPage({ categoryId }: CategoryPageProps) {
                 >
                   {SORT_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
                 </select>
-                <div className="hidden sm:flex items-center gap-1 rounded-lg p-1 border bg-surface-2 border-border">
+                <div className="hidden sm:flex items-center gap-1 rounded-lg p-1 border bg-white/5 border-white/10">
                   <button onClick={() => setView('grid')}
-                    className="p-1.5 rounded-md transition-all animate-none"
+                    className="p-1.5 rounded-md transition-all duration-250 hover:bg-white/5"
                     style={view === 'grid' ? { background: 'var(--color-brand-primary)', color: '#fff' } : { color: 'var(--color-text-muted)' }}
                   ><Grid3X3 size={13} /></button>
                   <button onClick={() => setView('list')}
-                    className="p-1.5 rounded-md transition-all animate-none"
+                    className="p-1.5 rounded-md transition-all duration-250 hover:bg-white/5"
                     style={view === 'list' ? { background: 'var(--color-brand-primary)', color: '#fff' } : { color: 'var(--color-text-muted)' }}
                   ><List size={13} /></button>
                 </div>
@@ -508,11 +508,13 @@ export default function CategoryPage({ categoryId }: CategoryPageProps) {
 
             {/* Product Grid / List */}
             {filtered.length === 0 ? (
-              <div className="text-center py-20">
-                <div className="text-5xl mb-4">🔍</div>
-                <h3 className="font-bold text-xl mb-2 text-foreground">{t('noProductsFound')}</h3>
-                <p className="text-sm mb-6 text-muted">{t('adjustFilters')}</p>
-                <button onClick={clearFilters} className="btn btn-primary">{t('clearFilters')}</button>
+              <div className="luxury-empty-state shadow-2xl">
+                <div className="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 bg-white/5 border border-white/10 text-brand-gold">
+                  <SlidersHorizontal size={30} />
+                </div>
+                <h3 className="font-black text-xl mb-2 text-white font-display uppercase tracking-wider">{t('noProductsFound')}</h3>
+                <p className="text-xs mb-6 text-text-muted font-semibold max-w-xs">{t('adjustFilters')}</p>
+                <button onClick={clearFilters} className="btn btn-primary btn-shimmer btn-elevated px-8 text-xs font-black uppercase tracking-wider">{t('clearFilters')}</button>
               </div>
             ) : (
               <AnimatePresence mode="popLayout">

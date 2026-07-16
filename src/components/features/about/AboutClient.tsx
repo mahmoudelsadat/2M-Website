@@ -124,10 +124,8 @@ export default function AboutClient() {
                 {t('guaranteeCardDesc')}
               </p>
               <a
-                href="https://wa.me/201115160947"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-primary"
+                href="mailto:concierge@2mpharmacy.com?subject=Guarantee%20Inquiry"
+                className="btn btn-primary btn-shimmer btn-elevated px-8 py-3 text-xs font-black uppercase tracking-wider"
               >
                 {t('chatWithUs')}
               </a>
