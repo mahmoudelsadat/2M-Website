@@ -90,7 +90,7 @@ function ProductCard({ product, onQuickView }: { product: Product; onQuickView: 
         {/* Wishlist */}
         <motion.button
           onClick={(e) => { e.preventDefault(); toggle(product.id); }}
-          className="absolute top-2.5 right-2.5 w-8 h-8 rounded-full bg-white border border-border shadow-sm flex items-center justify-center"
+          className="absolute top-2.5 right-2.5 w-8 h-8 rounded-full bg-surface border border-border shadow-sm flex items-center justify-center"
           whileTap={{ scale: 0.85 }}
           whileHover={{ scale: 1.1 }}
           aria-label={wishlisted ? t('removeFromWishlist') : t('addToWishlist')}
@@ -100,7 +100,7 @@ function ProductCard({ product, onQuickView }: { product: Product; onQuickView: 
 
         {/* Low stock */}
         {product.stockCount && product.stockCount < 15 && (
-          <div className="absolute bottom-3 left-3 flex items-center gap-1 text-[10px] font-bold text-step-2-text bg-white/90 rounded-full px-2.5 py-1 shadow-sm">
+          <div className="absolute bottom-3 left-3 flex items-center gap-1 text-[10px] font-bold text-step-2-text bg-surface/90 rounded-full px-2.5 py-1 shadow-sm">
             <Zap size={9} className="fill-current" /> {t('onlyLeft', { count: product.stockCount })}
           </div>
         )}
@@ -116,7 +116,7 @@ function ProductCard({ product, onQuickView }: { product: Product; onQuickView: 
           </motion.button>
           <motion.button
             onClick={(e) => { e.preventDefault(); onQuickView(product); }}
-            className="w-10 rounded-lg border border-white/60 bg-white/80 text-muted-foreground flex items-center justify-center"
+            className="w-10 rounded-lg border border-border bg-surface/80 text-muted-foreground flex items-center justify-center"
             whileTap={{ scale: 0.9 }}
             aria-label={t('quickView')}
           >

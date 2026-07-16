@@ -5,141 +5,140 @@
    Palette: Cool blues · Teals · Minimal grays · Clean whites
    ───────────────────────────────────────────────────────────── */
 
-@theme inline {
+@theme {
   /* Semantic Tokens for Quiet Luxury styling */
   --color-background:          var(--color-page-bg);
   --color-foreground:          var(--color-text-primary);
   --color-primary:             var(--color-brand-primary);
   --color-primary-foreground:  var(--color-text-inverse);
+  --color-accent:              var(--color-brand-accent);
+  --color-gold:                var(--color-brand-gold);
   --color-muted:               var(--color-text-muted);
   --color-muted-foreground:    var(--color-text-secondary);
   --color-border-theme:        var(--color-border);
   --color-card:                var(--color-surface);
   --color-card-foreground:     var(--color-text-primary);
 
-  /* Brand — Cool Blues & Teals */
-  --color-brand-primary:       #0D7377; /* Rich Teal */
-  --color-brand-primary-dark:  #055160; /* Deep Teal */
-  --color-brand-primary-soft:  #E0F5F7;
-  --color-brand-accent:        #14919B; /* Medium Teal */
-  --color-brand-accent-soft:   #D4EFEF;
+  /* Brand — Clinical Elegance Deep Red & Teal */
+  --color-brand-primary:       #8B0000; /* Deep Red */
+  --color-brand-primary-dark:  #610000; /* Darker Red */
+  --color-brand-primary-soft:  #FFDAD4; /* Soft Red */
+  --color-brand-accent:        #008080; /* Teal */
+  --color-brand-accent-soft:   #93F2F2; /* Soft Teal */
 
   /* Layout Custom Variables */
-  --color-back-to-top:         #060700;
+  --color-back-to-top:         #2D2D2D;
   --color-whatsapp:            #25D366;
   --color-whatsapp-dark:       #128C7E;
-  --color-pay-cod:             #4A7C59;
+  --color-pay-cod:             #008080;
   --color-pay-instapay:        #8B5CF6;
   --color-pay-vodafone:        #EF4444;
   --color-pay-ecash:           #F59E0B;
   --color-secure-payment:      #667EC9;
-  --color-easy-returns:        #2FA9A0;
-  --color-footer-bg:           #0D5962;
-  --color-footer-text:         #E8F0F2;
-  --color-footer-muted:        #A8D4D8;
+  --color-easy-returns:        #008080;
+  --color-footer-bg:           #610000;
+  --color-footer-text:         #FCF9F8;
+  --color-footer-muted:        #E3BEB8;
 
   /* Home Features Custom Variables */
-  --color-surface-warm:        #F8F7F4;
-  --color-surface-warm-dark:   #F3F0EB;
-  --color-border-warm:         #E4E0D8;
-  --color-step-1-text:         #4A90C4;
-  --color-step-1-bg:           #EBF4FB;
-  --color-step-1-border:       #C6E0F5;
-  --color-step-2-text:         #D4856A;
-  --color-step-2-bg:           #FAEEE9;
-  --color-step-2-border:       #F4CCBA;
-  --color-step-3-text:         #6B8F71;
-  --color-step-3-bg:           #EDF3EE;
-  --color-step-3-border:       #C0D9C2;
-  --color-step-4-text:         #B8922A;
-  --color-step-4-bg:           #FDF6E8;
-  --color-step-4-border:       #EDD2A0;
+  --color-surface-warm:        #FCF9F8;
+  --color-surface-warm-dark:   #F0EDED;
+  --color-border-warm:         #E3BEB8;
+  --color-step-1-text:         #8B0000;
+  --color-step-1-bg:           #FFDAD4;
+  --color-step-1-border:       #E3BEB8;
+  --color-step-2-text:         #008080;
+  --color-step-2-bg:           #93F2F2;
+  --color-step-2-border:       #90EFEF;
+  --color-step-3-text:         #2D2D2D;
+  --color-step-3-bg:           #F6F3F2;
+  --color-step-3-border:       #E4E2E1;
+  --color-step-4-text:         #610000;
+  --color-step-4-bg:           #FCF9F8;
+  --color-step-4-border:       #E3BEB8;
 
   /* Product Categories Custom Colors */
-  --color-wellness-bg:         #E0F8F6;
-  --color-wellness-text:       #1A6F69;
-  --color-wellness-border:     #A8D8D4;
-  --color-personal-bg:         #F0F4FF;
-  --color-personal-accent:     #667EC9;
-  --color-personal-text:       #3B5A9C;
-  --color-personal-border:     #D4DCF7;
-  --color-star-empty:          #D4CCC0;
+  --color-wellness-bg:         #93F2F2;
+  --color-wellness-text:       #004F4F;
+  --color-wellness-border:     #76D6D5;
+  --color-personal-bg:         #FFDAD4;
+  --color-personal-accent:     #610000;
+  --color-personal-text:       #410000;
+  --color-personal-border:     #E3BEB8;
+  --color-star-empty:          #DCD9d9;
 
-  /* Dark Theme Semantic Colors (About, Login & Contact Pages) */
-  --color-dark-bg:             #0D0D0D;
-  --color-dark-surface:        #111111;
-  --color-dark-hero:           #060700;
-  --color-dark-card:           #0A0A0A;
+  /* Dark Theme Semantic Colors */
+  --color-dark-bg:             #1B1C1C;
+  --color-dark-surface:        #1A1C1C;
+  --color-dark-hero:           #0D0D0D;
+  --color-dark-card:           #1A1C1C;
 
-
-
-
-
-  /* Surfaces — Minimal & Clean */
-  --color-page-bg:         #FAFBFC;
+  /* Surfaces — Clinical Elegance */
+  --color-page-bg:         #FCF9F8;
   --color-surface:         #FFFFFF;
-  --color-surface-2:       #F5F7F9;
-  --color-surface-3:       #EDF0F3;
+  --color-surface-2:       #F9F9F9;
+  --color-surface-3:       #F0EDED;
 
-  /* Text — High Contrast for Readability */
-  --color-text-primary:    #1A2332;
-  --color-text-secondary:  #536471;
-  --color-text-muted:      #8B95A5;
+  /* Text — Clinical Elegance */
+  --color-text-primary:    #2D2D2D; /* Charcoal */
+  --color-text-secondary:  #5A403C;
+  --color-text-muted:      #8E706B;
   --color-text-inverse:    #FFFFFF;
 
-  /* Borders — Subtle & Minimal */
-  --color-border:          #E5E9F0;
-  --color-border-soft:     #F0F3F7;
+  /* Borders — Clinical Elegance */
+  --color-border:          #F1F1F1;
+  --color-border-soft:     #EAE7E7;
 
   /* Secondary Accents */
-  --color-teal-light:      #2FA9A0;
-  --color-teal-light-soft: #E8F8F6;
-  --color-slate:           #4A5568;
-  --color-slate-soft:      #F1F3F7;
-  --color-cyan:            #00A8CC;
-  --color-cyan-soft:       #E0F5FB;
+  --color-teal-light:      #008080;
+  --color-teal-light-soft: #93F2F2;
+  --color-slate:           #2B2D2D;
+  --color-slate-soft:      #E2E2E2;
+  --color-cyan:            #006A6A;
+  --color-cyan-soft:       #93F2F2;
 
   /* Gold — Premium accent */
   --color-brand-gold:      #C9A84C;
   --color-brand-gold-dark: #A88730;
   --color-brand-gold-soft: #FDF8EC;
 
-  /* Typography — Clean Sans Serif Focus */
-  --font-display: var(--font-inter), 'Helvetica Neue', sans-serif;
-  --font-body:    var(--font-inter), 'Helvetica Neue', sans-serif;
-  --font-arabic:  var(--font-cairo), 'Arial', sans-serif;
+  /* Typography — Clinical Elegance */
+  --font-display: var(--font-manrope), sans-serif;
+  --font-body:    var(--font-manrope), sans-serif;
+  --font-label:   var(--font-hanken), sans-serif;
+  --font-arabic:  var(--font-cairo), sans-serif;
 
-  /* Type Scale — Minimal Hierarchy */
-  --text-xs:   0.75rem;   /* 12px — labels, badges */
-  --text-sm:   0.875rem;  /* 14px — body small */
-  --text-base: 1rem;      /* 16px — body */
-  --text-lg:   1.125rem;  /* 18px — subtitle */
-  --text-xl:   1.25rem;   /* 20px — card title */
-  --text-2xl:  1.5rem;    /* 24px — section sub */
-  --text-3xl:  1.875rem;  /* 30px — section title */
-  --text-4xl:  2.25rem;   /* 36px — page title */
-  --text-5xl:  2.5rem;    /* 40px — hero large */
+  /* Type Scale */
+  --text-xs:   0.75rem;   /* 12px */
+  --text-sm:   0.875rem;  /* 14px */
+  --text-base: 1rem;      /* 16px */
+  --text-lg:   1.125rem;  /* 18px */
+  --text-xl:   1.25rem;   /* 20px */
+  --text-2xl:  1.5rem;    /* 24px */
+  --text-3xl:  1.875rem;  /* 30px */
+  --text-4xl:  2.25rem;   /* 36px */
+  --text-5xl:  2.5rem;    /* 40px */
 
   /* Spacing */
   --space-section: 4rem;
 
-  /* Radius — Minimal Roundness */
+  /* Radius — Standard 8px, Large 16px */
   --radius-sm:   4px;
   --radius-md:   8px;
-  --radius-lg:   12px;
+  --radius-lg:   8px;
   --radius-xl:   16px;
   --radius-pill: 9999px;
 
-  /* Shadows — Subtle & Minimal */
-  --shadow-xs:   0 1px 2px rgba(26,35,50,0.04);
-  --shadow-sm:   0 2px 4px rgba(26,35,50,0.06);
-  --shadow-md:   0 4px 12px rgba(26,35,50,0.08);
-  --shadow-lg:   0 8px 24px rgba(26,35,50,0.10);
-  --shadow-xl:   0 16px 40px rgba(26,35,50,0.12);
-  --shadow-back-to-top: 0 4px 20px rgba(6,7,0,0.25);
-  --shadow-whatsapp: 0 4px 16px rgba(37,211,102,0.35);
-  --shadow-whatsapp-btn: 0 8px 32px rgba(37,211,102,0.4);
-  --shadow-mobile-nav: 0 -4px 24px rgba(26,35,50,0.08);
+  /* Shadows — Ambient diffused shadow 4% & 8% opacity Charcoal */
+  --shadow-xs:   0 1px 2px rgba(45,45,45,0.02);
+  --shadow-sm:   0 2px 4px rgba(45,45,45,0.04);
+  --shadow-md:   0 4px 12px rgba(45,45,45,0.06);
+  --shadow-lg:   0 8px 24px rgba(45,45,45,0.08);
+  --shadow-xl:   0 16px 40px rgba(45,45,45,0.1);
+  --shadow-back-to-top: 0 4px 20px rgba(45,45,45,0.15);
+  --shadow-whatsapp: 0 4px 16px rgba(37,211,102,0.25);
+  --shadow-whatsapp-btn: 0 8px 32px rgba(37,211,102,0.3);
+  --shadow-mobile-nav: 0 -4px 24px rgba(45,45,45,0.06);
 
 
 
@@ -153,11 +152,10 @@
   @keyframes slide-up { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 }
 
+
 /* ─── Reset & Base ──────────────────────────────────────────── */
 *, *::before, *::after {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
 }
 
 html {
@@ -168,8 +166,8 @@ html {
 }
 
 body {
-  background: #FAFBFC;
-  color: #536471;
+  background: var(--color-page-bg);
+  color: var(--color-text-secondary);
   font-family: var(--font-body);
   font-size: 1rem;
   line-height: 1.6;
@@ -180,32 +178,32 @@ body {
 
 /* ─── Type Hierarchy ────────────────────────────────────────── */
 @layer base {
-  h1 { font-family: var(--font-display); font-size: clamp(1.875rem, 5vw, 2.75rem); font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; color: #1A2332; }
-  h2 { font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; line-height: 1.25; letter-spacing: -0.015em; color: #1A2332; }
-  h3 { font-family: var(--font-body);    font-size: 1.125rem; font-weight: 600; line-height: 1.4; color: #1A2332; }
-  h4 { font-family: var(--font-body);    font-size: 1rem;     font-weight: 600; line-height: 1.4; color: #1A2332; }
+  h1 { font-family: var(--font-display); font-size: clamp(1.875rem, 5vw, 2.75rem); font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; color: var(--color-text-primary); }
+  h2 { font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; line-height: 1.25; letter-spacing: -0.015em; color: var(--color-text-primary); }
+  h3 { font-family: var(--font-body);    font-size: 1.125rem; font-weight: 600; line-height: 1.4; color: var(--color-text-primary); }
+  h4 { font-family: var(--font-body);    font-size: 1rem;     font-weight: 600; line-height: 1.4; color: var(--color-text-primary); }
 }
 
-p { line-height: 1.7; color: #536471; }
+p { line-height: 1.7; color: var(--color-text-secondary); }
 a { color: inherit; text-decoration: none; }
 
 
 /* ─── Selection ─────────────────────────────────────────────── */
-::selection { background: rgba(13, 115, 119, 0.15); color: var(--color-brand-primary); }
+::selection { background: var(--color-brand-primary-soft); color: var(--color-brand-primary); }
 
 /* ─── Focus ─────────────────────────────────────────────────── */
 :focus-visible { outline: 2px solid var(--color-brand-primary); outline-offset: 2px; border-radius: 2px; }
 
 /* ─── Gradient Text ─────────────────────────────────────────── */
 .text-gradient-primary {
-  background: linear-gradient(135deg, #0D7377 0%, #14919B 100%);
+  background: linear-gradient(135deg, var(--color-brand-primary) 0%, var(--color-brand-primary-dark) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .text-gradient-accent {
-  background: linear-gradient(135deg, #2FA9A0 0%, #14919B 100%);
+  background: linear-gradient(135deg, var(--color-brand-accent) 0%, var(--color-brand-primary) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -240,14 +238,14 @@ a { color: inherit; text-decoration: none; }
   background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid #E5E9F0;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .glass-dark {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid #E5E9F0;
+  border-bottom: 1px solid var(--color-border);
   box-shadow: var(--shadow-xs);
 }
 
@@ -280,9 +278,9 @@ a { color: inherit; text-decoration: none; }
 
 /* Premium Primary with subtle gradient, shadow boost, and interactive shimmer */
 .btn-primary {
-  background: linear-gradient(135deg, var(--color-brand-primary) 0%, var(--color-brand-accent) 100%);
+  background: linear-gradient(135deg, var(--color-brand-primary) 0%, var(--color-brand-primary-dark) 100%);
   color: #FFFFFF;
-  box-shadow: 0 4px 14px rgba(13, 115, 119, 0.3);
+  box-shadow: 0 4px 14px rgba(139, 0, 0, 0.25);
 }
 .btn-primary::after {
   content: '';
@@ -294,15 +292,15 @@ a { color: inherit; text-decoration: none; }
   background: linear-gradient(
     90deg,
     rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.25) 50%,
+    rgba(255, 255, 255, 0.2) 50%,
     rgba(255, 255, 255, 0) 100%
   );
   transform: skewX(-20deg);
   transition: none;
 }
 .btn-primary:hover {
-  background: linear-gradient(135deg, var(--color-brand-primary-dark) 0%, var(--color-brand-primary) 100%);
-  box-shadow: 0 6px 20px rgba(13, 115, 119, 0.45);
+  background: var(--color-brand-primary-dark);
+  box-shadow: 0 6px 20px rgba(139, 0, 0, 0.4);
   transform: translateY(-2px);
 }
 .btn-primary:hover::after {
@@ -376,8 +374,8 @@ a { color: inherit; text-decoration: none; }
 
 /* ─── Card System ───────────────────────────────────────────── */
 .card {
-  background: #FFFFFF;
-  border: 1px solid #E5E9F0;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   overflow: hidden;
   transition: all var(--transition-base);
@@ -391,8 +389,8 @@ a { color: inherit; text-decoration: none; }
 
 /* ─── Product Card ──────────────────────────────────────────── */
 .product-card {
-  background: #FFFFFF;
-  border: 1px solid #E5E9F0;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   overflow: hidden;
   transition: all var(--transition-base);
@@ -416,7 +414,7 @@ a { color: inherit; text-decoration: none; }
 .product-card-image {
   position: relative;
   aspect-ratio: 1;
-  background: #F5F7F9;
+  background: var(--color-surface-2);
   overflow: hidden;
 }
 .product-card-image img {
@@ -431,7 +429,7 @@ a { color: inherit; text-decoration: none; }
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(to top, rgba(255,255,255,0.98) 60%, transparent);
+  background: linear-gradient(to top, var(--color-surface) 60%, transparent);
   padding: 2rem 0.875rem 0.75rem;
   opacity: 0;
   transform: translateY(6px);
@@ -439,7 +437,7 @@ a { color: inherit; text-decoration: none; }
 }
 .product-card-body {
   padding: 0.875rem 1rem 1rem;
-  border-top: 1px solid #EDF0F3;
+  border-top: 1px solid var(--color-border);
 }
 
 /* ─── Section Layout ────────────────────────────────────────── */
@@ -475,14 +473,14 @@ a { color: inherit; text-decoration: none; }
   font-family: var(--font-display);
   font-size: clamp(1.6rem, 3.5vw, 2.25rem);
   font-weight: 700;
-  color: #1C1917;
+  color: var(--color-text-primary);
   line-height: 1.2;
   letter-spacing: -0.02em;
 }
 
 .section-subtitle {
   font-size: 1rem;
-  color: #6B6560;
+  color: var(--color-text-secondary);
   line-height: 1.65;
   max-width: 48ch;
   margin-top: 0.5rem;
@@ -607,33 +605,57 @@ input[type="number"]::-webkit-outer-spin-button {
 ::-webkit-scrollbar-thumb        { background: var(--color-brand-primary); border-radius: 9999px; opacity: 0.6; }
 ::-webkit-scrollbar-thumb:hover  { background: var(--color-brand-primary-dark); opacity: 1; }
 
-/* ─── Dark Mode ────────────────────────────────────────────── */
+/* ─── Dark Mode ─────────────────────────────────────────────── */
 .dark {
-  --color-page-bg:       #060700;
-  --color-surface:       #12130A;
-  --color-surface-2:     #1C1D14;
-  --color-surface-3:     #27281D;
-  --color-text-primary:  #F8FAFC;
-  --color-text-secondary:#CBD5E1;
-  --color-text-muted:    #8B95A5;
-  --color-border:        #2C2D22;
-  --color-border-soft:   #1C1D14;
-  --color-brand-primary: #C9A84C; /* Metallic Gold */
-  --color-brand-primary-dark: #A88730; /* Deep Gold */
-  --color-brand-primary-soft: rgba(201, 168, 76, 0.1);
-  --color-brand-accent:  #D4AF37;
-  --color-brand-accent-soft: rgba(212, 175, 55, 0.1);
+  --color-page-bg:       #0F1010;
+  --color-surface:       #1A1C1C;
+  --color-surface-2:     #1F2222;
+  --color-surface-3:     #252828;
+  --color-text-primary:  #F2F2F2;
+  --color-text-secondary:#BABABA;
+  --color-text-muted:    #777777;
+  --color-text-inverse:  #1A1C1C;
+  --color-border:        #2C2F2F;
+  --color-border-soft:   #252828;
+  /* Brand stays Deep Red + Teal in dark mode */
+  --color-brand-primary:       #8B0000;
+  --color-brand-primary-dark:  #610000;
+  --color-brand-primary-soft:  rgba(139, 0, 0, 0.2);
+  --color-brand-accent:        #008080;
+  --color-brand-accent-soft:   rgba(0, 128, 128, 0.2);
+  --color-brand-gold-soft:     rgba(201, 168, 76, 0.15);
+  /* Warm surfaces */
+  --color-surface-warm:        #1F2222;
+  --color-surface-warm-dark:   #252828;
+  --color-border-warm:         #333636;
+  /* Step card backgrounds */
+  --color-step-1-bg:           rgba(139, 0, 0, 0.2);
+  --color-step-2-bg:           rgba(0, 128, 128, 0.15);
+  --color-step-3-bg:           #252828;
+  --color-step-4-bg:           #1F2222;
+  /* Footer muted text */
+  --color-footer-muted:        #D4A8A2;
+  /* Star rating */
+  --color-star-empty:          #3A3D3D;
+  /* Stronger shadows on dark backgrounds */
+  --shadow-xs:  0 1px 2px rgba(0,0,0,0.3);
+  --shadow-sm:  0 2px 4px rgba(0,0,0,0.35);
+  --shadow-md:  0 4px 12px rgba(0,0,0,0.4);
+  --shadow-lg:  0 8px 24px rgba(0,0,0,0.45);
+  --shadow-xl:  0 16px 40px rgba(0,0,0,0.5);
 }
 .dark body                       { background: var(--color-page-bg); color: var(--color-text-primary); }
-.dark .announcement-bar          { background: #060700; }
-.dark .glass-dark                { background: rgba(6, 7, 0, 0.92); }
+.dark .announcement-bar          { background: var(--color-brand-primary-dark); }
+.dark .glass-nav                 { background: rgba(15,16,16,0.9); border-bottom-color: var(--color-border); }
+.dark .glass-dark                { background: rgba(15,16,16,0.95); border-bottom-color: var(--color-border); }
 .dark .product-card              { background: var(--color-surface); border-color: var(--color-border); }
-.dark .product-card-image        { background: var(--color-page-bg); }
+.dark .product-card-image        { background: var(--color-surface-2); }
 .dark .card                      { background: var(--color-surface); border-color: var(--color-border); }
 .dark nav                        { border-bottom-color: var(--color-border); }
 
+
 /* ─── Body Theme Transition ────────────────────────────────── */
-body, body *, nav, nav *, .product-card, .card {
+body, header, nav, footer, .product-card, .card, button, input, select, textarea, a {
   transition: background-color 0.28s cubic-bezier(0.4, 0, 0.2, 1), 
               border-color 0.28s cubic-bezier(0.4, 0, 0.2, 1), 
               color 0.2s cubic-bezier(0.4, 0, 0.2, 1), 

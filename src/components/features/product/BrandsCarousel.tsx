@@ -20,7 +20,7 @@ export default function BrandsCarousel() {
           {doubled.map((brand, i) => (
             <div
               key={`${brand.name}-${i}`}
-              className="flex-shrink-0 h-12 px-6 rounded-xl border border-border-warm bg-white flex items-center gap-2.5 text-muted-foreground hover:text-foreground hover:border-primary/20 hover:shadow-sm transition-all duration-200 cursor-pointer"
+              className="flex-shrink-0 h-12 px-6 rounded-xl border border-border-warm bg-surface flex items-center gap-2.5 text-muted-foreground hover:text-foreground hover:border-primary/20 hover:shadow-sm transition-all duration-200 cursor-pointer"
             >
               <span className="text-lg">{brand.logo}</span>
               <span className="text-sm font-semibold whitespace-nowrap">{brand.name}</span>

@@ -31,7 +31,7 @@ export default function HowItWorks() {
             return (
               <div
                 key={step.n}
-                className={`relative p-6 rounded-2xl border bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-md group shadow-sm ${step.borderClass}`}
+                className={`relative p-6 rounded-2xl border bg-surface transition-all duration-300 hover:-translate-y-1 hover:shadow-md group shadow-sm ${step.borderClass}`}
               >
                 {/* Step number */}
                 <div className={`absolute top-4 right-5 text-3xl font-black opacity-[0.06] group-hover:opacity-[0.1] transition-opacity ${step.textClass}`}>
@@ -50,7 +50,7 @@ export default function HowItWorks() {
 
                 {/* Connector */}
                 {i < STEPS.length - 1 && (
-                  <div className="hidden lg:block absolute -right-3 top-1/2 -translate-y-1/2 z-10 w-6 h-6 bg-white border border-border-warm rounded-full flex items-center justify-center shadow-sm">
+                  <div className="hidden lg:block absolute -right-3 top-1/2 -translate-y-1/2 z-10 w-6 h-6 bg-surface border border-border-warm rounded-full flex items-center justify-center shadow-sm">
                     <ArrowRight size={10} className="text-muted" />
                   </div>
                 )}

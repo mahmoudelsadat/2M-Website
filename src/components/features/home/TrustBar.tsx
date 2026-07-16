@@ -1,123 +1,153 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { trustStats } from '@/lib/data';
-import { ShieldCheck, Truck, CreditCard, RotateCcw, Stethoscope } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { ShieldCheck, Star, Truck, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 import { useTranslation } from '@/lib/LanguageContext';
+import { getBrands } from '@/lib/api';
 
-function useCountUp(target: number, duration = 1800, start = false) {
-  const [count, setCount] = useState(0);
+// Custom inline SVG logos to match the screenshot perfectly
+const BRAND_LOGOS: Record<string, React.ReactNode> = {
+  'la roche-posay': (
+    <div className="flex flex-col items-center justify-center font-sans tracking-widest text-[9px] text-[#0A2540] font-black">
+      <div className="flex items-center gap-1">
+        <div className="w-2.5 h-2.5 bg-[#00A6FF]" />
+        <span>LA ROCHE-POSAY</span>
+      </div>
+      <span className="text-[5px] tracking-[0.2em] font-normal text-neutral-400 mt-0.5">LABORATOIRE DERMATOLOGIQUE</span>
+    </div>
+  ),
+  'cerave': (
+    <div className="font-sans text-xl font-bold tracking-tight text-[#0F62AC] flex items-baseline">
+      <span>Cera</span><span className="text-[#41B6E6]">Ve</span>
+    </div>
+  ),
+  'vichy': (
+    <div className="flex flex-col items-center justify-center font-serif text-lg font-extrabold tracking-[0.25em] text-neutral-900">
+      <span>VICHY</span>
+      <span className="text-[5px] font-sans tracking-[0.1em] font-bold text-neutral-400 -mt-1">LABORATOIRES</span>
+    </div>
+  ),
+  'the ordinary': (
+    <div className="flex flex-col items-center justify-center font-sans text-xs font-bold tracking-tight text-neutral-900">
+      <span>The Ordinary.</span>
+      <span className="text-[4px] tracking-widest text-neutral-400 font-normal uppercase mt-0.5">Clinical Formulations</span>
+    </div>
+  ),
+  'now foods': (
+    <div className="flex flex-col items-center justify-center font-sans text-sm font-extrabold text-[#E28716] italic">
+      <span className="leading-none">now</span>
+      <span className="text-[5px] not-italic tracking-[0.1em] font-bold text-[#2A7B4C] uppercase leading-none mt-0.5">Premium Health</span>
+    </div>
+  ),
+};
+
+export default function TrustBar() {
+  const { t, isRtl } = useTranslation();
+  const [brands, setBrands] = useState<any[]>([]);
+
   useEffect(() => {
-    if (!start) return;
-    let t0: number | null = null;
-    const step = (ts: number) => {
-      if (!t0) t0 = ts;
-      const p = Math.min((ts - t0) / duration, 1);
-      const eased = 1 - Math.pow(1 - p, 3);
-      setCount(Math.round(eased * target));
-      if (p < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  }, [target, duration, start]);
-  return count;
-}
-
-const STAT_COLORS = [
-  { colorClass: 'text-primary', bgClass: 'bg-primary/10 border-primary/20', glowClass: 'shadow-primary/10' },
-  { colorClass: 'text-gold',    bgClass: 'bg-gold/10 border-gold/20',       glowClass: 'shadow-gold/10' },
-  { colorClass: 'text-accent',  bgClass: 'bg-accent/10 border-accent/20',   glowClass: 'shadow-accent/10' },
-  { colorClass: 'text-primary', bgClass: 'bg-primary/10 border-primary/20', glowClass: 'shadow-primary/10' },
-];
-
-const labelKeys = ['premiumBrands', 'happyCustomers', 'governoratesCovered', 'authenticProducts'];
-
-function Stat({
-  value, suffix, labelKey, colorClass, bgClass, glowClass,
-}: {
-  value: number; suffix: string; labelKey: string;
-  colorClass: string; bgClass: string; glowClass: string;
-}) {
-  const { t } = useTranslation();
-  const [visible, setVisible] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  const count = useCountUp(value, 1800, visible);
-  const formatted = value >= 1000 ? `${(count / 1000).toFixed(count === value ? 0 : 1)}K` : count.toString();
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true); }, { threshold: 0.4 });
-    obs.observe(el);
-    return () => obs.disconnect();
+    getBrands()
+      .then((res) => {
+        // Map to include our premium SVG logos if available, otherwise fallback
+        const formatted = res.map((b) => ({
+          ...b,
+          renderLogo: BRAND_LOGOS[b.name.toLowerCase()] || (
+            <span className="font-extrabold text-neutral-800 text-sm tracking-tight">{b.name}</span>
+          ),
+        }));
+        setBrands(formatted);
+      })
+      .catch((err) => console.error(err));
   }, []);
 
   return (
-    <div ref={ref} className="flex flex-col items-center text-center px-4 group">
-      {/* Glow ring on scroll reveal */}
-      <div
-        className={`relative w-20 h-20 rounded-2xl flex items-center justify-center mb-4 transition-all duration-300 group-hover:-translate-y-1 border ${bgClass} ${
-          visible ? `shadow-xl ${glowClass}` : 'shadow-none'
-        }`}
-      >
-        <div className={`text-2xl font-black tabular-nums ${colorClass}`}>
-          {formatted}{suffix}
-        </div>
-      </div>
-      <div className="text-sm font-semibold text-muted-foreground">
-        {t(labelKey)}
-      </div>
-    </div>
-  );
-}
-
-const TRUST_ITEMS = [
-  { icon: ShieldCheck, textKey: 'authenticGuarantee', colorClass: 'text-primary' },
-  { icon: CreditCard,  textKey: 'codAvailable',        colorClass: 'text-accent' },
-  { icon: Truck,       textKey: 'egyptWideDelivery',   colorClass: 'text-primary' },
-  { icon: RotateCcw,   textKey: 'easyReturns',         colorClass: 'text-gold' },
-  { icon: Stethoscope, textKey: 'pharmacistCurated',   colorClass: 'text-primary' },
-];
-
-export default function TrustBar() {
-  const { t } = useTranslation();
-
-  return (
-    <section className="py-20 border-y bg-card border-border-theme">
+    <section className="py-20 bg-surface-2 border-y border-border">
       <div className="container-2m">
-
-        {/* Stats row */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-12">
-          {trustStats.map((s, i) => (
-            <Stat
-              key={s.label}
-              value={s.value}
-              suffix={s.suffix}
-              labelKey={labelKeys[i]}
-              colorClass={STAT_COLORS[i].colorClass}
-              bgClass={STAT_COLORS[i].bgClass}
-              glowClass={STAT_COLORS[i].glowClass}
-            />
-          ))}
+        {/* Why Choose 2M Section Header */}
+        <div className="text-center mb-12">
+          <h2 className="text-2xl sm:text-3xl font-black text-text-primary" style={{ fontFamily: 'var(--font-display)' }}>
+            {t('whyChooseTitle')}
+          </h2>
         </div>
 
-        {/* Divider */}
-        <div className="section-divider my-12" />
+        {/* 3 Glow Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          {/* Card 1 */}
+          <div className="relative p-8 rounded-3xl bg-surface border border-brand-primary/10 shadow-sm flex flex-col items-center text-center group hover:scale-[1.02] transition-transform duration-300">
+            <div className="w-14 h-14 rounded-full bg-brand-primary-soft border border-brand-primary-soft/30 flex items-center justify-center mb-6 text-brand-primary">
+              <ShieldCheck size={26} />
+            </div>
+            <h3 className="text-base font-bold text-text-primary mb-2">{t('chooseAuthenticTitle')}</h3>
+            <p className="text-xs text-text-secondary leading-relaxed max-w-[28ch]">{t('chooseAuthenticDesc')}</p>
+          </div>
 
-        {/* Trust signal pills */}
-        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-4">
-          {TRUST_ITEMS.map((item) => {
-            const Icon = item.icon;
-            return (
-              <div
-                key={item.textKey}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-full border border-border-theme bg-surface-2 text-[0.8rem] font-semibold text-muted-foreground transition-all duration-200 hover:-translate-y-0.5 hover:bg-card shadow-sm"
-              >
-                <Icon size={14} className={item.colorClass} />
-                <span>{t(item.textKey)}</span>
+          {/* Card 2 */}
+          <div className="relative p-8 rounded-3xl bg-surface border border-brand-accent/10 shadow-sm flex flex-col items-center text-center group hover:scale-[1.02] transition-transform duration-300">
+            <div className="w-14 h-14 rounded-full bg-brand-accent-soft border border-brand-accent-soft/30 flex items-center justify-center mb-6 text-brand-accent">
+              <Star size={26} />
+            </div>
+            <h3 className="text-base font-bold text-text-primary mb-2">{t('chooseExpertTitle')}</h3>
+            <p className="text-xs text-text-secondary leading-relaxed max-w-[28ch]">{t('chooseExpertDesc')}</p>
+          </div>
+
+          {/* Card 3 */}
+          <div className="relative p-8 rounded-3xl bg-surface border border-border shadow-sm flex flex-col items-center text-center group hover:scale-[1.02] transition-transform duration-300">
+            <div className="w-14 h-14 rounded-full bg-surface-3 flex items-center justify-center mb-6 text-text-primary">
+              <Truck size={26} />
+            </div>
+            <h3 className="text-base font-bold text-text-primary mb-2">{t('chooseDeliveryTitle')}</h3>
+            <p className="text-xs text-text-secondary leading-relaxed max-w-[28ch]">{t('chooseDeliveryDesc')}</p>
+          </div>
+        </div>
+
+        {/* Explore All Brands Link (aligned right) */}
+        <div className={`flex ${isRtl ? 'justify-start' : 'justify-end'} mb-14`}>
+          <Link
+            href="/brands"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-brand-accent hover:text-brand-accent/80 transition-colors uppercase tracking-wider hover:underline"
+          >
+            {t('exploreAllBrands')} <ArrowRight size={12} className={isRtl ? 'rotate-180' : ''} />
+          </Link>
+        </div>
+
+        {/* Brand slider / carousel */}
+        {brands.length > 0 && (
+          <div className="relative mt-8 group/slider">
+            <div className="flex items-center justify-between gap-4">
+              {/* Left arrow */}
+              <button className="w-8 h-8 rounded-full border border-border bg-surface text-text-secondary hover:text-brand-primary flex items-center justify-center transition-colors shadow-xs">
+                <ChevronLeft size={16} />
+              </button>
+
+              {/* Brands grid representing the carousel row in the screenshot */}
+              <div className="flex-1 overflow-hidden">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+                  {brands.slice(0, 5).map((brand) => (
+                    <Link
+                      key={brand.name}
+                      href={`/brands/${brand.slug || brand.name.toLowerCase()}`}
+                      className="h-16 rounded-2xl bg-surface flex items-center justify-center px-4 border border-border hover:scale-[1.03] hover:shadow-md transition-all duration-300"
+                    >
+                      {brand.renderLogo}
+                    </Link>
+                  ))}
+                </div>
               </div>
-            );
-          })}
-        </div>
+
+              {/* Right arrow */}
+              <button className="w-8 h-8 rounded-full border border-border bg-surface text-text-secondary hover:text-brand-primary flex items-center justify-center transition-colors shadow-xs">
+                <ChevronRight size={16} />
+              </button>
+            </div>
+
+            {/* Slider dots indicators */}
+            <div className="flex items-center justify-center gap-1.5 mt-8">
+              <span className="w-1.5 h-1.5 rounded-full bg-brand-primary" />
+              <span className="w-1.5 h-1.5 rounded-full bg-border-soft" />
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

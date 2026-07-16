@@ -54,9 +54,7 @@ function DarkModeToggle({ compact = false }: { compact?: boolean }) {
       id="dark-mode-toggle"
       onClick={toggle}
       whileTap={{ scale: 0.88 }}
-      className={`${compact ? 'w-8 h-8' : 'w-9 h-9'} rounded-xl flex items-center justify-center border border-border-theme bg-card transition-all duration-300 ${
-        dark ? 'text-gold' : 'text-muted-foreground'
-      }`}
+      className={`${compact ? 'w-8 h-8' : 'w-9 h-9'} rounded-xl flex items-center justify-center border border-border bg-surface hover:bg-surface-2 text-text-secondary hover:text-brand-primary transition-all duration-300`}
       aria-label={dark ? 'Light mode' : 'Dark mode'}
     >
       <AnimatePresence mode="wait" initial={false}>
@@ -153,7 +151,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
   return (
     <>
       {/* ── Announcement Bar ─────────────────────────────────── */}
-      <div className="relative z-50 select-none overflow-hidden bg-primary min-h-[36px]">
+      <div className="relative z-50 select-none overflow-hidden bg-[#060700]/95 border-b border-neutral-900 min-h-[36px]">
         <div className="container-2m flex items-center justify-between h-9 gap-4">
           {/* Left: scrolling announcement marquee */}
           <div className="flex-1 overflow-hidden relative h-full flex items-center whitespace-nowrap mask-edges">
@@ -161,7 +159,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
               {[...Array(2)].map((_, i) => (
                 <div key={i} className="flex gap-8 px-4 items-center">
                   {announcements.map((anno, idx) => (
-                    <span key={idx} className="text-[11px] font-semibold text-white/90">
+                    <span key={idx} className="text-[11px] font-semibold text-neutral-400">
                       {anno}
                     </span>
                   ))}
@@ -175,20 +173,20 @@ export default function Navbar({ cartCount }: NavbarProps) {
             <a
               href="https://wa.me/201115160947"
               target="_blank" rel="noopener noreferrer"
-              className="hidden md:flex items-center gap-1.5 text-[11px] font-bold text-emerald-300 hover:text-emerald-200 transition-colors"
+              className="hidden md:flex items-center gap-1.5 text-[11px] font-bold text-emerald-500 hover:text-emerald-400 transition-colors"
             >
               <Phone size={11} />
               <span>01115160947</span>
             </a>
-            <span className="hidden md:inline text-white/20">|</span>
-            <span className="hidden sm:flex items-center gap-1 text-[11px] text-white/70 font-medium">
-              <ShieldCheck size={11} className="text-gold" />
+            <span className="hidden md:inline text-neutral-800">|</span>
+            <span className="hidden sm:flex items-center gap-1 text-[11px] text-neutral-400 font-medium">
+              <ShieldCheck size={11} className="text-teal-500" />
               {t('authenticShort')}
             </span>
             {adminLoggedIn && (
               <Link
                 href="/admin/dashboard"
-                className="flex items-center gap-1 bg-primary-foreground/10 text-white px-2.5 py-0.5 rounded-md text-[10px] font-semibold uppercase tracking-wider hover:bg-primary-foreground/20 transition-colors"
+                className="flex items-center gap-1 bg-white/10 text-white px-2.5 py-0.5 rounded-md text-[10px] font-semibold uppercase tracking-wider hover:bg-white/20 transition-colors"
               >
                 <ShieldCheck size={10} />
                 {t('admin')}
@@ -200,42 +198,28 @@ export default function Navbar({ cartCount }: NavbarProps) {
 
       {/* ── Main Navbar ──────────────────────────────────────── */}
       <nav
-        className={`sticky top-0 z-40 transition-all duration-300 ${
-          scrolled
-            ? 'bg-card/95 backdrop-blur-xl border-b border-border-theme shadow-lg py-0'
-            : 'bg-background border-b border-border-theme/40 py-0'
-        }`}
+        className={`sticky top-0 z-40 transition-all duration-300 bg-white/85 dark:bg-[#1A1C1C]/90 backdrop-blur-[12px] border-b border-border shadow-sm py-0`}
       >
         <div className="container-2m">
-          <div className="flex items-center h-[68px] gap-4">
+          <div className="flex items-center justify-between h-[72px] gap-4">
 
             {/* ── Logo ── */}
-            <Link href="/" className="flex items-center gap-3 flex-shrink-0 group" aria-label="2M Pharmacy">
-              <motion.div
-                whileHover={{ scale: 1.06 }}
-                whileTap={{ scale: 0.94 }}
-                className="w-[46px] h-[46px] rounded-2xl flex items-center justify-center flex-shrink-0 relative overflow-hidden shadow-sm bg-primary"
-              >
-                <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent pointer-events-none" />
-                <span className="text-white font-black text-xl tracking-tight leading-none relative z-10">2M</span>
-              </motion.div>
-              <div className="hidden sm:flex flex-col">
-                <span className="font-black text-[1.25rem] leading-none tracking-tight text-foreground font-body">
-                  {t('storeName')}
-                </span>
-                <span className="text-[9px] font-semibold uppercase tracking-[0.1em] mt-0.5 text-primary">
-                  {t('premium')}
-                </span>
+            <Link href="/" className="flex flex-col select-none justify-center group" aria-label="2M Pharmacy">
+              <div className="flex items-baseline gap-1">
+                <span className="text-xl font-black tracking-tight text-text-primary">2M</span>
+                <span className="text-base font-semibold text-text-primary">Pharmacy</span>
               </div>
+              <span className="text-[7.5px] font-bold tracking-[0.2em] text-text-muted uppercase leading-none mt-0.5">
+                {t('premiumHealth')}
+              </span>
             </Link>
 
             {/* ── Desktop Nav Links ── */}
             <div className="hidden lg:flex items-center flex-1 justify-center">
-              <div className="flex items-center gap-0.5">
+              <div className="flex items-center gap-1.5">
                 {navLinks.map((link) => {
                   const active  = isActive(link.href);
                   const hasSub  = link.submenu && link.submenu.length > 0;
-                  const meta    = CAT_META[link.label];
                   const isOffer = link.label === 'OFFERS';
 
                   return (
@@ -247,28 +231,18 @@ export default function Navbar({ cartCount }: NavbarProps) {
                     >
                       <Link
                         href={link.href}
-                        className={`relative flex items-center gap-1.5 px-3.5 py-2 text-[12.5px] font-bold tracking-wide transition-all duration-200 rounded-xl group ${
+                        className={`relative flex items-center gap-1.5 px-4 py-2 text-[13.5px] font-medium tracking-wide transition-all duration-200 rounded-xl group ${
                           isOffer
-                            ? 'text-[#9B1239] bg-red-50 border border-red-100 hover:bg-red-100'
+                            ? 'text-brand-primary bg-brand-primary-soft border border-brand-primary-soft/30 hover:bg-brand-primary-soft/80'
                             : active
-                            ? 'text-primary bg-primary/10'
-                            : 'text-muted-foreground hover:text-foreground hover:bg-surface-2'
+                            ? 'text-brand-primary font-bold'
+                            : 'text-text-secondary hover:text-brand-primary'
                         }`}
                       >
-                        {/* Category icon */}
-                        {meta && (
-                          <span
-                            className="w-5 h-5 rounded-md flex items-center justify-center flex-shrink-0 transition-all duration-200"
-                            style={{ background: meta.bg, color: meta.color }}
-                          >
-                            {meta.icon}
-                          </span>
-                        )}
-
                         <span>{isRtl ? link.labelAr : link.label}</span>
 
                         {isOffer && (
-                          <span className="flex items-center gap-0.5 text-[9px] font-black uppercase bg-[#9B1239] text-white px-1.5 py-0.5 rounded-md leading-none">
+                          <span className="flex items-center gap-0.5 text-[9px] font-black uppercase bg-brand-primary text-white px-1.5 py-0.5 rounded-md leading-none">
                             <Zap size={8} /> {t('hot')}
                           </span>
                         )}
@@ -276,15 +250,15 @@ export default function Navbar({ cartCount }: NavbarProps) {
                         {hasSub && (
                           <ChevronDown
                             size={11}
-                            className={`flex-shrink-0 transition-transform duration-200 ${activeMenu === link.label ? 'rotate-180' : ''}`}
+                            className={`flex-shrink-0 transition-transform duration-200 text-text-muted group-hover:text-brand-primary ${activeMenu === link.label ? 'rotate-180' : ''}`}
                           />
                         )}
 
-                        {/* Active underline */}
+                        {/* Active underdot or line */}
                         {active && !isOffer && (
                           <motion.span
                             layoutId="nav-active-bar"
-                            className="absolute bottom-0 left-3 right-3 h-0.5 rounded-full bg-primary"
+                            className="absolute bottom-0 left-4 right-4 h-0.5 rounded-full bg-brand-primary"
                           />
                         )}
                       </Link>
@@ -299,18 +273,14 @@ export default function Navbar({ cartCount }: NavbarProps) {
                             transition={{ duration: 0.18, ease: 'easeOut' }}
                             onMouseEnter={() => openMenu(link.label)}
                             onMouseLeave={closeMenu}
-                            className={`absolute top-full ${isRtl ? 'right-0' : 'left-0'} mt-1 w-[520px] bg-card border border-border-theme rounded-2xl shadow-2xl z-50 overflow-hidden`}
+                            className={`absolute top-full ${isRtl ? 'right-0 origin-top-right' : 'left-0 origin-top-left'} mt-1 w-[520px] min-w-[520px] max-w-[95vw] bg-white dark:bg-dark-surface border border-border rounded-2xl shadow-lg z-50 overflow-hidden`}
                           >
-                            {/* Top accent gradient */}
-                            <div
-                              className="h-1 w-full"
-                              style={{ background: `linear-gradient(90deg, ${meta?.color ?? 'var(--color-brand-primary)'}, var(--color-brand-gold))` }}
-                            />
+                            <div className="h-1 w-full bg-gradient-to-r from-brand-primary to-brand-accent" />
 
                             <div className="p-5 grid grid-cols-5 gap-5">
                               {/* Left: subcategory links */}
                               <div className="col-span-3">
-                                <p className="text-[9px] font-black uppercase tracking-[0.15em] text-muted mb-3">
+                                <p className="text-[9px] font-black uppercase tracking-[0.15em] text-text-muted mb-3">
                                   {t('browseCategories')}
                                 </p>
                                 <div className="space-y-1">
@@ -318,53 +288,45 @@ export default function Navbar({ cartCount }: NavbarProps) {
                                     <Link
                                       key={sub.label}
                                       href={sub.href}
-                                      className="flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-surface-2 group/sub transition-all duration-150 border border-transparent hover:border-border-theme"
+                                      className="flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-surface-2 group/sub transition-all duration-150 border border-transparent hover:border-border"
                                     >
-                                      <span className="text-xs font-semibold text-muted-foreground group-hover/sub:text-foreground transition-colors">
-                                        {sub.label}
+                                      <span className="text-xs font-semibold text-text-secondary group-hover/sub:text-brand-primary transition-colors">
+                                        {isRtl && (sub as any).labelAr ? (sub as any).labelAr : sub.label}
                                       </span>
                                       <ArrowRight
                                         size={11}
-                                        className={`text-muted group-hover/sub:text-primary transition-colors flex-shrink-0 ${isRtl ? 'rotate-180' : ''}`}
+                                        className={`text-text-muted group-hover/sub:text-brand-primary transition-colors flex-shrink-0 ${isRtl ? 'rotate-180' : ''}`}
                                       />
                                     </Link>
                                   ))}
                                 </div>
                                 <Link
                                   href={link.href}
-                                  className="mt-3 flex items-center gap-1.5 text-[10px] font-black text-primary hover:underline uppercase tracking-wider"
+                                  className="mt-3 flex items-center gap-1.5 text-[10px] font-black text-brand-accent hover:underline uppercase tracking-wider"
                                 >
                                   {t('viewAll')} <ArrowRight size={10} className={isRtl ? 'rotate-180' : ''} />
                                 </Link>
                               </div>
 
                               {/* Right: featured deal card */}
-                              <div
-                                className="col-span-2 rounded-xl p-4 flex flex-col justify-between relative overflow-hidden border border-border-theme/40"
-                                style={{ background: `linear-gradient(135deg, ${meta?.bg ?? '#EBF0FB'}, white)` }}
-                              >
-                                <div className="absolute -bottom-8 -right-8 w-20 h-20 rounded-full opacity-20 blur-2xl pointer-events-none" style={{ background: meta?.color }} />
+                              <div className="col-span-2 rounded-xl p-4 flex flex-col justify-between relative overflow-hidden border border-border bg-surface-2">
                                 <div>
                                   <div className="flex items-center justify-between mb-2">
-                                    <span
-                                      className="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md border"
-                                      style={{ background: meta?.bg, color: meta?.color, borderColor: meta?.color + '40' }}
-                                    >
+                                    <span className="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md border border-brand-accent/20 bg-brand-accent-soft text-brand-accent">
                                       {t(getMegaDeal(link.label).badgeKey)}
                                     </span>
                                     <span className="text-lg">{getMegaDeal(link.label).emoji}</span>
                                   </div>
-                                  <h4 className="text-xs font-black text-foreground mb-1.5" style={{ fontFamily: 'var(--font-display)' }}>
+                                  <h4 className="text-xs font-black text-text-primary mb-1.5" style={{ fontFamily: 'var(--font-display)' }}>
                                     {t(getMegaDeal(link.label).titleKey)}
                                   </h4>
-                                  <p className="text-[10px] text-muted-foreground font-medium leading-relaxed">
+                                  <p className="text-[10px] text-text-secondary font-medium leading-relaxed">
                                     {t(getMegaDeal(link.label).descKey)}
                                   </p>
                                 </div>
                                 <Link
                                   href={getMegaDeal(link.label).link}
-                                  className="mt-3 w-full py-2 text-[10px] font-black uppercase tracking-wider rounded-lg text-center transition-all duration-200 border text-white hover:opacity-90 hover:scale-[1.02] flex items-center justify-center gap-1.5"
-                                  style={{ background: meta?.color ?? 'var(--color-brand-primary)', borderColor: 'transparent' }}
+                                  className="mt-3 w-full py-2 text-[10px] font-black uppercase tracking-wider rounded-lg text-center transition-all duration-200 bg-brand-primary text-white hover:bg-brand-primary-dark hover:scale-[1.02] flex items-center justify-center gap-1.5"
                                 >
                                   {t('shopDeal')} ⚡
                                 </Link>
@@ -380,7 +342,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
             </div>
 
             {/* ── Right Action Cluster ── */}
-            <div className="flex items-center gap-1 flex-shrink-0">
+            <div className="flex items-center gap-2.5 flex-shrink-0">
 
               {/* Search */}
               <motion.button
@@ -389,44 +351,24 @@ export default function Navbar({ cartCount }: NavbarProps) {
                 whileTap={{ scale: 0.88 }}
                 className={`w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-200 border ${
                   searchOpen
-                    ? 'bg-primary border-primary text-white'
-                    : 'bg-card border-border-theme text-muted-foreground hover:bg-surface-2'
+                    ? 'bg-surface-2 border-border text-brand-primary'
+                    : 'bg-transparent border-transparent text-text-secondary hover:text-brand-primary hover:bg-surface-2'
                 }`}
                 aria-label="Search"
               >
-                {searchOpen ? <X size={15} /> : <Search size={15} />}
-              </motion.button>
-
-              {/* Dark mode */}
-              <div className="hidden sm:block">
-                <DarkModeToggle />
-              </div>
-
-              {/* Language */}
-              <motion.button
-                id="nav-lang-btn"
-                whileTap={{ scale: 0.9 }}
-                onClick={() => setLocale(locale === 'en' ? 'ar' : 'en')}
-                className="hidden sm:flex items-center gap-1.5 h-9 px-3 rounded-lg border border-border-theme text-[10px] font-semibold uppercase tracking-wider text-muted-foreground hover:bg-surface-2 transition-all duration-200"
-              >
-                <Globe size={12} className="text-primary" />
-                {locale === 'en' ? 'ع' : 'EN'}
+                {searchOpen ? <X size={16} /> : <Search size={16} />}
               </motion.button>
 
               {/* Account */}
               <Link
                 href="/account"
                 id="nav-account-btn"
-                className={`w-9 h-9 rounded-lg flex items-center justify-center border transition-all duration-200 relative ${
-                  userLoggedIn
-                    ? 'border-primary bg-primary/10 text-primary'
-                    : 'border-border-theme bg-card text-muted-foreground hover:bg-surface-2'
-                }`}
+                className="w-9 h-9 rounded-lg flex items-center justify-center border border-transparent bg-transparent text-text-secondary hover:text-brand-primary hover:bg-surface-2 transition-all duration-200 relative"
                 aria-label="Account"
               >
-                <User size={15} />
+                <User size={16} />
                 {userLoggedIn && (
-                  <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-emerald-500 ring-1 ring-white" />
+                  <span className="absolute top-2.5 right-2.5 w-1.5 h-1.5 rounded-full bg-emerald-500 ring-1 ring-white" />
                 )}
               </Link>
               
@@ -434,55 +376,58 @@ export default function Navbar({ cartCount }: NavbarProps) {
               <Link
                 href="/account?tab=wishlist"
                 id="nav-wishlist-btn"
-                className="w-9 h-9 rounded-lg hidden sm:flex items-center justify-center border border-border-theme bg-card text-muted-foreground hover:bg-surface-2 transition-all duration-200 relative"
+                className="w-9 h-9 rounded-lg hidden sm:flex items-center justify-center border border-transparent bg-transparent text-text-secondary hover:text-brand-primary hover:bg-surface-2 transition-all duration-200 relative"
                 aria-label="Wishlist"
               >
-                <Heart size={15} />
+                <Heart size={16} />
                 <AnimatePresence>
                   {wishlistCount > 0 && (
                     <motion.span
                       initial={{ scale: 0, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
                       exit={{ scale: 0, opacity: 0 }}
-                      className="absolute -top-1 -right-1 w-4 h-4 flex items-center justify-center text-[8px] font-bold rounded-full bg-primary text-white shadow-sm"
+                      className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-brand-primary"
                     >
-                      {wishlistCount}
                     </motion.span>
                   )}
                 </AnimatePresence>
               </Link>
 
-              {/* Cart */}
-              <motion.div whileTap={{ scale: 0.93 }}>
+              {/* Cart Group */}
+              <div className="flex items-center gap-1.5">
+                <span className="w-5 h-5 rounded-full border border-brand-accent/20 bg-brand-accent-soft text-brand-accent flex items-center justify-center text-[10px] font-bold">
+                  {displayCount}
+                </span>
                 <Link
                   href="/cart"
                   id="nav-cart-btn"
-                  className="relative flex items-center gap-2 pl-3 pr-3.5 h-9 rounded-lg text-white bg-primary text-[11px] font-semibold uppercase tracking-wider transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0"
+                  className="flex items-center gap-1.5 border border-border bg-surface hover:bg-surface-2 text-text-primary rounded-full px-4 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all shadow-sm"
                   aria-label={`Cart — ${displayCount} items`}
                 >
-                  <ShoppingCart size={14} className="flex-shrink-0" />
-                  <span className="hidden sm:inline">{t('cartShort')}</span>
-                  <AnimatePresence>
-                    {displayCount > 0 && (
-                      <motion.span
-                        key={displayCount}
-                        initial={{ scale: 0, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        exit={{   scale: 0, opacity: 0 }}
-                        className="w-5 h-5 flex items-center justify-center text-[9px] font-semibold rounded-full bg-white/20 text-white leading-none shadow-sm"
-                      >
-                        {displayCount}
-                      </motion.span>
-                    )}
-                  </AnimatePresence>
+                  <ShoppingCart size={12} className="text-text-secondary" />
+                  <span>{t('cartUppercase')}</span>
                 </Link>
-              </motion.div>
+              </div>
+
+              {/* Accessibility toggles inside submenus/clean buttons */}
+              <div className="hidden sm:block">
+                <DarkModeToggle />
+              </div>
+
+              <motion.button
+                id="nav-lang-btn"
+                whileTap={{ scale: 0.9 }}
+                onClick={() => setLocale(locale === 'en' ? 'ar' : 'en')}
+                className="hidden sm:flex items-center justify-center w-9 h-9 rounded-lg border border-border text-[10px] font-semibold uppercase tracking-wider text-text-secondary hover:text-brand-primary hover:bg-surface-2 transition-all duration-200"
+              >
+                {locale === 'en' ? 'ع' : 'EN'}
+              </motion.button>
 
               {/* Hamburger */}
               <button
                 id="nav-mobile-menu-btn"
                 onClick={() => setMobileOpen(!mobileOpen)}
-                className="lg:hidden w-9 h-9 rounded-lg flex items-center justify-center border border-border-theme bg-card text-muted-foreground hover:bg-surface-2 transition-all duration-200"
+                className="lg:hidden w-9 h-9 rounded-lg flex items-center justify-center border border-border bg-surface text-text-secondary hover:text-brand-primary transition-all duration-200"
                 aria-label="Menu"
               >
                 <AnimatePresence mode="wait" initial={false}>
@@ -516,18 +461,6 @@ export default function Navbar({ cartCount }: NavbarProps) {
             )}
           </AnimatePresence>
         </div>
-
-        {/* Scrolled gold accent line */}
-        <AnimatePresence>
-          {scrolled && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="bg-gradient-to-r from-transparent via-gold to-transparent h-px opacity-40"
-            />
-          )}
-        </AnimatePresence>
       </nav>
 
       {/* ── Mobile Drawer ── */}
@@ -536,7 +469,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
           <>
             {/* Backdrop */}
             <motion.div
-              className="fixed inset-0 z-40 lg:hidden bg-black/50 backdrop-blur-sm"
+              className="fixed inset-0 z-40 lg:hidden bg-black/60 backdrop-blur-sm"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{   opacity: 0 }}
@@ -545,26 +478,21 @@ export default function Navbar({ cartCount }: NavbarProps) {
 
             {/* Drawer panel */}
             <motion.aside
-              className={`fixed top-0 bottom-0 z-50 lg:hidden w-[300px] flex flex-col overflow-hidden bg-card shadow-2xl ${isRtl ? 'left-0' : 'right-0'}`}
+              className={`fixed top-0 bottom-0 z-50 lg:hidden w-[300px] flex flex-col overflow-hidden bg-surface border-l border-border shadow-2xl ${isRtl ? 'left-0' : 'right-0'}`}
               initial={{ x: isRtl ? '-100%' : '100%' }}
               animate={{ x: 0 }}
               exit={{   x: isRtl ? '-100%' : '100%' }}
               transition={{ type: 'spring', damping: 28, stiffness: 240 }}
             >
               {/* Drawer header */}
-              <div className="relative flex items-center justify-between px-5 py-4 flex-shrink-0 bg-primary">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-white/15 flex items-center justify-center text-white font-black text-sm border border-white/20">
-                    2M
-                  </div>
-                  <div>
-                    <div className="text-white font-black text-sm leading-none">{t('storeName')}</div>
-                    <div className="text-white/70 text-[9px] font-semibold uppercase tracking-wider mt-0.5">{t('premium')}</div>
-                  </div>
+              <div className="relative flex items-center justify-between px-5 py-4 flex-shrink-0 bg-surface-2 border-b border-border">
+                <div className="flex flex-col">
+                  <div className="text-text-primary font-black text-sm leading-none">{t('storeName')}</div>
+                  <div className="text-text-muted text-[9px] font-semibold uppercase tracking-wider mt-0.5">{t('premium')}</div>
                 </div>
                 <button
                   onClick={() => setMobileOpen(false)}
-                  className="w-8 h-8 rounded-lg bg-white/15 flex items-center justify-center text-white hover:bg-white/25 transition-colors border border-white/20"
+                  className="w-8 h-8 rounded-lg bg-surface flex items-center justify-center text-text-primary hover:bg-surface-2 transition-colors border border-border"
                 >
                   <X size={15} />
                 </button>
@@ -584,10 +512,10 @@ export default function Navbar({ cartCount }: NavbarProps) {
                       <div
                         className={`flex items-center justify-between px-4 py-3 rounded-xl text-[12px] font-bold uppercase tracking-wider transition-all duration-150 ${
                           isOffer
-                            ? 'text-[#9B1239] bg-red-50 border border-red-100'
+                            ? 'text-brand-primary bg-brand-primary-soft border border-brand-primary-soft/30'
                             : active
-                            ? 'text-primary bg-primary/10 border border-primary/15'
-                            : 'text-foreground hover:bg-surface-2 border border-transparent cursor-pointer'
+                            ? 'text-brand-primary bg-surface-2 border border-border'
+                            : 'text-text-secondary hover:bg-surface-2 border border-transparent cursor-pointer'
                         }`}
                         onClick={() => {
                           if (hasSub) {
@@ -601,7 +529,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
                           {meta && (
                             <span
                               className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
-                              style={{ background: meta.bg, color: meta.color }}
+                              style={{ background: 'var(--color-surface-3)', color: 'var(--color-brand-primary)' }}
                             >
                               {meta.icon}
                             </span>
@@ -609,10 +537,10 @@ export default function Navbar({ cartCount }: NavbarProps) {
                           <span>{isRtl ? link.labelAr : link.label}</span>
                         </div>
                         {isOffer
-                          ? <span className="text-[9px] font-black bg-[#9B1239] text-white px-1.5 py-0.5 rounded">{t('hot')}</span>
+                          ? <span className="text-[9px] font-black bg-brand-primary text-white px-1.5 py-0.5 rounded">{t('hot')}</span>
                           : hasSub
-                          ? <ChevronDown size={14} className="text-muted-foreground transition-transform duration-200 rotate-0" />
-                          : <ArrowRight size={12} className={`text-muted-foreground ${isRtl ? 'rotate-180' : ''}`} />
+                          ? <ChevronDown size={14} className="text-text-muted transition-transform duration-200 rotate-0" />
+                          : <ArrowRight size={12} className={`text-text-muted ${isRtl ? 'rotate-180' : ''}`} />
                         }
                       </div>
 
@@ -623,7 +551,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: 'auto', opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
-                            className="overflow-hidden ml-4 mr-4 border-l border-border-theme mt-1"
+                            className="overflow-hidden ml-4 mr-4 border-l border-border mt-1"
                           >
                             <div className="flex flex-col gap-1 py-2 pl-3">
                               {link.submenu!.map((sub) => (
@@ -631,15 +559,15 @@ export default function Navbar({ cartCount }: NavbarProps) {
                                   key={sub.label}
                                   href={sub.href}
                                   onClick={() => setMobileOpen(false)}
-                                  className="text-xs font-semibold text-muted-foreground hover:text-foreground py-2"
+                                  className="text-xs font-semibold text-text-secondary hover:text-brand-primary py-2"
                                 >
                                   {sub.label}
                                 </Link>
                               ))}
                               <Link
-                                href={link.href}
-                                onClick={() => setMobileOpen(false)}
-                                className="text-[10px] font-black text-primary uppercase py-2 flex items-center gap-1 mt-1"
+                                  href={link.href}
+                                  onClick={() => setMobileOpen(false)}
+                                  className="text-[10px] font-black text-brand-accent uppercase py-2 flex items-center gap-1 mt-1"
                               >
                                 {t('viewAll')} <ArrowRight size={10} className={isRtl ? 'rotate-180' : ''} />
                               </Link>
@@ -653,14 +581,14 @@ export default function Navbar({ cartCount }: NavbarProps) {
               </nav>
 
               {/* Drawer footer */}
-              <div className="p-4 border-t border-border-theme space-y-3 flex-shrink-0 bg-surface-2">
+              <div className="p-4 border-t border-border space-y-3 flex-shrink-0 bg-surface-2">
                 {/* Lang + dark mode row */}
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => setLocale(locale === 'en' ? 'ar' : 'en')}
-                    className="flex-1 flex items-center justify-center gap-2 h-10 rounded-lg border border-border-theme text-[11px] font-semibold uppercase tracking-wider text-foreground transition-colors hover:bg-card"
+                    className="flex-1 flex items-center justify-center gap-2 h-10 rounded-lg border border-border text-[11px] font-semibold uppercase tracking-wider text-text-secondary hover:bg-surface-3 transition-colors"
                   >
-                    <Globe size={13} className="text-primary" />
+                    <Globe size={13} className="text-brand-primary" />
                     {t('languageName')}
                   </button>
                   <DarkModeToggle />
@@ -669,7 +597,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
                 {/* Cart CTA */}
                 <Link
                   href="/cart"
-                  className="w-full h-11 flex items-center justify-center gap-2 rounded-lg text-white bg-primary font-semibold text-[11px] uppercase tracking-wider transition-all hover:opacity-90"
+                  className="w-full h-11 flex items-center justify-center gap-2 rounded-lg text-white bg-brand-primary hover:bg-brand-primary-dark font-semibold text-[11px] uppercase tracking-wider transition-all"
                 >
                   <ShoppingCart size={14} />
                   {t('shoppingCart')}
@@ -684,7 +612,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
                 <a
                   href="https://wa.me/201115160947"
                   target="_blank" rel="noopener noreferrer"
-                  className="w-full h-10 flex items-center justify-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50 text-[11px] font-semibold text-emerald-700 hover:bg-emerald-100 transition-colors"
+                  className="w-full h-10 flex items-center justify-center gap-2 rounded-lg border border-emerald-500/20 bg-emerald-500/10 text-[11px] font-semibold text-emerald-600 hover:bg-emerald-500/20 transition-colors"
                 >
                   <Phone size={13} /> 01115160947 (WhatsApp)
                 </a>

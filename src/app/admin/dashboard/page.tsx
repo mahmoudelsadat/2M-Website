@@ -1413,7 +1413,7 @@ export default function AdminDashboardPage() {
               key={item.id}
               onClick={() => { setActivePanel(item.id); setMobileSidebarOpen(false); }}
               className={`w-full flex items-center gap-3 pl-6 pr-4 py-3 mb-2 text-[14px] font-semibold transition-all duration-150 rounded-l-full relative ${
-                active ? 'bg-slate-100 text-[#1E40AF]' : 'text-white/70 hover:bg-white/10 hover:text-white'
+                active ? 'bg-slate-100 text-brand-primary' : 'text-white/70 hover:bg-white/10 hover:text-white'
               }`}
             >
               <span className="flex-shrink-0">{item.icon}</span>
@@ -1432,7 +1432,7 @@ export default function AdminDashboardPage() {
               key={item.id}
               onClick={() => { setActivePanel(item.id); setMobileSidebarOpen(false); }}
               className={`w-full flex items-center gap-3 pl-6 pr-4 py-3 mb-2 text-[14px] font-semibold transition-all duration-150 rounded-l-full relative ${
-                active ? 'bg-slate-100 text-[#1E40AF]' : 'text-white/70 hover:bg-white/10 hover:text-white'
+                active ? 'bg-slate-100 text-brand-primary' : 'text-white/70 hover:bg-white/10 hover:text-white'
               }`}
             >
               <span className="flex-shrink-0">{item.icon}</span>

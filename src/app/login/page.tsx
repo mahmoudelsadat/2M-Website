@@ -94,7 +94,7 @@ export default function LoginPage() {
   return (
     <>
       <Navbar />
-      <main className="flex-grow flex items-center justify-center min-h-[85vh] py-16 px-4 bg-gray-50 dark:bg-dark-hero">
+      <main className="flex-grow flex items-center justify-center min-h-[85vh] py-16 px-4 bg-background">
         <div className="w-full max-w-[460px] relative">
           
           {/* Decorative ambient blobs */}
@@ -102,7 +102,7 @@ export default function LoginPage() {
           <div className="absolute -bottom-12 -right-12 w-64 h-64 bg-gray-200 rounded-full blur-3xl pointer-events-none opacity-50 dark:opacity-10" />
 
           {/* Portal Card */}
-          <div className="shadow-xl rounded-xl border border-gray-200 dark:border-slate-800 bg-white dark:bg-dark-card relative z-10 overflow-hidden">
+          <div className="shadow-xl rounded-xl border border-border bg-card relative z-10 overflow-hidden">
             
             {/* Top decorative branding tag */}
             <div className="h-1.5 w-full bg-gradient-to-r from-primary to-brand-gold" />
@@ -177,9 +177,9 @@ export default function LoginPage() {
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             placeholder={t('fullNameLabel')}
-                            className={`w-full p-3 bg-gray-50 dark:bg-slate-800 border ${
-                              errors.name ? 'border-red-400 focus:ring-red-500/10' : 'border-border focus:border-primary focus:ring-primary/5'
-                            } rounded-lg ps-11 pe-4 text-sm text-foreground dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 transition-all`}
+                            className={`w-full p-3 bg-surface-2 border ${
+                              errors.name ? 'border-red-400 focus:ring-red-500/10' : 'border-border focus:border-brand-primary focus:ring-brand-primary/5'
+                            } rounded-lg ps-11 pe-4 text-sm text-foreground placeholder-gray-400 focus:outline-none focus:ring-2 transition-all`}
                           />
                         </div>
                         {errors.name && (
@@ -202,9 +202,9 @@ export default function LoginPage() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="email@example.com"
-                      className={`w-full p-3 bg-gray-50 dark:bg-slate-800 border ${
-                        errors.email ? 'border-red-400 focus:ring-red-500/10' : 'border-border focus:border-primary focus:ring-primary/5'
-                      } rounded-lg ps-11 pe-4 text-sm text-foreground dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 transition-all`}
+                      className={`w-full p-3 bg-surface-2 border ${
+                        errors.email ? 'border-red-400 focus:ring-red-500/10' : 'border-border focus:border-brand-primary focus:ring-brand-primary/5'
+                      } rounded-lg ps-11 pe-4 text-sm text-foreground placeholder-gray-400 focus:outline-none focus:ring-2 transition-all`}
                     />
                   </div>
                   {errors.email && (
@@ -224,9 +224,9 @@ export default function LoginPage() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••"
-                      className={`w-full p-3 bg-gray-50 dark:bg-slate-800 border ${
-                        errors.password ? 'border-red-400 focus:ring-red-500/10' : 'border-border focus:border-primary focus:ring-primary/5'
-                      } rounded-lg ps-11 pe-11 text-sm text-foreground dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 transition-all`}
+                      className={`w-full p-3 bg-surface-2 border ${
+                        errors.password ? 'border-red-400 focus:ring-red-500/10' : 'border-border focus:border-brand-primary focus:ring-brand-primary/5'
+                      } rounded-lg ps-11 pe-11 text-sm text-foreground placeholder-gray-400 focus:outline-none focus:ring-2 transition-all`}
                     />
                     <button
                       type="button"
@@ -263,9 +263,9 @@ export default function LoginPage() {
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             placeholder="••••••••"
-                            className={`w-full p-3 bg-gray-50 dark:bg-slate-800 border ${
-                              errors.confirmPassword ? 'border-red-400 focus:ring-red-500/10' : 'border-border focus:border-primary focus:ring-primary/5'
-                            } rounded-lg ps-11 pe-4 text-sm text-foreground dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 transition-all`}
+                            className={`w-full p-3 bg-surface-2 border ${
+                              errors.confirmPassword ? 'border-red-400 focus:ring-red-500/10' : 'border-border focus:border-brand-primary focus:ring-brand-primary/5'
+                            } rounded-lg ps-11 pe-4 text-sm text-foreground placeholder-gray-400 focus:outline-none focus:ring-2 transition-all`}
                           />
                         </div>
                         {errors.confirmPassword && (
@@ -298,10 +298,10 @@ export default function LoginPage() {
               {/* Portal Switcher Footer info */}
               <div className="mt-8 pt-6 border-t border-border text-center">
                 <p className="text-xs text-muted-foreground font-semibold">
-                  {isLogin ? t('newTo2M') : t('alreadyHaveAccount')}
+                  {isLogin ? t('newTo2M') : t('alreadyHaveAccount')}{' '}
                   <button
                     onClick={() => { setIsLogin(!isLogin); setErrors({}); }}
-                    className="text-primary font-bold hover:underline"
+                    className="text-brand-primary font-bold hover:underline"
                   >
                     {isLogin ? t('createAccount') : t('signInHere')}
                   </button>
@@ -310,7 +310,7 @@ export default function LoginPage() {
                 {/* Admin Access Redirect */}
                 <Link
                   href="/admin"
-                  className="inline-flex items-center gap-1.5 text-[10px] font-bold text-brand-gold uppercase tracking-wider mt-4 hover:text-primary transition-colors"
+                  className="inline-flex items-center gap-1.5 text-[10px] font-bold text-brand-gold uppercase tracking-wider mt-4 hover:text-brand-primary transition-colors"
                 >
                   <ShieldCheck size={12} />
                   {t('adminPortal')}

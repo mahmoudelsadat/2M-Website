@@ -86,9 +86,9 @@ export default function PDPClient({ product, related }: PDPClientProps) {
   ];
 
   const TRUST_ITEMS = [
-    { icon: Shield, labelKey: 'authentic' as const, color: '#2B7CC1' },
-    { icon: Truck, labelKey: 'delivery' as const, color: '#10B981' },
-    { icon: RefreshCw, labelKey: 'returns' as const, color: '#C9A84C' },
+    { icon: Shield, labelKey: 'authentic' as const, color: 'var(--color-brand-primary)' },
+    { icon: Truck, labelKey: 'delivery' as const, color: 'var(--color-brand-accent)' },
+    { icon: RefreshCw, labelKey: 'returns' as const, color: 'var(--color-brand-gold)' },
   ];
 
   const productName = product.name;
@@ -100,9 +100,9 @@ export default function PDPClient({ product, related }: PDPClientProps) {
       <div className="container-2m py-8">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-xs text-muted-foreground mb-8 flex-wrap" aria-label="Breadcrumb">
-          <Link href="/" className="hover:text-primary transition-colors">{t('home')}</Link>
+          <Link href="/" className="hover:text-brand-primary transition-colors">{t('home')}</Link>
           <ChevronRight size={12} className={isRtl ? 'rotate-180' : ''} />
-          <Link href={`/${product.category}`} className="hover:text-primary transition-colors capitalize">{product.category}</Link>
+          <Link href={`/${product.category}`} className="hover:text-brand-primary transition-colors capitalize">{product.category}</Link>
           <ChevronRight size={12} className={isRtl ? 'rotate-180' : ''} />
           <span className="text-foreground font-semibold truncate max-w-[200px]">{productName}</span>
         </nav>
@@ -139,7 +139,7 @@ export default function PDPClient({ product, related }: PDPClientProps) {
               {product.badge === 'pharmacist-pick' && (
                 <div className="absolute top-4 right-4">
                   <span
-                    className="badge text-xs bg-primary/10 text-primary border border-primary/30"
+                    className="badge text-xs bg-primary/10 text-brand-primary border border-brand-primary/30"
                   >
                     ✅ {isRtl ? 'ترشيح الصيدلي' : 'Pharmacist Pick'}
                   </span>
@@ -154,7 +154,7 @@ export default function PDPClient({ product, related }: PDPClientProps) {
                   key={i}
                   onClick={() => setActiveImage(i)}
                   className={`w-20 h-20 rounded-xl overflow-hidden transition-all duration-200 border bg-card ${
-                    activeImage === i ? 'border-primary opacity-100 ring-1 ring-primary' : 'border-border opacity-60 hover:opacity-100'
+                    activeImage === i ? 'border-brand-primary opacity-100 ring-1 ring-brand-primary' : 'border-border opacity-60 hover:opacity-100'
                   }`}
                 >
                   <Image src={img} alt="" width={80} height={80} className="w-full h-full object-contain p-2" />
@@ -218,7 +218,7 @@ export default function PDPClient({ product, related }: PDPClientProps) {
                 <button
                   id="pdp-qty-minus"
                   onClick={() => setQty(Math.max(1, qty - 1))}
-                  className="w-11 h-12 flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-surface-2 transition-all"
+                  className="w-11 h-12 flex items-center justify-center text-muted-foreground hover:text-brand-primary hover:bg-surface-2 transition-all"
                   aria-label="Decrease quantity"
                 >
                   <Minus size={15} />
@@ -229,7 +229,7 @@ export default function PDPClient({ product, related }: PDPClientProps) {
                 <button
                   id="pdp-qty-plus"
                   onClick={() => setQty(qty + 1)}
-                  className="w-11 h-12 flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-surface-2 transition-all"
+                  className="w-11 h-12 flex items-center justify-center text-muted-foreground hover:text-brand-primary hover:bg-surface-2 transition-all"
                   aria-label="Increase quantity"
                 >
                   <Plus size={15} />
@@ -256,9 +256,9 @@ export default function PDPClient({ product, related }: PDPClientProps) {
               <button
                 id="pdp-wishlist"
                 onClick={() => setWishlisted(!wishlisted)}
-                className={`btn btn-ghost flex-1 text-xs py-2.5 ${wishlisted ? 'border-primary text-primary' : ''}`}
+                className={`btn btn-ghost flex-1 text-xs py-2.5 ${wishlisted ? 'border-brand-primary text-brand-primary' : ''}`}
               >
-                <Heart size={14} className={wishlisted ? 'fill-primary text-primary' : ''} />
+                <Heart size={14} className={wishlisted ? 'fill-brand-primary text-brand-primary' : ''} />
                 {wishlisted ? t('saved') : t('saveToWishlist')}
               </button>
               <button

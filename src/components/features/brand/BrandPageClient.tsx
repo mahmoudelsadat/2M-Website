@@ -24,7 +24,7 @@ export default function BrandPageClient({ brand, brandProducts }: BrandPageClien
       {/* Header */}
       <section className="py-14 bg-card border-b border-border">
         <div className="container-2m">
-          <Link href="/brands" className={`inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-6`}>
+          <Link href="/brands" className={`inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-brand-primary transition-colors mb-6`}>
             <ArrowLeft size={14} className={isRtl ? 'rotate-180' : ''} /> {t('allBrands')}
           </Link>
           <div className="flex items-center gap-5">
@@ -69,7 +69,7 @@ export default function BrandPageClient({ brand, brandProducts }: BrandPageClien
                   </div>
                   <div className="product-card-body">
                     <p className="text-[11px] text-muted font-semibold uppercase tracking-wider mb-1">{p.brand}</p>
-                    <h2 className="text-sm font-semibold text-foreground line-clamp-2 mb-2 group-hover:text-primary transition-colors">{p.name}</h2>
+                    <h2 className="text-sm font-semibold text-foreground line-clamp-2 mb-2 group-hover:text-brand-primary transition-colors">{p.name}</h2>
                     <div className="flex items-center gap-1 mb-2">
                       {[1,2,3,4,5].map((s) => (
                         <Star key={s} size={10} className={s <= Math.round(p.rating) ? 'fill-brand-gold text-brand-gold' : 'text-gray-300'} />

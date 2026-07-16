@@ -48,7 +48,7 @@ export default function QuickViewModal({ product, onClose }: QuickViewProps) {
           onClick={(e) => { if (e.target === overlayRef.current) onClose(); }}
         >
           <motion.div
-            className="relative bg-white rounded-3xl overflow-hidden max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
+            className="relative bg-surface rounded-3xl overflow-hidden max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
             initial={{ scale: 0.92, opacity: 0, y: 24 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.92, opacity: 0, y: 24 }}
@@ -57,7 +57,7 @@ export default function QuickViewModal({ product, onClose }: QuickViewProps) {
             {/* Close */}
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-white border border-border flex items-center justify-center text-muted-foreground hover:text-foreground shadow-sm transition-all hover:scale-105"
+              className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-surface border border-border flex items-center justify-center text-muted-foreground hover:text-foreground shadow-sm transition-all hover:scale-105"
               aria-label="Close"
             >
               <X size={16} />

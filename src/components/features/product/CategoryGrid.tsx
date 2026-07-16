@@ -95,7 +95,7 @@ export default function CategoryGrid() {
                 {/* Top: Icon + Badge */}
                 <div className="flex items-start justify-between mb-4">
                   <div
-                    className="w-12 h-12 rounded-lg flex items-center justify-center text-2xl transition-transform duration-300 group-hover:scale-110 relative z-10 bg-white shadow-sm"
+                    className="w-12 h-12 rounded-lg flex items-center justify-center text-2xl transition-transform duration-300 group-hover:scale-110 relative z-10 bg-surface shadow-sm"
                   >
                     {cat.id === 'pharmacy' && <Pill className="text-primary" />}
                     {cat.id === 'beauty' && <Sparkles className="text-brand-accent" />}
@@ -103,7 +103,7 @@ export default function CategoryGrid() {
                     {cat.id === 'personal-care' && <Droplets className="text-personal-accent" />}
                   </div>
                   
-                  <span className={`text-[10px] font-black px-2 py-0.5 rounded-full border bg-white shadow-sm transition-colors duration-300 relative z-10 ${palette.accentClass} ${palette.borderClass}`}>
+                  <span className={`text-[10px] font-black px-2 py-0.5 rounded-full border bg-surface shadow-sm transition-colors duration-300 relative z-10 ${palette.accentClass} ${palette.borderClass}`}>
                     {cat.productCount} {t('items')}
                   </span>
                 </div>

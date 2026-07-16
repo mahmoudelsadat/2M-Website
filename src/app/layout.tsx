@@ -1,18 +1,18 @@
 import type { Metadata } from 'next';
-import { Inter, Playfair_Display, Cairo } from 'next/font/google';
+import { Manrope, Hanken_Grotesk, Cairo } from 'next/font/google';
 import { Toaster } from 'sonner';
 import { LanguageProvider } from '@/lib/LanguageContext';
 import './globals.css';
 
-const inter = Inter({
+const manrope = Manrope({
   subsets: ['latin'],
-  variable: '--font-inter',
+  variable: '--font-manrope',
   display: 'swap',
 });
 
-const playfair = Playfair_Display({
+const hankenGrotesk = Hanken_Grotesk({
   subsets: ['latin'],
-  variable: '--font-playfair',
+  variable: '--font-hanken',
   display: 'swap',
 });
 
@@ -70,7 +70,7 @@ export default function RootLayout({
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${inter.variable} ${playfair.variable} ${cairo.variable}`}
+      className={`${manrope.variable} ${hankenGrotesk.variable} ${cairo.variable}`}
     >
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />

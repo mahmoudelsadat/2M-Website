@@ -58,7 +58,7 @@ function Toggle({ checked, onChange }: { checked: boolean; onChange: () => void 
       onClick={onChange}
       className={`w-9 h-5 rounded-full transition-all duration-200 relative flex-shrink-0 cursor-pointer ${checked ? 'bg-primary' : 'bg-surface-3'}`}
     >
-      <div className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-all duration-200 ${checked ? 'left-4' : 'left-0.5'}`} />
+      <div className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-all duration-200 ${checked ? 'start-[18px]' : 'start-0.5'}`} />
     </div>
   );
 }
@@ -251,6 +251,19 @@ export default function CategoryPage({ categoryId }: CategoryPageProps) {
 
   const filtered = useMemo(() => {
     let result = allCategoryProducts.filter((p) => {
+      if (activeChip) {
+        const chipKey = activeChip.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+        let targetSub = chipKey;
+        if (chipKey === 'vitamins') targetSub = 'vitamins-minerals';
+        if (chipKey === 'otc') targetSub = 'medicines';
+        if (chipKey === 'devices') targetSub = 'devices';
+        if (chipKey === 'hair-care') targetSub = 'haircare';
+        if (chipKey === 'body') targetSub = 'bodycare';
+        if (chipKey === 'womens') targetSub = 'womens';
+        if (chipKey === 'eye-ear') targetSub = 'eye-ear';
+        
+        if (!p.subcategory.toLowerCase().includes(targetSub)) return false;
+      }
       if (filters.inStockOnly && !p.inStock) return false;
       if (filters.onSaleOnly && !p.originalPrice) return false;
       if (p.price < filters.priceMin || p.price > filters.priceMax) return false;
@@ -265,7 +278,7 @@ export default function CategoryPage({ categoryId }: CategoryPageProps) {
       case 'newest':     result = [...result].filter((p) => p.badge === 'new').concat(result.filter((p) => p.badge !== 'new')); break;
     }
     return result;
-  }, [allCategoryProducts, filters, sort]);
+  }, [allCategoryProducts, filters, sort, activeChip]);
 
   const toggleBrand = useCallback((brand: string) => {
     setFilters((f) => ({
@@ -281,7 +294,7 @@ export default function CategoryPage({ categoryId }: CategoryPageProps) {
     filters.priceMin > 0 || filters.priceMax < 5000,
   ].filter(Boolean).length;
 
-  const inputCls = 'w-full border rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:border-primary transition-colors';
+  const inputCls = 'w-full border rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:border-brand-primary transition-colors';
 
   const categoryName = category ? (isRtl && category.nameAr ? category.nameAr : category.name) : '';
   const categoryDescription = category ? (t(`desc_${category.id}` as any) || category.description) : '';
@@ -353,10 +366,10 @@ export default function CategoryPage({ categoryId }: CategoryPageProps) {
             <div className="sticky top-24">
               <div className="flex items-center justify-between mb-5">
                 <h2 className="text-sm font-black uppercase tracking-wider flex items-center gap-2 text-foreground">
-                  <SlidersHorizontal size={14} className="text-primary" /> {t('filters')}
+                  <SlidersHorizontal size={14} className="text-brand-primary" /> {t('filters')}
                 </h2>
                 {activeFilterCount > 0 && (
-                  <button onClick={clearFilters} className="text-xs flex items-center gap-1 transition-colors text-primary hover:text-red-600"
+                  <button onClick={clearFilters} className="text-xs flex items-center gap-1 transition-colors text-brand-primary hover:text-brand-primary-dark"
                   >
                     <X size={11} /> {t('clear')} ({activeFilterCount})
                   </button>
@@ -416,10 +429,13 @@ export default function CategoryPage({ categoryId }: CategoryPageProps) {
               <FilterSection title={t('brand')} defaultOpen={false}>
                 <div className="space-y-1.5 max-h-48 overflow-y-auto pr-1">
                   {allBrands.map((brand) => (
-                    <label key={brand} className="flex items-center gap-2.5 cursor-pointer group">
+                    <div
+                      key={brand}
+                      onClick={() => toggleBrand(brand)}
+                      className="flex items-center gap-2.5 cursor-pointer group"
+                    >
                       <div
-                        onClick={() => toggleBrand(brand)}
-                        className="w-4 h-4 rounded border transition-all duration-150 flex items-center justify-center flex-shrink-0"
+                        className="w-4 h-4 rounded border transition-all duration-150 flex items-center justify-center flex-shrink-0 bg-surface-2"
                         style={filters.brands.includes(brand)
                           ? { background: 'var(--color-brand-primary)', borderColor: 'var(--color-brand-primary)' }
                           : { borderColor: 'var(--color-border)' }
@@ -427,8 +443,8 @@ export default function CategoryPage({ categoryId }: CategoryPageProps) {
                       >
                         {filters.brands.includes(brand) && <Check size={10} className="text-white" strokeWidth={3} />}
                       </div>
-                      <span className="text-xs transition-colors text-muted-foreground">{brand}</span>
-                    </label>
+                      <span className="text-xs transition-colors text-muted-foreground group-hover:text-foreground">{brand}</span>
+                    </div>
                   ))}
                 </div>
               </FilterSection>

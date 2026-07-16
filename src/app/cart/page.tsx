@@ -291,10 +291,10 @@ export default function CartPage() {
 
                   {/* Payment badges */}
                   <div className="flex items-center justify-center gap-2 pt-2 border-t flex-wrap border-border">
-                    <span className="text-[10px] font-bold px-2.5 py-1 rounded-full border border-instapay-brand text-instapay-brand bg-purple-50">⚡ InstaPay</span>
-                    <span className="text-[10px] font-bold px-2.5 py-1 rounded-full border border-vodafone-brand text-vodafone-brand bg-red-50">📱 Vodafone</span>
-                    <span className="text-[10px] font-bold px-2.5 py-1 rounded-full border border-ecash-brand text-ecash-brand bg-amber-50">🟠 e& Cash</span>
-                    <span className="text-[10px] font-bold px-2.5 py-1 rounded-full border border-cod-brand text-cod-brand bg-green-50">💵 COD</span>
+                    <span className="text-[10px] font-bold px-2.5 py-1 rounded-full border border-border bg-surface-2 text-text-primary">⚡ InstaPay</span>
+                    <span className="text-[10px] font-bold px-2.5 py-1 rounded-full border border-border bg-surface-2 text-text-primary">📱 Vodafone</span>
+                    <span className="text-[10px] font-bold px-2.5 py-1 rounded-full border border-border bg-surface-2 text-text-primary">🟠 e& Cash</span>
+                    <span className="text-[10px] font-bold px-2.5 py-1 rounded-full border border-border bg-surface-2 text-text-primary">💵 COD</span>
                   </div>
                 </div>
               </div>
