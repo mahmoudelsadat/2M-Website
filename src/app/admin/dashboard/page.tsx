@@ -293,6 +293,7 @@ function ProductsPanel() {
   const [deleteId, setDeleteId]     = useState<string | null>(null);
   const [selected, setSelected]     = useState<Set<string>>(new Set());
   const [isLoading, setIsLoading]   = useState(false);
+  const [imageMode, setImageMode]   = useState<'upload' | 'link'>('upload');
 
   const API_URL = '/api';
 
@@ -502,11 +503,90 @@ function ProductsPanel() {
             <Field label="Rating (0–5)">
               <input type="number" step="0.1" min="0" max="5" className={inputCls} value={form.rating} onChange={e => f('rating', Number(e.target.value))} />
             </Field>
-            <div className="col-span-2">
-              <Field label="Image URL *" error={errors.image}>
-                <input className={inputCls} value={form.image} onChange={e => f('image', e.target.value)} placeholder="https://..." />
-              </Field>
-              {form.image && <img src={form.image} className="mt-2 h-16 w-16 rounded-lg object-contain bg-slate-50 border border-slate-100 p-1" onError={e => (e.currentTarget.src = 'https://placehold.co/80x80?text=ERR')} />}
+            <div className="col-span-2 space-y-3">
+              <div className="flex items-center justify-between">
+                <label className="block text-[10px] font-black uppercase tracking-wider text-slate-500">Product Image *</label>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setImageMode('upload')}
+                    className={`px-2 py-0.5 rounded text-[10px] font-bold ${imageMode === 'upload' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
+                  >
+                    Upload File
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setImageMode('link')}
+                    className={`px-2 py-0.5 rounded text-[10px] font-bold ${imageMode === 'link' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
+                  >
+                    Image Link
+                  </button>
+                </div>
+              </div>
+
+              {imageMode === 'upload' ? (
+                <div className="border-2 border-dashed border-slate-200 hover:border-slate-300 rounded-xl p-4 flex flex-col items-center justify-center bg-slate-50/50 transition-colors relative">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                    onChange={async (e) => {
+                      const file = e.target.files?.[0];
+                      if (!file) return;
+                      const loadingToast = toast.loading('Uploading image...');
+                      try {
+                        const body = new FormData();
+                        body.append('file', file);
+                        const res = await fetch('/api/upload', {
+                          method: 'POST',
+                          body,
+                        });
+                        if (res.ok) {
+                          const data = await res.json();
+                          f('image', data.url);
+                          toast.success('Image uploaded successfully!', { id: loadingToast });
+                        } else {
+                          toast.error('Failed to upload image.', { id: loadingToast });
+                        }
+                      } catch (err) {
+                        toast.error('Network error during upload.', { id: loadingToast });
+                      }
+                    }}
+                  />
+                  <Plus size={16} className="text-slate-400 mb-1" />
+                  <span className="text-[11px] font-bold text-slate-600">Choose File</span>
+                  <span className="text-[9px] text-slate-400 mt-0.5">PNG, JPG, WEBP up to 5MB</span>
+                </div>
+              ) : (
+                <input
+                  className={inputCls}
+                  value={form.image}
+                  onChange={e => f('image', e.target.value)}
+                  placeholder="e.g. https://images.unsplash.com/photo-..."
+                />
+              )}
+
+              {form.image && (
+                <div className="flex items-center gap-3 bg-slate-50 border border-slate-100 p-2 rounded-xl mt-2">
+                  <img
+                    src={form.image}
+                    className="h-12 w-12 rounded-lg object-contain bg-white border border-slate-200/50 p-1 flex-shrink-0"
+                    onError={e => (e.currentTarget.src = 'https://placehold.co/80x80?text=ERR')}
+                  />
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[9px] font-black uppercase text-slate-400 tracking-wider">Active Image Path</p>
+                    <p className="text-[10px] font-bold text-slate-600 truncate">{form.image}</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => f('image', '')}
+                    className="text-[10px] font-bold text-red-500 hover:text-red-600 px-2 py-1 rounded hover:bg-red-50"
+                  >
+                    Remove
+                  </button>
+                </div>
+              )}
+              {errors.image && <p className="text-[10px] text-red-500 font-semibold mt-1">{errors.image}</p>}
             </div>
             <div className="col-span-2">
               <Field label="Description">

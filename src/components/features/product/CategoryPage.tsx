@@ -34,15 +34,15 @@ const DEFAULT_FILTERS: FilterState = {
 function FilterSection({ title, children, defaultOpen = true }: { title: string; children: React.ReactNode; defaultOpen?: boolean }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
-    <div className="border-b pb-4 mb-4 border-white/10">
+    <div className="border-b pb-4 mb-4 border-border">
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center justify-between w-full text-sm font-bold mb-3 transition-colors text-foreground"
+        className="flex items-center justify-between w-full text-sm font-bold mb-3 transition-colors text-text-primary"
       >
         {title}
         {open
-          ? <ChevronUp size={14} className="text-muted" />
-          : <ChevronDown size={14} className="text-muted" />
+          ? <ChevronUp size={14} className="text-text-secondary" />
+          : <ChevronDown size={14} className="text-text-secondary" />
         }
       </button>
       <div className={`overflow-hidden transition-all duration-300 ${open ? 'max-h-96' : 'max-h-0'}`}>
@@ -306,17 +306,17 @@ export default function CategoryPage({ categoryId }: CategoryPageProps) {
       {category && (
         <div
           className="relative py-12 sm:py-16 overflow-hidden"
-          style={{ background: `linear-gradient(135deg, ${category.color}12 0%, var(--color-card) 60%)` }}
+          style={{ background: `linear-gradient(135deg, ${category.color}12 0%, var(--color-surface) 60%)` }}
         >
           <div className="absolute inset-0 pointer-events-none"
             style={{ background: `radial-gradient(ellipse at 70% 50%, ${category.color}10, transparent 60%)` }} />
 
           <div className="container-2m relative z-10">
             {/* Breadcrumb */}
-            <nav className="flex items-center gap-2 text-xs mb-5 text-muted" aria-label="Breadcrumb">
-              <Link href="/" className="hover:text-foreground transition-colors">{t('home')}</Link>
+            <nav className="flex items-center gap-2 text-xs mb-5 text-text-secondary" aria-label="Breadcrumb">
+              <Link href="/" className="hover:text-brand-primary transition-colors">{t('home')}</Link>
               <span>/</span>
-              <span className="text-foreground font-semibold">{categoryName}</span>
+              <span className="text-text-primary font-semibold">{categoryName}</span>
             </nav>
 
             <div className="flex items-center gap-5">
@@ -327,9 +327,9 @@ export default function CategoryPage({ categoryId }: CategoryPageProps) {
                 {category.icon}
               </div>
               <div>
-                <h1 className="text-3xl sm:text-4xl font-black mb-1 text-foreground">{categoryName}</h1>
-                <p className="text-sm text-muted-foreground">
-                  {categoryDescription} · <span className="text-foreground font-bold">{category.productCount}+ {t('products')}</span>
+                <h1 className="text-3xl sm:text-4xl font-black mb-1 text-text-primary">{categoryName}</h1>
+                <p className="text-sm text-text-secondary">
+                  {categoryDescription} · <span className="text-text-primary font-bold">{category.productCount}+ {t('products')}</span>
                 </p>
               </div>
             </div>
@@ -345,7 +345,7 @@ export default function CategoryPage({ categoryId }: CategoryPageProps) {
                     className="px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-200"
                     style={
                       active
-                        ? { background: category.color, color: '#fff', boxShadow: `0 4px 12px ${category.color}40` }
+                        ? { background: category.color, color: '#fff', boxShadow: 'none' }
                         : { background: 'var(--color-surface-2)', color: 'var(--color-text-secondary)', border: '1px solid var(--color-border)' }
                     }
                   >
@@ -391,16 +391,16 @@ export default function CategoryPage({ categoryId }: CategoryPageProps) {
                 <div className="flex items-center gap-2 mb-3">
                   <input type="number" value={filters.priceMin}
                     onChange={(e) => setFilters((f) => ({ ...f, priceMin: Number(e.target.value) }))}
-                    className={`${inputCls} bg-white/5 border-white/10 text-white placeholder-white/35`} placeholder="Min" />
-                  <span className="text-xs text-muted">–</span>
+                    className={`${inputCls} bg-white border-border text-text-primary placeholder-text-muted`} placeholder="Min" />
+                  <span className="text-xs text-text-secondary">–</span>
                   <input type="number" value={filters.priceMax}
                     onChange={(e) => setFilters((f) => ({ ...f, priceMax: Number(e.target.value) }))}
-                    className={`${inputCls} bg-white/5 border-white/10 text-white placeholder-white/35`} placeholder="Max" />
+                    className={`${inputCls} bg-white border-border text-text-primary placeholder-text-muted`} placeholder="Max" />
                 </div>
                 <input type="range" min={0} max={5000} value={filters.priceMax}
                   onChange={(e) => setFilters((f) => ({ ...f, priceMax: Number(e.target.value) }))}
-                  className="w-full cursor-pointer accent-primary" />
-                <div className="flex justify-between text-[10px] mt-1 text-muted">
+                  className="w-full cursor-pointer accent-brand-primary" />
+                <div className="flex justify-between text-[10px] mt-1 text-text-secondary">
                   <span>EGP 0</span><span>EGP 5,000</span>
                 </div>
               </FilterSection>
@@ -479,17 +479,17 @@ export default function CategoryPage({ categoryId }: CategoryPageProps) {
 
               <div className="flex items-center gap-3">
                 <select value={sort} onChange={(e) => setSort(e.target.value)}
-                  className="border rounded-xl px-3 py-2 text-xs font-medium focus:outline-none cursor-pointer bg-card border-border text-foreground"
+                  className="border rounded-xl px-3 py-2 text-xs font-medium focus:outline-none cursor-pointer bg-white border-border text-text-primary"
                 >
                   {SORT_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
                 </select>
-                <div className="hidden sm:flex items-center gap-1 rounded-lg p-1 border bg-white/5 border-white/10">
+                <div className="hidden sm:flex items-center gap-1 rounded-lg p-1 border bg-surface-2 border-border">
                   <button onClick={() => setView('grid')}
-                    className="p-1.5 rounded-md transition-all duration-250 hover:bg-white/5"
+                    className="p-1.5 rounded-md transition-all duration-250 hover:bg-surface-3"
                     style={view === 'grid' ? { background: 'var(--color-brand-primary)', color: '#fff' } : { color: 'var(--color-text-muted)' }}
                   ><Grid3X3 size={13} /></button>
                   <button onClick={() => setView('list')}
-                    className="p-1.5 rounded-md transition-all duration-250 hover:bg-white/5"
+                    className="p-1.5 rounded-md transition-all duration-250 hover:bg-surface-3"
                     style={view === 'list' ? { background: 'var(--color-brand-primary)', color: '#fff' } : { color: 'var(--color-text-muted)' }}
                   ><List size={13} /></button>
                 </div>
@@ -508,13 +508,13 @@ export default function CategoryPage({ categoryId }: CategoryPageProps) {
 
             {/* Product Grid / List */}
             {filtered.length === 0 ? (
-              <div className="luxury-empty-state shadow-2xl">
-                <div className="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 bg-white/5 border border-white/10 text-brand-gold">
+              <div className="luxury-empty-state bg-white border border-border shadow-xs rounded-2xl p-8 max-w-md mx-auto text-center">
+                <div className="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 bg-brand-primary-soft border border-brand-primary-soft/30 text-brand-primary">
                   <SlidersHorizontal size={30} />
                 </div>
-                <h3 className="font-black text-xl mb-2 text-white font-display uppercase tracking-wider">{t('noProductsFound')}</h3>
-                <p className="text-xs mb-6 text-text-muted font-semibold max-w-xs">{t('adjustFilters')}</p>
-                <button onClick={clearFilters} className="btn btn-primary btn-shimmer btn-elevated px-8 text-xs font-black uppercase tracking-wider">{t('clearFilters')}</button>
+                <h3 className="font-black text-xl mb-2 text-text-primary font-display uppercase tracking-wider">{t('noProductsFound')}</h3>
+                <p className="text-xs mb-6 text-text-secondary font-semibold max-w-xs">{t('adjustFilters')}</p>
+                <button onClick={clearFilters} className="btn btn-primary btn-shimmer btn-elevated px-8 text-xs font-black uppercase tracking-wider text-white">{t('clearFilters')}</button>
               </div>
             ) : (
               <AnimatePresence mode="popLayout">

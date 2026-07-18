@@ -70,12 +70,12 @@ export default function RootLayout({
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`dark ${manrope.variable} ${hankenGrotesk.variable} ${cairo.variable}`}
-      style={{ colorScheme: 'dark' }}
+      className={`light ${manrope.variable} ${hankenGrotesk.variable} ${cairo.variable}`}
+      style={{ colorScheme: 'light' }}
     >
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#060700" />
+        <meta name="theme-color" content="#fcf9f8" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />

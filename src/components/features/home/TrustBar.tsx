@@ -74,7 +74,7 @@ export default function TrustBar() {
         {/* 3 Glow Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           {/* Card 1 */}
-          <div className="relative p-8 rounded-3xl bg-surface border border-brand-primary/10 shadow-sm flex flex-col items-center text-center group hover:scale-[1.02] transition-transform duration-300">
+          <div className="relative p-8 rounded-2xl bg-surface border border-border shadow-xs flex flex-col items-center text-center group hover:scale-[1.02] transition-transform duration-300">
             <div className="w-14 h-14 rounded-full bg-brand-primary-soft border border-brand-primary-soft/30 flex items-center justify-center mb-6 text-brand-primary">
               <ShieldCheck size={26} />
             </div>
@@ -83,7 +83,7 @@ export default function TrustBar() {
           </div>
 
           {/* Card 2 */}
-          <div className="relative p-8 rounded-3xl bg-surface border border-brand-accent/10 shadow-sm flex flex-col items-center text-center group hover:scale-[1.02] transition-transform duration-300">
+          <div className="relative p-8 rounded-2xl bg-surface border border-border shadow-xs flex flex-col items-center text-center group hover:scale-[1.02] transition-transform duration-300">
             <div className="w-14 h-14 rounded-full bg-brand-accent-soft border border-brand-accent-soft/30 flex items-center justify-center mb-6 text-brand-accent">
               <Star size={26} />
             </div>
@@ -92,7 +92,7 @@ export default function TrustBar() {
           </div>
 
           {/* Card 3 */}
-          <div className="relative p-8 rounded-3xl bg-surface border border-border shadow-sm flex flex-col items-center text-center group hover:scale-[1.02] transition-transform duration-300">
+          <div className="relative p-8 rounded-2xl bg-surface border border-border shadow-xs flex flex-col items-center text-center group hover:scale-[1.02] transition-transform duration-300">
             <div className="w-14 h-14 rounded-full bg-surface-3 flex items-center justify-center mb-6 text-text-primary">
               <Truck size={26} />
             </div>

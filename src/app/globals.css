@@ -58,48 +58,48 @@
   --color-step-4-border:       #E3BEB8;
 
   /* Product Categories Custom Colors */
-  --color-wellness-bg:         #93F2F2;
-  --color-wellness-text:       #004F4F;
-  --color-wellness-border:     #76D6D5;
-  --color-personal-bg:         #FFDAD4;
-  --color-personal-accent:     #610000;
-  --color-personal-text:       #410000;
-  --color-personal-border:     #E3BEB8;
+  --color-wellness-bg:         #edf7f7;
+  --color-wellness-text:       #006a6a;
+  --color-wellness-border:     #cde6e6;
+  --color-personal-bg:         #fdf5f4;
+  --color-personal-accent:     #8b0000;
+  --color-personal-text:       #610000;
+  --color-personal-border:     #f5dfdc;
   --color-star-empty:          #DCD9d9;
 
   /* Dark Theme Semantic Colors */
-  --color-dark-bg:             #060700;
-  --color-dark-surface:        rgba(255,255,255,0.06);
-  --color-dark-hero:           #060700;
-  --color-dark-card:           rgba(255,255,255,0.06);
+  --color-dark-bg:             #fcf9f8;
+  --color-dark-surface:        #ffffff;
+  --color-dark-hero:           #fcf9f8;
+  --color-dark-card:           #ffffff;
 
-  /* Surfaces — Luxury Dark Glass */
-  --color-page-bg:         #060700;
-  --color-surface:         rgba(255,255,255,0.05);
-  --color-surface-2:       rgba(255,255,255,0.08);
-  --color-surface-3:       rgba(255,255,255,0.12);
-  --glass-surface:         linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
-  --glass-border:          rgba(255,255,255,0.08);
-  --glass-shadow:          0 20px 45px rgba(0,0,0,0.45);
-  --glow-accent:           rgba(139, 0, 0, 0.25);
+  /* Surfaces — Clinical Elegance */
+  --color-page-bg:         #fcf9f8;
+  --color-surface:         #ffffff;
+  --color-surface-2:       #f6f3f2;
+  --color-surface-3:       #f0eded;
+  --glass-surface:         rgba(255, 255, 255, 0.8);
+  --glass-border:          #e4e2e1;
+  --glass-shadow:          0 4px 20px rgba(45, 45, 45, 0.04);
+  --glow-accent:           rgba(0, 128, 128, 0.04);
 
-  /* Text — Luxury Dark Glass */
-  --color-text-primary:    #F8F5EF;
-  --color-text-secondary:  #CFC7BD;
-  --color-text-muted:      #9A948D;
-  --color-text-inverse:    #060700;
+  /* Text — Clinical Elegance */
+  --color-text-primary:    #1b1c1c;
+  --color-text-secondary:  #2D2D2D;
+  --color-text-muted:      #6B6560;
+  --color-text-inverse:    #ffffff;
 
-  /* Borders — Luxury Dark Glass */
-  --color-border:          rgba(255,255,255,0.12);
-  --color-border-soft:     rgba(255,255,255,0.08);
+  /* Borders — Clinical Elegance */
+  --color-border:          #e4e2e1;
+  --color-border-soft:     #f1f1f1;
 
   /* Secondary Accents */
   --color-teal-light:      #008080;
-  --color-teal-light-soft: #93F2F2;
-  --color-slate:           #2B2D2D;
-  --color-slate-soft:      #E2E2E2;
-  --color-cyan:            #006A6A;
-  --color-cyan-soft:       #93F2F2;
+  --color-teal-light-soft: #e6f2f2;
+  --color-slate:           #2b2d2d;
+  --color-slate-soft:      #e4e2e1;
+  --color-cyan:            #006a6a;
+  --color-cyan-soft:       #e6f2f2;
 
   /* Gold — Premium accent */
   --color-brand-gold:      #C9A84C;
@@ -239,49 +239,46 @@ a { color: inherit; text-decoration: none; }
 
 /* ─── Glass Navbar ──────────────────────────────────────────── */
 .glass-nav {
-  background: rgba(6, 7, 0, 0.65);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: 0 4px 20px rgba(45, 45, 45, 0.04);
 }
 
 .glass-dark {
-  background: rgba(6, 7, 0, 0.8);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: 0 4px 20px rgba(45, 45, 45, 0.04);
 }
 
 .glass-panel {
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.55);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
 }
 
 .neon-edge {
-  box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 0 35px var(--glow-accent);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
 }
 
 .neon-glow-red {
-  box-shadow: 0 0 25px rgba(139, 0, 0, 0.35);
+  box-shadow: var(--shadow-xs);
 }
 .neon-glow-teal {
-  box-shadow: 0 0 25px rgba(0, 128, 128, 0.35);
+  box-shadow: var(--shadow-xs);
 }
 .neon-glow-gold {
-  box-shadow: 0 0 25px rgba(201, 168, 76, 0.35);
+  box-shadow: var(--shadow-xs);
 }
 
 .luxury-empty-state {
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.55);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
 }
 
 /* ─── Button System ─────────────────────────────────────────── */
@@ -644,47 +641,47 @@ input[type="number"]::-webkit-outer-spin-button {
 .dark, .light {
   --color-brand-primary:       #8B0000;
   --color-brand-primary-dark:  #610000;
-  --color-brand-primary-soft:  rgba(139, 0, 0, 0.2);
+  --color-brand-primary-soft:  #fbebeb;
   --color-brand-accent:        #008080;
-  --color-brand-accent-soft:   rgba(0, 128, 128, 0.2);
-  --color-brand-gold-soft:     rgba(201, 168, 76, 0.15);
-  --color-surface-warm:        rgba(255,255,255,0.06);
-  --color-surface-warm-dark:   rgba(255,255,255,0.10);
-  --color-border-warm:         rgba(255,255,255,0.14);
-  --color-step-1-bg:           rgba(139, 0, 0, 0.2);
-  --color-step-2-bg:           rgba(0, 128, 128, 0.15);
-  --color-step-3-bg:           rgba(255,255,255,0.08);
-  --color-step-4-bg:           rgba(255,255,255,0.06);
-  --color-footer-muted:        #CFC7BD;
-  --color-star-empty:          rgba(255,255,255,0.18);
-  --shadow-xs:  0 1px 2px rgba(0,0,0,0.3);
-  --shadow-sm:  0 2px 4px rgba(0,0,0,0.35);
-  --shadow-md:  0 4px 12px rgba(0,0,0,0.4);
-  --shadow-lg:  0 8px 24px rgba(0,0,0,0.45);
-  --shadow-xl:  0 16px 40px rgba(0,0,0,0.5);
+  --color-brand-accent-soft:   #e6f2f2;
+  --color-brand-gold-soft:     #FDF8EC;
+  --color-surface-warm:        #f6f3f2;
+  --color-surface-warm-dark:   #f0eded;
+  --color-border-warm:         #e4e2e1;
+  --color-step-1-bg:           #fbebeb;
+  --color-step-2-bg:           #e6f2f2;
+  --color-step-3-bg:           #f6f3f2;
+  --color-step-4-bg:           #fcf9f8;
+  --color-footer-muted:        #6B6560;
+  --color-star-empty:          #e4e2e1;
+  --shadow-xs:  0 1px 2px rgba(45,45,45,0.02);
+  --shadow-sm:  0 2px 4px rgba(45,45,45,0.04);
+  --shadow-md:  0 4px 12px rgba(45,45,45,0.06);
+  --shadow-lg:  0 8px 24px rgba(45,45,45,0.08);
+  --shadow-xl:  0 16px 40px rgba(45,45,45,0.1);
 }
 
-.light {
-  --color-page-bg:       #060700;
-  --color-surface:       rgba(255,255,255,0.04);
-  --color-surface-2:     rgba(255,255,255,0.06);
-  --color-surface-3:     rgba(255,255,255,0.10);
-  --color-text-primary:  #F8F5EF;
-  --color-text-secondary:#CFC7BD;
-  --color-text-muted:    #9A948D;
-  --color-text-inverse:  #060700;
-  --color-border:        rgba(255,255,255,0.08);
-  --color-border-soft:   rgba(255,255,255,0.05);
-  --glass-surface:       linear-gradient(135deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
-  --glass-border:        rgba(255,255,255,0.08);
-  --glass-shadow:        0 20px 45px rgba(0,0,0,0.45);
-  --glow-accent:         rgba(0, 128, 128, 0.18);
+.light, .dark {
+  --color-page-bg:       #fcf9f8;
+  --color-surface:       #ffffff;
+  --color-surface-2:     #f6f3f2;
+  --color-surface-3:     #f0eded;
+  --color-text-primary:  #1b1c1c;
+  --color-text-secondary:#2D2D2D;
+  --color-text-muted:    #6B6560;
+  --color-text-inverse:  #ffffff;
+  --color-border:        #e4e2e1;
+  --color-border-soft:   #f1f1f1;
+  --glass-surface:       rgba(255, 255, 255, 0.8);
+  --glass-border:        #e4e2e1;
+  --glass-shadow:        0 4px 20px rgba(45, 45, 45, 0.04);
+  --glow-accent:         rgba(0, 128, 128, 0.04);
 }
 
 .dark body                       { background: var(--color-page-bg); color: var(--color-text-primary); }
-.dark .announcement-bar          { background: rgba(6,7,0,0.96); }
-.dark .glass-nav                 { background: rgba(8,10,8,0.72); border-bottom-color: rgba(255,255,255,0.10); }
-.dark .glass-dark                { background: rgba(8,10,8,0.82); border-bottom-color: rgba(255,255,255,0.10); }
+.dark .announcement-bar          { background: var(--color-brand-primary); }
+.dark .glass-nav                 { background: rgba(255, 255, 255, 0.8); border-bottom-color: var(--color-border-soft); }
+.dark .glass-dark                { background: rgba(255, 255, 255, 0.8); border-bottom-color: var(--color-border-soft); }
 .dark .product-card              { background: var(--color-surface); border-color: var(--color-border); }
 .dark .product-card-image        { background: var(--color-surface-2); }
 .dark .card                      { background: var(--color-surface); border-color: var(--color-border); }

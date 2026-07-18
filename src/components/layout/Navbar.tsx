@@ -151,7 +151,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
   return (
     <>
       {/* ── Announcement Bar ─────────────────────────────────── */}
-      <div className="relative z-50 select-none overflow-hidden bg-[#060700]/95 border-b border-white/10 min-h-[36px]">
+      <div className="relative z-50 select-none overflow-hidden bg-[#1b1c1c] border-b border-white/5 min-h-[36px]">
         <div className="container-2m flex items-center justify-between h-9 gap-4">
           {/* Left: scrolling announcement marquee */}
           <div className="flex-1 overflow-hidden relative h-full flex items-center whitespace-nowrap mask-edges">
@@ -197,7 +197,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
 
             {/* ── Logo ── */}
             <Link href="/" className="flex items-center gap-2.5 select-none justify-center group" aria-label="2M Pharmacy">
-              <div className="w-10 h-10 rounded-xl bg-white text-black flex items-center justify-center font-black text-xl tracking-tighter shadow-md border border-white/20 transition-all duration-300 group-hover:scale-105">
+              <div className="w-10 h-10 rounded-xl bg-brand-primary text-white flex items-center justify-center font-black text-xl tracking-tighter shadow-sm border border-brand-primary/20 transition-all duration-300 group-hover:scale-105">
                 2M
               </div>
               <div className="flex flex-col items-start leading-none">
@@ -303,7 +303,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
                               </div>
 
                               {/* Right: featured deal card */}
-                              <div className="col-span-2 rounded-xl p-4 flex flex-col justify-between relative overflow-hidden border border-white/10 bg-white/5">
+                              <div className="col-span-2 rounded-xl p-4 flex flex-col justify-between relative overflow-hidden border border-border bg-surface-2">
                                 <div>
                                   <div className="flex items-center justify-between mb-2">
                                     <span className="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md border border-brand-accent/20 bg-brand-accent-soft text-brand-accent">
@@ -418,7 +418,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
               <button
                 id="nav-mobile-menu-btn"
                 onClick={() => setMobileOpen(!mobileOpen)}
-                className="lg:hidden w-9 h-9 rounded-lg flex items-center justify-center border border-border bg-surface text-text-secondary hover:text-brand-primary transition-all duration-200"
+                className="lg:hidden w-9 h-9 rounded-lg flex items-center justify-center border border-border bg-white text-text-secondary hover:text-brand-primary transition-all duration-200"
                 aria-label="Menu"
               >
                 <AnimatePresence mode="wait" initial={false}>
@@ -476,9 +476,9 @@ export default function Navbar({ cartCount }: NavbarProps) {
               transition={{ type: 'spring', damping: 28, stiffness: 240 }}
             >
               {/* Drawer header */}
-              <div className="relative flex items-center justify-between px-5 py-4 flex-shrink-0 bg-surface-2 border-b border-border">
+              <div className="relative flex items-center justify-between px-5 py-4 flex-shrink-0 bg-white border-b border-border">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-white text-black flex items-center justify-center font-black text-base tracking-tighter shadow-sm border border-white/10">
+                  <div className="w-8 h-8 rounded-lg bg-brand-primary text-white flex items-center justify-center font-black text-base tracking-tighter shadow-sm border border-brand-primary/10">
                     2M
                   </div>
                   <div className="flex flex-col items-start leading-none">
@@ -603,7 +603,7 @@ export default function Navbar({ cartCount }: NavbarProps) {
                   )}
                 </Link>
 
-                <div className="w-full h-10 flex items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/5 text-[11px] font-semibold text-text-secondary">
+                <div className="w-full h-10 flex items-center justify-center gap-2 rounded-lg border border-border bg-surface-2 text-[11px] font-semibold text-text-secondary">
                   <ShieldCheck size={13} className="text-brand-accent" />
                   Curated access only
                 </div>

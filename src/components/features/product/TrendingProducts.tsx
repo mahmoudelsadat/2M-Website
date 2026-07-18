@@ -205,8 +205,8 @@ export default function TrendingProducts() {
               }}
               className={`flex-shrink-0 px-4 py-2 rounded-full text-[0.8rem] font-semibold transition-colors duration-200 ${
                 activeTab === tab.value
-                  ? 'bg-primary text-white shadow-sm'
-                  : 'bg-surface-2 text-muted-foreground hover:bg-surface-3 hover:text-foreground'
+                  ? 'bg-brand-primary text-white shadow-xs'
+                  : 'bg-surface-2 text-text-secondary hover:bg-surface-3 hover:text-text-primary'
               }`}
               whileTap={{ scale: 0.95 }}
             >

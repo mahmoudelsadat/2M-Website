@@ -13,7 +13,7 @@ function TestimonialCard({ t: item }: { t: Testimonial }) {
 
   return (
     <div
-      className="p-6 rounded-2xl border flex flex-col gap-4 h-full transition-all duration-200 hover:-translate-y-1 hover:shadow-lg bg-card border-border shadow-xs"
+      className="p-6 rounded-2xl border flex flex-col gap-4 h-full transition-all duration-200 hover:-translate-y-1 hover:shadow-sm bg-white border-border shadow-xs"
     >
       {/* Stars */}
       <div className="flex gap-0.5">
@@ -23,10 +23,10 @@ function TestimonialCard({ t: item }: { t: Testimonial }) {
       </div>
 
       {/* Quote */}
-      <p className="text-[0.9rem] leading-relaxed flex-1 text-foreground">&ldquo;{item.text}&rdquo;</p>
+      <p className="text-[0.9rem] leading-relaxed flex-1 text-text-primary">&ldquo;{item.text}&rdquo;</p>
 
       {/* Product label */}
-      <div className="text-[11px] font-semibold rounded-full px-3 py-1 w-fit text-primary bg-brand-primary-soft">
+      <div className="text-[11px] font-semibold rounded-full px-3 py-1 w-fit text-brand-primary bg-brand-primary-soft">
         {item.product}
       </div>
 
@@ -34,11 +34,11 @@ function TestimonialCard({ t: item }: { t: Testimonial }) {
       <div className="flex items-center gap-3 pt-3 border-t border-border">
         <Image src={item.avatar} alt={item.name} width={36} height={36} className="rounded-full object-cover border border-border" />
         <div>
-          <div className="flex items-center gap-1.5 text-[0.875rem] font-semibold text-foreground">
+          <div className="flex items-center gap-1.5 text-[0.875rem] font-semibold text-text-primary">
             {item.name}
-            {item.verified && <CheckCircle size={12} className="text-primary" />}
+            {item.verified && <CheckCircle size={12} className="text-brand-primary" />}
           </div>
-          <div className="text-[11px] text-muted-foreground">{item.date}</div>
+          <div className="text-[11px] text-text-muted">{item.date}</div>
         </div>
         {item.verified && (
           <span className="ml-auto badge badge-sky text-[10px]">{t('verified')}</span>
@@ -77,7 +77,7 @@ export default function Testimonials() {
   ] : testimonials;
 
   return (
-    <section className="py-16 border-t bg-card border-border">
+    <section className="py-16 border-t bg-surface-2 border-border">
       <div className="container-2m">
         {/* Header */}
         <div className="section-header">
@@ -87,12 +87,12 @@ export default function Testimonials() {
           </div>
           <div className="flex items-center gap-2">
             <button id="testimonials-prev" onClick={prev}
-              className="w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-200 bg-card border-border text-muted-foreground hover:bg-surface-2"
+              className="w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-200 bg-white border-border text-text-secondary hover:bg-surface-2"
             >
               <ChevronLeft size={16} />
             </button>
             <button id="testimonials-next" onClick={next}
-              className="w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-200 bg-card border-border text-muted-foreground hover:bg-surface-2"
+              className="w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-200 bg-white border-border text-text-secondary hover:bg-surface-2"
             >
               <ChevronRight size={16} />
             </button>
@@ -100,17 +100,17 @@ export default function Testimonials() {
         </div>
 
         {/* Overall rating strip */}
-        <div className="flex items-center gap-4 p-4 rounded-2xl mb-8 border bg-brand-gold-soft border-brand-gold-dark/25">
+        <div className="flex items-center gap-4 p-4 rounded-2xl mb-8 border bg-brand-gold-soft/50 border-brand-gold-soft">
           <div className="text-3xl font-black text-brand-gold-dark">4.9</div>
           <div>
             <div className="flex gap-0.5 mb-0.5">
               {[1,2,3,4,5].map((s) => <Star key={s} size={14} className="fill-brand-gold text-brand-gold" />)}
             </div>
-            <div className="text-sm text-muted-foreground">
-              {t('basedOn')} <span className="font-bold text-foreground">10,000+</span> {t('verifiedReviews')}
+            <div className="text-sm text-text-secondary">
+              {t('basedOn')} <span className="font-bold text-text-primary">10,000+</span> {t('verifiedReviews')}
             </div>
           </div>
-          <div className="ml-auto hidden sm:block text-xs italic text-muted">
+          <div className="ml-auto hidden sm:block text-xs italic text-text-secondary">
             &ldquo;{t('egyptMostTrustedBrand')}&rdquo;
           </div>
         </div>
@@ -155,7 +155,7 @@ export default function Testimonials() {
         <div className="flex justify-center gap-1.5 mt-7">
           {testimonials.map((_, i) => (
             <button key={i} onClick={() => setCurrent(i)}
-              className={`h-2 rounded-full transition-all duration-300 ${i === current ? 'w-6 bg-primary' : 'w-2 bg-border'}`}
+              className={`h-2 rounded-full transition-all duration-300 ${i === current ? 'w-6 bg-brand-primary' : 'w-2 bg-border'}`}
               aria-label={t('goToReview', { index: i + 1 })}
             />
           ))}

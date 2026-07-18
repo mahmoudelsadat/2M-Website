@@ -31,7 +31,7 @@ export default function HowItWorks() {
             return (
               <div
                 key={step.n}
-                className={`relative p-6 rounded-2xl border bg-surface transition-all duration-300 hover:-translate-y-1 hover:shadow-md group shadow-sm ${step.borderClass}`}
+                className={`relative p-6 rounded-2xl border bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-sm group shadow-xs ${step.borderClass}`}
               >
                 {/* Step number */}
                 <div className={`absolute top-4 right-5 text-3xl font-black opacity-[0.06] group-hover:opacity-[0.1] transition-opacity ${step.textClass}`}>
@@ -45,8 +45,8 @@ export default function HowItWorks() {
                   <Icon size={20} className={step.textClass} />
                 </div>
 
-                <h3 className="text-[1rem] font-bold text-foreground mb-2">{t(step.titleKey)}</h3>
-                <p className="text-[0.85rem] text-muted-foreground leading-relaxed">{t(step.descKey)}</p>
+                <h3 className="text-[1rem] font-bold text-text-primary mb-2">{t(step.titleKey)}</h3>
+                <p className="text-[0.85rem] text-text-secondary leading-relaxed">{t(step.descKey)}</p>
 
                 {/* Connector */}
                 {i < STEPS.length - 1 && (

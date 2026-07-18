@@ -11,6 +11,7 @@ import FloatingButtons, { MobileBottomNav } from '@/components/layout/FloatingBu
 import { useTranslation } from '@/lib/LanguageContext';
 import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
+import { supabase } from '@/lib/supabase';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -31,11 +32,26 @@ export default function LoginPage() {
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
-    // Redirect if already logged in
-    const loggedIn = localStorage.getItem('2m-user-logged-in');
-    if (loggedIn === 'true') {
-      router.push('/account');
-    }
+    const checkAuthAndRedirect = () => {
+      const loggedIn = localStorage.getItem('2m-user-logged-in');
+      if (loggedIn === 'true') {
+        const role = localStorage.getItem('2m-user-role');
+        if (role === 'admin') {
+          router.push('/admin/dashboard');
+        } else {
+          router.push('/account');
+        }
+      }
+    };
+
+    // Check immediately on mount
+    checkAuthAndRedirect();
+
+    // Listen to local storage changes (dispatched by onAuthStateChange when Google callback runs)
+    window.addEventListener('storage', checkAuthAndRedirect);
+    return () => {
+      window.removeEventListener('storage', checkAuthAndRedirect);
+    };
   }, [router]);
 
   const validate = () => {
@@ -68,27 +84,48 @@ export default function LoginPage() {
     if (!validate()) return;
 
     setLoading(true);
-    // Simulate API Network call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setLoading(false);
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
 
-    localStorage.setItem('2m-user-logged-in', 'true');
-    localStorage.setItem('2m-user-name', name || email.split('@')[0]);
-    localStorage.setItem('2m-user-email', email);
-    
-    toast.success(
-      isLogin ? t('loginSuccess') : t('registerSuccess'),
-      {
-        description: isLogin
-          ? t('welcomeUser', { name: localStorage.getItem('2m-user-name') || '' })
-          : t('journeyStart'),
-        duration: 3000
+      const data = await res.json();
+      setLoading(false);
+
+      if (!res.ok) {
+        toast.error(data.error || 'Invalid credentials');
+        return;
       }
-    );
 
-    // Refresh navbar and redirect
-    window.dispatchEvent(new Event('storage'));
-    router.push('/account');
+      localStorage.setItem('2m-user-logged-in', 'true');
+      localStorage.setItem('2m-user-name', data.user.name);
+      localStorage.setItem('2m-user-email', data.user.email);
+      localStorage.setItem('2m-user-role', data.user.role || 'customer');
+
+      toast.success(
+        isLogin ? t('loginSuccess') : t('registerSuccess'),
+        {
+          description: isLogin
+            ? t('welcomeUser', { name: data.user.name })
+            : t('journeyStart'),
+          duration: 3000
+        }
+      );
+
+      // Refresh navbar and redirect
+      window.dispatchEvent(new Event('storage'));
+
+      if (data.user.role === 'admin') {
+        router.push('/admin/dashboard');
+      } else {
+        router.push('/account');
+      }
+    } catch (err) {
+      setLoading(false);
+      toast.error('Network error during login');
+    }
   };
 
   return (
@@ -295,6 +332,35 @@ export default function LoginPage() {
                 </button>
               </form>
 
+              <div className="relative my-6">
+                <div className="absolute inset-0 flex items-center"><span className="w-full border-t border-slate-200/60" /></div>
+                <div className="relative flex justify-center text-[10px] uppercase tracking-wider font-bold"><span className="bg-white px-3 text-muted-foreground">{isRtl ? 'أو تابع باستخدام' : 'Or continue with'}</span></div>
+              </div>
+
+              <button
+                type="button"
+                onClick={async () => {
+                  const { error } = await supabase.auth.signInWithOAuth({
+                    provider: 'google',
+                    options: {
+                      redirectTo: `${window.location.origin}/login`,
+                    },
+                  });
+                  if (error) {
+                    toast.error(error.message);
+                  }
+                }}
+                className="w-full py-3 px-4 border border-slate-200 bg-white text-slate-700 hover:bg-slate-50/80 rounded-xl text-xs font-black flex items-center justify-center gap-2.5 transition-all duration-300 shadow-xs"
+              >
+                <svg className="w-4 h-4" viewBox="0 0 24 24">
+                  <path
+                    fill="#EA4335"
+                    d="M12.24 10.285V14.4h6.887c-.648 2.41-2.519 4.114-5.136 4.114-3.555 0-6.437-2.883-6.437-6.437 0-3.555 2.882-6.437 6.437-6.437 1.543 0 2.95.543 4.053 1.45l3.11-3.11C19.062 1.996 15.82 1 12.24 1 6.033 1 1 6.033 1 12.24s5.033 11.24 11.24 11.24c5.898 0 10.87-4.187 10.87-11.24 0-.64-.077-1.285-.21-1.955H12.24z"
+                  />
+                </svg>
+                <span>Google</span>
+              </button>
+
               {/* Portal Switcher Footer info */}
               <div className="mt-8 pt-6 border-t border-border text-center">
                 <p className="text-xs text-muted-foreground font-semibold">
@@ -306,15 +372,6 @@ export default function LoginPage() {
                     {isLogin ? t('createAccount') : t('signInHere')}
                   </button>
                 </p>
-                
-                {/* Admin Access Redirect */}
-                <Link
-                  href="/admin"
-                  className="inline-flex items-center gap-1.5 text-[10px] font-bold text-brand-gold uppercase tracking-wider mt-4 hover:text-brand-primary transition-colors"
-                >
-                  <ShieldCheck size={12} />
-                  {t('adminPortal')}
-                </Link>
               </div>
 
             </div>

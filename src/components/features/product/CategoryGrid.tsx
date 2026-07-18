@@ -86,7 +86,7 @@ export default function CategoryGrid() {
                 key={cat.id}
                 href={`/${cat.slug}`}
                 id={`category-${cat.slug}`}
-                className={`cat-card group block rounded-2xl p-6 border transition-all duration-300 hover:-translate-y-1 hover:shadow-xl relative overflow-hidden shadow-xs ${palette.bgClass} ${palette.borderClass}`}
+                className={`cat-card group block rounded-2xl p-6 border transition-all duration-300 hover:-translate-y-1 hover:shadow-sm relative overflow-hidden shadow-xs ${palette.bgClass} ${palette.borderClass}`}
                 style={{
                   transitionDelay: `${i * 50}ms`,
                 }}
@@ -97,9 +97,9 @@ export default function CategoryGrid() {
                   <div
                     className="w-12 h-12 rounded-lg flex items-center justify-center text-2xl transition-transform duration-300 group-hover:scale-110 relative z-10 bg-surface shadow-sm"
                   >
-                    {cat.id === 'pharmacy' && <Pill className="text-primary" />}
+                    {cat.id === 'pharmacy' && <Pill className="text-brand-primary" />}
                     {cat.id === 'beauty' && <Sparkles className="text-brand-accent" />}
-                    {cat.id === 'wellness' && <Leaf className="text-teal-light" />}
+                    {cat.id === 'wellness' && <Leaf className="text-brand-accent" />}
                     {cat.id === 'personal-care' && <Droplets className="text-personal-accent" />}
                   </div>
                   
@@ -121,7 +121,7 @@ export default function CategoryGrid() {
                     {t('exploreCategory')}
                   </span>
                   <div
-                    className={`w-7 h-7 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:translate-x-1 group-hover:shadow-md ${palette.accentBgClass}`}
+                    className={`w-7 h-7 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:translate-x-1 group-hover:shadow-sm ${palette.accentBgClass}`}
                   >
                     <ArrowRight size={12} className="text-white" />
                   </div>

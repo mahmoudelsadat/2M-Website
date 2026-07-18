@@ -24,7 +24,7 @@ export default function FloatingButtons() {
     >
       <Link
         href="/pharmacy"
-        className="glass-panel flex items-center gap-2 rounded-full px-4 py-3 text-[11px] font-semibold text-white/90 hover:text-white transition-all duration-200"
+        className="bg-[#1b1c1c] hover:bg-[#2d2d2d] shadow-md flex items-center gap-2 rounded-full px-4 py-3 text-[11px] font-semibold text-white transition-all duration-200"
         aria-label={t('shop')}
       >
         <Sparkles size={14} className="text-brand-accent" />
@@ -50,7 +50,7 @@ export function MobileBottomNav() {
 
   return (
     <nav
-      className="fixed bottom-0 left-0 right-0 z-40 lg:hidden border-t border-white/10 bg-[#060700]/90 backdrop-blur-xl shadow-[0_-12px_40px_rgba(0,0,0,0.35)]"
+      className="fixed bottom-0 left-0 right-0 z-40 lg:hidden border-t border-border bg-white/95 backdrop-blur-xl shadow-sm"
       style={{
         paddingBottom: 'env(safe-area-inset-bottom)',
       }}

@@ -1,0 +1,9 @@
+**/*.png
+**/*.jpg
+**/*.jpeg
+**/public/**
+**/node_modules/**
+**/package-lock.json
+**/.next/**
+**/.git/**
+**/messages/**  # استثنيه بس لو مش بتعدل في الترجمة حالياً

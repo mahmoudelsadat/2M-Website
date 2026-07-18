@@ -55,7 +55,7 @@ function NewsletterForm() {
             type="email"
             placeholder={t('newsletterPlaceholder')}
             {...register('email')}
-            className="w-full bg-white/5 text-white placeholder-white/45 rounded-l-xl px-4 py-2 text-xs focus:outline-none border border-white/10 focus:border-white/30"
+            className="w-full bg-white text-text-primary placeholder-text-muted rounded-l-xl px-4 py-2 text-xs focus:outline-none border border-border focus:border-brand-primary/30"
           />
         </div>
         <button
@@ -67,7 +67,7 @@ function NewsletterForm() {
           {isSubmitting ? t('newsletterSubmitting') : t('subscribe')}
         </button>
       </form>
-      {errors.email && <p className="text-[10px] text-red-400 mt-1.5">{errors.email.message}</p>}
+      {errors.email && <p className="text-[10px] text-red-500 mt-1.5">{errors.email.message}</p>}
     </div>
   );
 }
@@ -76,37 +76,37 @@ export default function Footer() {
   const t = useTranslations('Layout');
 
   return (
-    <footer className="bg-[#060700]/95 text-footer-muted border-t border-white/10 backdrop-blur-xl">
+    <footer className="bg-surface-2 text-text-secondary border-t border-border">
       {/* Main footer area */}
       <div className="container-2m py-16">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-10">
           {/* Logo & Newsletter column */}
           <div className="md:col-span-2 flex flex-col justify-start">
             <Link href="/" className="flex items-center gap-2.5 select-none mb-6 group">
-              <div className="w-10 h-10 rounded-xl bg-white text-black flex items-center justify-center font-black text-xl tracking-tighter shadow-md border border-white/20 transition-all duration-300 group-hover:scale-105">
+              <div className="w-10 h-10 rounded-xl bg-brand-primary text-white flex items-center justify-center font-black text-xl tracking-tighter shadow-sm border border-brand-primary/20 transition-all duration-300 group-hover:scale-105">
                 2M
               </div>
               <div className="flex flex-col items-start leading-none text-left">
-                <span className="text-sm font-black tracking-wider text-footer-text uppercase">Pharmacy</span>
-                <span className="text-[7.5px] font-bold tracking-[0.18em] text-footer-muted uppercase mt-0.5">
+                <span className="text-sm font-black tracking-wider text-text-primary uppercase">Pharmacy</span>
+                <span className="text-[7.5px] font-bold tracking-[0.18em] text-text-muted uppercase mt-0.5">
                   {t('brandSubTitle')}
                 </span>
               </div>
             </Link>
 
             <div className="mb-6">
-              <p className="text-xs font-bold text-footer-text">{t('newsletterFooterTitle')}</p>
+              <p className="text-xs font-bold text-text-primary">{t('newsletterFooterTitle')}</p>
               <NewsletterForm />
             </div>
           </div>
 
           {/* Links columns */}
           <div>
-            <h4 className="text-footer-text font-bold text-[11px] uppercase tracking-wider mb-4">{t('shop')}</h4>
+            <h4 className="text-text-primary font-bold text-[11px] uppercase tracking-wider mb-4">{t('shop')}</h4>
             <ul className="space-y-2">
               {footerLinks.shop.map((l) => (
                 <li key={l.labelKey}>
-                  <Link href={l.href} className="text-xs text-footer-muted hover:text-white transition-colors duration-150">
+                  <Link href={l.href} className="text-xs text-text-secondary hover:text-brand-primary transition-colors duration-150">
                     {t(l.labelKey)}
                   </Link>
                 </li>
@@ -115,11 +115,11 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-footer-text font-bold text-[11px] uppercase tracking-wider mb-4">{t('customerService')}</h4>
+            <h4 className="text-text-primary font-bold text-[11px] uppercase tracking-wider mb-4">{t('customerService')}</h4>
             <ul className="space-y-2">
               {footerLinks.service.map((l) => (
                 <li key={l.labelKey}>
-                  <Link href={l.href} className="text-xs text-footer-muted hover:text-white transition-colors duration-150">
+                  <Link href={l.href} className="text-xs text-text-secondary hover:text-brand-primary transition-colors duration-150">
                     {t(l.labelKey)}
                   </Link>
                 </li>
@@ -128,11 +128,11 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-footer-text font-bold text-[11px] uppercase tracking-wider mb-4">{t('company')}</h4>
+            <h4 className="text-text-primary font-bold text-[11px] uppercase tracking-wider mb-4">{t('company')}</h4>
             <ul className="space-y-2">
               {footerLinks.company.map((l) => (
                 <li key={l.labelKey}>
-                  <Link href={l.href} className="text-xs text-footer-muted hover:text-white transition-colors duration-150">
+                  <Link href={l.href} className="text-xs text-text-secondary hover:text-brand-primary transition-colors duration-150">
                     {t(l.labelKey)}
                   </Link>
                 </li>
@@ -142,13 +142,13 @@ export default function Footer() {
         </div>
 
         {/* Bottom Area: Socials and Payment Providers */}
-        <div className="border-t border-white/10 mt-14 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="border-t border-border mt-14 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
           {/* Social Icons */}
           <div className="flex items-center gap-4">
-            <a href="https://www.instagram.com/2m_pharmcy" target="_blank" rel="noopener noreferrer" className="text-footer-muted hover:text-white transition-colors">
+            <a href="https://www.instagram.com/2m_pharmcy" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-brand-primary transition-colors">
               <InstagramIcon size={14} />
             </a>
-            <a href="https://www.facebook.com/people/2M-Pharmacy/100068944428141/" target="_blank" rel="noopener noreferrer" className="text-footer-muted hover:text-white transition-colors">
+            <a href="https://www.facebook.com/people/2M-Pharmacy/100068944428141/" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-brand-primary transition-colors">
               <FacebookIcon size={14} />
             </a>
           </div>
@@ -156,7 +156,7 @@ export default function Footer() {
           {/* Payment Badges */}
           <div className="flex items-center gap-2">
             {['COD', 'InstaPay', 'Vodafone', 'e& Cash'].map((badge) => (
-              <span key={badge} className="text-[9px] font-bold text-footer-text px-2 py-0.5 rounded border border-white/20 bg-white/10 uppercase tracking-wider">
+              <span key={badge} className="text-[9px] font-bold text-text-primary px-2 py-0.5 rounded border border-border bg-white uppercase tracking-wider">
                 {badge}
               </span>
             ))}
